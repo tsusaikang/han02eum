@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="발음, 영한·영영 뜻, 한영 뜻과 예문을 한 번에 찾는 말결 사전">
+    <title>말결 — 영한·영영·한영 사전</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="말결 사전 홈">
+          <span class="brand-mark" aria-hidden="true">m</span>
+          <span>말결</span>
+        </a>
+        <p class="header-note">English · 한국어</p>
+      </header>
+
+      <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow">EN–KO · EN–EN · KO–EN</p>
+          <h1 id="hero-title">단어의 뜻을 넘어,<br><em>쓰임의 결</em>까지.</h1>
+          <p class="hero-copy">영어 또는 한국어 단어를 입력하세요. 발음과 뜻, 실제 문장 속 쓰임을 함께 찾아드립니다.</p>
+
+          <form class="search-form" id="search-form" role="search">
+            <label class="sr-only" for="search-input">사전 검색</label>
+            <span class="search-icon" aria-hidden="true"></span>
+            <input
+              id="search-input"
+              name="word"
+              type="search"
+              maxlength="80"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              placeholder="궁금한 단어를 입력해 보세요"
+              enterkeyhint="search"
+              required
+            >
+            <kbd aria-hidden="true">/</kbd>
+            <button type="submit">찾기</button>
+          </form>
+
+          <div class="suggestions" aria-label="추천 검색어">
+            <span>이런 단어는 어때요?</span>
+            <button type="button" data-query="serendipity">serendipity</button>
+            <button type="button" data-query="context">context</button>
+            <button type="button" data-query="안녕">안녕</button>
+            <button type="button" data-query="배우다">배우다</button>
+          </div>
+        </section>
+
+        <section id="lookup-area" class="lookup-area" aria-live="polite" aria-busy="false">
+          <div id="empty-state" class="empty-state">
+            <div class="empty-card pronunciation-preview">
+              <span class="preview-number">01</span>
+              <div>
+                <p class="preview-label">소리로 익히고</p>
+                <strong>/prəˌnʌn.siˈeɪ.ʃən/</strong>
+              </div>
+            </div>
+            <div class="empty-card meaning-preview">
+              <span class="preview-number">02</span>
+              <div>
+                <p class="preview-label">뜻을 이해하고</p>
+                <strong>meaning · 의미</strong>
+              </div>
+            </div>
+            <div class="empty-card example-preview">
+              <span class="preview-number">03</span>
+              <div>
+                <p class="preview-label">문장으로 기억해요</p>
+                <strong>Words live in context.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div id="loading-state" class="loading-state is-hidden" aria-label="사전 검색 중">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-line short"></div>
+            <div class="skeleton-card">
+              <div class="skeleton skeleton-label"></div>
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line medium"></div>
+            </div>
+          </div>
+
+          <div id="message-state" class="message-state is-hidden" role="status">
+            <span class="message-symbol" aria-hidden="true">?</span>
+            <h2 id="message-title"></h2>
+            <p id="message-copy"></p>
+          </div>
+
+          <article id="result" class="result is-hidden" aria-labelledby="result-word">
+            <header class="word-header">
+              <div>
+                <p id="result-direction" class="result-direction"></p>
+                <h2 id="result-word" tabindex="-1"></h2>
+                <div id="pronunciation-list" class="pronunciation-list"></div>
+              </div>
+              <button id="audio-button" class="audio-button" type="button">
+                <span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span>발음 듣기</span>
+              </button>
+            </header>
+
+            <div id="translation-section" class="translation-section is-hidden">
+              <p class="section-kicker">한국어 뜻</p>
+              <div id="translation-list" class="translation-list"></div>
+            </div>
+
+            <section class="definitions-section" aria-labelledby="definitions-title">
+              <div class="section-heading-row">
+                <div>
+                  <p id="definitions-kicker" class="section-kicker"></p>
+                  <h3 id="definitions-title">뜻과 쓰임</h3>
+                </div>
+                <span id="definition-count" class="count-badge"></span>
+              </div>
+              <div id="definition-groups" class="definition-groups"></div>
+            </section>
+
+            <footer class="source-note">
+              <div class="source-mark" aria-hidden="true">W</div>
+              <p>
+                <strong>출처를 확인할 수 있는 사전</strong>
+                <span id="source-description"></span>
+              </p>
+              <a id="source-link" href="#" target="_blank" rel="noreferrer">원문 보기 <span aria-hidden="true">↗</span></a>
+            </footer>
+          </article>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>말결 <span>·</span> words in context</p>
+        <p>사전 내용은 <a href="https://en.wiktionary.org/" target="_blank" rel="noreferrer">Wiktionary</a> 기여자가 만들었으며 CC BY-SA 4.0에 따라 제공됩니다.</p>
+      </footer>
+    </div>
+  </body>
+</html>
