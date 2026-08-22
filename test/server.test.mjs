@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { normalizeLookupWord, requestWiktionaryEntry } from "../src/dictionary-api.js";
 
-const TEST_USER_AGENT = "MalgyeolTest/1.0 (https://example.test/contact)";
+const TEST_USER_AGENT = "HanyeongIeumTest/1.0 (https://example.test/contact)";
 
 test("normalizeLookupWord normalizes Unicode and whitespace", () => {
   assert.equal(normalizeLookupWord("  hello   world  "), "hello world");

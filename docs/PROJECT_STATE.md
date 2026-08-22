@@ -1,4 +1,4 @@
-# 말결 사전 — 공식 프로젝트 상태
+# 한영이음 사전 — 공식 프로젝트 상태
 
 마지막 갱신: 2026-08-22 (KST)
 
@@ -17,14 +17,15 @@
 
 ## 확정된 결정과 이유
 
-1. 새 운영 기반은 Cloudflare Workers Static Assets로 한다. 정적 화면과 서버 API를 한 배포 단위와 같은 출처에서 제공할 수 있다.
-2. Git 연동은 Cloudflare Workers Builds가 GitHub `main` 브랜치를 감시하는 방식으로 한다. 사용자가 선택한 운영 흐름이며 푸시마다 검증·배포 이력을 남길 수 있다.
-3. Worker 이름은 `malgyeol-dictionary`로 고정한다. Cloudflare 프로젝트 이름과 `wrangler.jsonc`의 이름이 달라 빌드가 실패하는 것을 방지한다.
-4. Wikimedia 호출은 브라우저가 아니라 Worker가 수행한다. 공개 연락처 User-Agent, 캐시, 제한 시간, 오류 처리를 한곳에서 관리하기 위해서다.
-5. `WIKIMEDIA_USER_AGENT`는 Cloudflare 런타임 비밀값으로 두고 필수값으로 선언한다. 연락처가 이메일일 수도 있어 저장소 노출을 피하고, 누락된 운영 배포를 차단하기 위해서다.
-6. Worker의 Cache API를 사용해 성공·미존재 응답을 10분간 공유 캐시한다. 서버 한 프로세스에 묶인 기존 메모리 캐시를 제거하기 위해서다.
-7. Cloudflare 자동 호출 로그와 추적은 끄고 검색어가 없는 오류 코드만 기록한다. 자동 관측 정보에 요청 URL과 검색어가 남는 것을 줄이기 위해서다.
-8. `main` 푸시는 배포를 일으킬 수 있으므로 원격 저장소 생성·연결·푸시는 저장소 공개 범위와 연락처 값 확인 후 진행한다.
+1. 서비스 이름은 `한영이음`으로 한다. 영어와 한국어를 잇는 사전이라는 역할이 이름에서 바로 드러나고 발음이 쉽기 때문이다.
+2. 영문 기술 식별자와 Worker 이름은 `hanyeong-ieum-dictionary`로 통일한다. Cloudflare 프로젝트 이름과 `wrangler.jsonc`의 이름이 달라 빌드가 실패하는 것을 방지한다.
+3. 새 운영 기반은 Cloudflare Workers Static Assets로 한다. 정적 화면과 서버 API를 한 배포 단위와 같은 출처에서 제공할 수 있다.
+4. Git 연동은 Cloudflare Workers Builds가 GitHub `main` 브랜치를 감시하는 방식으로 한다. 사용자가 선택한 운영 흐름이며 푸시마다 검증·배포 이력을 남길 수 있다.
+5. Wikimedia 호출은 브라우저가 아니라 Worker가 수행한다. 공개 연락처 User-Agent, 캐시, 제한 시간, 오류 처리를 한곳에서 관리하기 위해서다.
+6. `WIKIMEDIA_USER_AGENT`는 Cloudflare 런타임 비밀값으로 두고 필수값으로 선언한다. 연락처가 이메일일 수도 있어 저장소 노출을 피하고, 누락된 운영 배포를 차단하기 위해서다.
+7. Worker의 Cache API를 사용해 성공·미존재 응답을 10분간 공유 캐시한다. 서버 한 프로세스에 묶인 기존 메모리 캐시를 제거하기 위해서다.
+8. Cloudflare 자동 호출 로그와 추적은 끄고 검색어가 없는 오류 코드만 기록한다. 자동 관측 정보에 요청 URL과 검색어가 남는 것을 줄이기 위해서다.
+9. `main` 푸시는 배포를 일으킬 수 있으므로 원격 저장소 생성·연결·푸시는 저장소 공개 범위와 연락처 값 확인 후 진행한다.
 
 ## 완료한 작업
 
@@ -37,6 +38,8 @@
 - API와 정적 자산 보안 헤더, 검색어를 남기지 않는 최소 오류 로그 설정
 - Node 순수 로직 테스트와 Cloudflare 런타임 라우팅 테스트 구성
 - GitHub/Cloudflare 연결 절차와 검증 명령 문서화
+- 서비스 이름을 `한영이음`, 영문 기술 식별자를 `hanyeong-ieum-dictionary`로 확정하고 화면·설정·문서에 반영
+- 컨텍스트 한계 전에 공식 상태와 인수인계를 먼저 갱신하도록 프로젝트 지침 추가
 
 ## 산출물과 관련 파일
 
@@ -54,7 +57,7 @@
 ## 검증 결과
 
 - `npm run check`: 통과
-- `npm run test:node`: 8/8 통과
+- `npm run test:node`: 11/11 통과
 - `npm run test:worker`: 3/3 통과
 - `npm run cf-typegen:check`: 통과
 - `npm run verify`: 통과(Node 로직·캐시 11/11, Worker 런타임 3/3 포함)
@@ -66,8 +69,7 @@
 
 ## 미해결 문제
 
-- GitHub 저장소 이름과 공개/비공개 범위를 사용자가 정해야 한다.
-- `WIKIMEDIA_USER_AGENT`에 넣을 공개 저장소 또는 연락처 URL이 필요하다.
+- GitHub 저장소는 `tsusaikang/han02eum`으로 정했고 로컬 `origin`에 연결했다. 비로그인 HTTP 요청에서 200 응답을 확인해 공개 저장소 및 Wikimedia 공개 연락처 URL로 사용하기로 했다.
 - Cloudflare 계정에서 Worker 생성, 런타임 비밀값 등록, GitHub 연결이 필요하다.
 - 첫 실배포 뒤 실제 영어·한국어 검색과 모바일 화면을 검수해야 한다.
 - 코드 공개 라이선스와 상업 이용 여부는 아직 사용자 확정이 필요하다.
@@ -75,9 +77,9 @@
 
 ## 다음 단계
 
-1. 사용자가 GitHub 저장소 이름, 공개 범위, 공개 연락처 URL을 확정한다.
-2. 로컬 전환 결과를 커밋한 뒤 GitHub 원격 저장소에 `main`을 푸시한다.
-3. Cloudflare Worker `malgyeol-dictionary`에 필수 비밀값을 등록한다.
+1. `한영이음` 이름 반영 변경을 로컬 커밋으로 보존한다.
+2. GitHub 원격 저장소에 `main`을 처음 푸시한다.
+3. Cloudflare Worker `hanyeong-ieum-dictionary`에 필수 비밀값을 등록한다.
 4. GitHub 저장소를 Workers Builds에 연결하고 `main` 자동 배포를 활성화한다.
 5. 첫 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
 6. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
@@ -95,11 +97,13 @@
 ## Git 체크포인트
 
 - 로컬 저장소는 `main` 브랜치이며 전환 전 기준 커밋은 `b7ae0a2`이다.
-- GitHub 원격은 아직 연결하지 않았고 외부 전송도 하지 않았다.
+- GitHub 원격 `origin`은 `https://github.com/tsusaikang/han02eum.git`에 연결했다.
+- 읽기 전용 원격 조회 결과 브랜치나 커밋 참조가 없어 빈 저장소로 확인됐다.
+- 원격 연결만 설정했으며 아직 커밋을 푸시하지 않았다.
 - Cloudflare 전환 변경은 최종 전체 검증을 통과해 새 로컬 커밋으로 보존했다.
 
 ## 인수인계 체크포인트
 
-Cloudflare용 코드 전환, 전체 검증, 로컬 커밋까지 완료됐다. 다음 단계부터는 외부 계정 상태를 바꾸는 작업이다. GitHub 저장소 공개 범위와 Wikimedia 공개 연락처 URL이 정해지기 전에는 원격 저장소 생성·푸시·실배포를 수행하지 않는다.
+Cloudflare용 코드 전환과 이름 변경 검증까지 완료됐고 서비스 이름은 `한영이음`으로 확정됐다. GitHub 원격은 공개 저장소 `tsusaikang/han02eum`에 연결했으며 해당 URL을 Wikimedia 공개 연락처로 사용한다. 이름 반영 변경은 아직 커밋·푸시 전이다. 다음 작업은 변경을 커밋하고 `main`을 처음 푸시하는 것이다.
 
 현재 컨텍스트로 계속하는 편이 효율적이므로 새 작업은 아직 필요하지 않다.

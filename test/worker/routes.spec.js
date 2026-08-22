@@ -1,7 +1,7 @@
 import { exports } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 
-describe("말결 Worker API routing", () => {
+describe("한영이음 Worker API routing", () => {
   it("rejects a missing lookup word", async () => {
     const response = await exports.default.fetch("https://example.test/api/lookup");
     expect(response.status).toBe(400);

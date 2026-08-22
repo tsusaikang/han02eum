@@ -6,7 +6,7 @@ export default defineConfig({
     cloudflareTest({
       miniflare: {
         bindings: {
-          WIKIMEDIA_USER_AGENT: "MalgyeolTest/1.0 (https://example.test/contact)"
+          WIKIMEDIA_USER_AGENT: "HanyeongIeumTest/1.0 (https://example.test/contact)"
         }
       },
       wrangler: {

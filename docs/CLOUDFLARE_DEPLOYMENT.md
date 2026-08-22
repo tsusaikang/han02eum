@@ -23,14 +23,14 @@ Cloudflare 연결 이후의 `main` 푸시는 운영 배포를 시작할 수 있�
 
 ## 3. Cloudflare Worker와 필수값 준비
 
-Cloudflare 대시보드에서 Worker 이름을 정확히 `malgyeol-dictionary`로 만든다. 이 이름은 `wrangler.jsonc`의 `name`과 같아야 합니다.
+Cloudflare 대시보드에서 Worker 이름을 정확히 `hanyeong-ieum-dictionary`로 만든다. 이 이름은 `wrangler.jsonc`의 `name`과 같아야 합니다.
 
 Worker의 **Settings > Variables & Secrets**에 다음 값을 런타임 비밀값으로 추가합니다.
 
 - 이름: `WIKIMEDIA_USER_AGENT`
-- 값: `MalgyeolDictionary/0.2 (공개 연락처 URL)`
+- 값: `HanyeongIeumDictionary/0.2 (공개 연락처 URL)`
 
-예: `MalgyeolDictionary/0.2 (https://github.com/OWNER/REPOSITORY)`
+예: `HanyeongIeumDictionary/0.2 (https://github.com/tsusaikang/han02eum)`
 
 이 값은 Workers Builds의 빌드 변수에 넣지 않습니다. 빌드 변수는 실행 중인 Worker에서 사용할 수 없습니다. 저장소의 `.dev.vars.example`은 형식 안내일 뿐 실제 운영값이 아닙니다.
 

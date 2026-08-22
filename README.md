@@ -1,4 +1,4 @@
-# 말결 사전
+# 한영이음 사전
 
 영어와 한국어 단어를 검색해 발음, 영한·영영·한영 뜻, 예문을 함께 보는 웹 사전 MVP입니다.
 
@@ -37,10 +37,10 @@ npm run verify
 
 ## 배포 전 필수 설정
 
-Cloudflare Worker 이름은 `wrangler.jsonc`의 `malgyeol-dictionary`와 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
+Cloudflare Worker 이름은 `wrangler.jsonc`의 `hanyeong-ieum-dictionary`와 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
 
 - 이름: `WIKIMEDIA_USER_AGENT`
-- 값 예시: `MalgyeolDictionary/0.2 (https://github.com/OWNER/REPOSITORY)`
+- 값 예시: `HanyeongIeumDictionary/0.2 (https://github.com/tsusaikang/han02eum)`
 
 괄호 안에는 실제로 공개 접근 가능한 저장소나 연락처 페이지를 넣어야 합니다. 이 값이 없으면 배포 검증이 실패하고 API도 안전하게 503을 반환합니다.
 

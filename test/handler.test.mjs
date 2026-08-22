@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { handleRequest } from "../src/handler.js";
 
-const TEST_USER_AGENT = "MalgyeolTest/1.0 (https://example.test/contact)";
+const TEST_USER_AGENT = "HanyeongIeumTest/1.0 (https://example.test/contact)";
 
 function createContext() {
   const pending = [];

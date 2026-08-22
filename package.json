@@ -1,5 +1,5 @@
 {
-  "name": "malgyeol-dictionary",
+  "name": "hanyeong-ieum-dictionary",
   "version": "0.2.0",
   "private": true,
   "type": "module",
@@ -12,7 +12,7 @@
     "cf-typegen:check": "wrangler types --check",
     "test": "npm run test:node && npm run test:worker",
     "test:node": "node --test test/*.test.mjs",
-    "test:worker": "WRANGLER_LOG_PATH=/tmp/malgyeol-wrangler.log WIKIMEDIA_USER_AGENT='MalgyeolTest/1.0 (https://example.test/contact)' vitest run",
+    "test:worker": "WRANGLER_LOG_PATH=/tmp/hanyeong-ieum-wrangler.log WIKIMEDIA_USER_AGENT='HanyeongIeumTest/1.0 (https://example.test/contact)' vitest run",
     "check": "tsc --noEmit && node --check src/dictionary-api.js && node --check src/handler.js && node --check src/worker.js && node --check public/app.js && node --check public/dictionary-parser.js",
     "verify": "npm run cf-typegen:check && npm test && npm run check"
   },
