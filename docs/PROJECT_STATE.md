@@ -66,24 +66,29 @@
 - `npm run verify`: 통과(Node 로직·캐시 11/11, Worker 런타임 3/3 포함)
 - `npm run deploy:dry-run`: 통과(정적 파일 6개 인식, 번들 8.81 KiB / gzip 3.15 KiB)
 - `wrangler check startup`: 통과(로컬 시작 프로파일 17.8 ms; 실서버 성능 수치는 아님)
-- GitHub `main` 최초 푸시 완료, Cloudflare 실배포는 아직 수행하지 않음
+- GitHub `main` 푸시를 감지한 Cloudflare Workers Build `3f11c2ad`가 커밋 `95ccc3e`를 검증·배포
+- 운영 주소 `https://han02eum.dwnc.workers.dev/`에서 첫 실배포 확인
+- 실 URL `hello` 검색: IPA, 한국어 뜻, 영영 정의, 예문, 출처 정상 표시
+- 실 URL `안녕` 검색: 로마자, 영어 뜻, 예문, 출처 정상 표시
+- 미존재 단어 안내 정상 표시
+- 동일 `hello` API 재요청에서 `X-Dictionary-Cache: HIT` 확인
+- 390 × 844 모바일 화면에서 헤더, 검색창, 추천 검색어, 결과 카드가 가로로 잘리지 않음
+- 배포 후 Logs 활성, Invocation logs 비활성, Traces 비활성 상태 확인
 
-기존 MVP에서 확인한 `hello`, `안녕`, 404, 데스크톱·모바일 화면 결과는 전환 전 기준이다. Worker 전환 후 실 URL 브라우저 검수는 첫 배포 뒤 다시 수행해야 한다.
+위 실 URL 결과가 현재 운영 체크포인트다. Wiktionary 원문과 리비전은 이후 변경될 수 있으므로 항목 내용 자체는 시점 의존적이다.
 
 ## 미해결 문제
 
 - GitHub 저장소는 `tsusaikang/han02eum`으로 정했고 로컬 `origin`에 연결했다. 비로그인 HTTP 요청에서 200 응답을 확인해 공개 저장소 및 Wikimedia 공개 연락처 URL로 사용하기로 했다.
-- 최초 Workers Build는 Cloudflare Worker 이름 `han02eum`과 당시 `wrangler.jsonc` 이름 불일치로 실패했다. 저장소 설정을 `han02eum`으로 수정했으며 새 푸시로 재검증해야 한다.
-- 첫 실배포 뒤 실제 영어·한국어 검색과 모바일 화면을 검수해야 한다.
 - 코드 공개 라이선스와 상업 이용 여부는 아직 사용자 확정이 필요하다.
 - Wiktionary 항목별 번역·예문 품질 편차와 문서 구조 변경 가능성은 남아 있다.
+- 사용자 도메인 연결은 선택 사항으로 남아 있다.
 
 ## 다음 단계
 
-1. Worker 이름 정합성 수정과 설정 문서를 커밋하고 GitHub `main`에 푸시한다.
-2. Cloudflare가 새 푸시를 감지해 `npm run verify`와 `npm run deploy`를 성공시키는지 확인한다.
-3. 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
-4. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
+1. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
+2. 코드 공개 라이선스와 상업 이용 계획을 확정한다.
+3. 실제 사용 중 발견되는 Wiktionary 항목별 품질 편차를 수집하고 파서 개선 우선순위를 정한다.
 
 ## 중요한 제약과 주의사항
 
@@ -102,10 +107,15 @@
 - HTTPS 푸시는 로컬 인증 정보가 없어 중단됐고 아무것도 전송되지 않았다. 기존 SSH 키가 GitHub 계정 `tsusaikang`으로 인증되는 것을 확인한 뒤 같은 저장소로 전환했다.
 - `main` 최초 푸시를 완료했고 로컬 브랜치는 `origin/main`을 추적한다.
 - 서비스 이름 변경과 프로젝트 지침은 커밋 `9adbb12`로 원격에 보존됐다.
+- Cloudflare Worker 이름 정합성 수정과 첫 자동 배포 트리거는 커밋 `95ccc3e`로 원격에 보존됐다.
 - Cloudflare 전환 변경은 최종 전체 검증을 통과해 새 로컬 커밋으로 보존했다.
 
 ## 인수인계 체크포인트
 
-Cloudflare Worker `han02eum`과 GitHub 저장소 연결, 자동 빌드 명령, 운영 브랜치, 런타임 Secret 설정을 완료했다. 최초 빌드는 Worker 이름 불일치로 실패했으며, 저장소의 `wrangler.jsonc` 이름을 `han02eum`으로 수정한 뒤 전체 검증과 배포 드라이런을 통과했다. 다음 단계는 이 변경을 `main`에 푸시해 Cloudflare 자동 빌드·배포와 실 URL 동작을 확인하는 것이다.
+Cloudflare Worker `han02eum`과 GitHub 저장소 연결, 자동 빌드 명령, 운영 브랜치, 런타임 Secret 설정을 완료했다. 최초 빌드의 Worker 이름 불일치를 수정한 커밋 `95ccc3e`를 `main`에 푸시했고, Cloudflare가 이를 자동 감지해 Build `3f11c2ad`에서 검증·배포했다. 운영 주소에서 영어·한국어·미존재 검색, 캐시 HIT, 모바일 화면, 로그 보호 설정을 확인했다. GitHub → Cloudflare 자동 배포 이전 목표는 완료됐다.
 
-현재 컨텍스트로 계속하는 편이 효율적이므로 새 작업은 아직 필요하지 않다.
+새 작업 권장. 배포 이전 단계가 끝났고 다음은 도메인·라이선스·사전 품질처럼 별도 의사결정이 필요한 운영 개선 단계다.
+
+새 작업의 첫 메시지로 사용할 인수인계 프롬프트:
+
+> `/Users/jusang/projects/english-dictionary/docs/PROJECT_STATE.md`를 먼저 읽고 한영이음 프로젝트의 다음 운영 개선 단계를 진행해줘. GitHub `tsusaikang/han02eum`의 `main`은 Cloudflare Worker `han02eum`에 자동 배포되며 운영 주소는 `https://han02eum.dwnc.workers.dev/`다. 첫 자동 배포와 영어·한국어 검색, 미존재 항목, 캐시 HIT, 모바일 화면 검수까지 완료됐다. 기존 Wikimedia 출처·라이선스 표시, 런타임 Secret, 검색어 로그 보호, 검증 후 푸시 원칙을 유지해라. 먼저 사용자와 다음 우선순위가 사용자 도메인, 코드 라이선스, 또는 사전 품질 개선 중 무엇인지 정하고 작업하라.
