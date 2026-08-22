@@ -1,0 +1,4 @@
+# Wrangler generates a few type aliases with trailing spaces. Keep the file exact
+# so `wrangler types --check` can verify it without treating generator output as
+# a repository whitespace error.
+worker-configuration.d.ts -whitespace

@@ -1,6 +1,6 @@
 # 데이터 출처와 이용 조건
 
-마지막 검토: 2026-08-20
+마지막 검토: 2026-08-22
 
 ## 채택한 출처
 
@@ -13,6 +13,8 @@ MVP는 **영문 Wiktionary 한 곳**을 원천으로 사용합니다.
 - 음원은 파일별 라이선스가 다를 수 있으므로 Wikimedia가 제공하는 원본 URL을 스트리밍하고, 파일을 재배포하지 않습니다.
 
 데이터는 [MediaWiki Action API의 `action=parse`](https://www.mediawiki.org/wiki/API:Parsing_wikitext)를 서버에서 호출합니다. 운영 호출은 [Wikimedia API 이용 지침](https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_API_Usage_Guidelines)과 [User-Agent 정책](https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy/en)을 따라야 합니다.
+
+현재 운영 중계 서버는 Cloudflare Worker입니다. `WIKIMEDIA_USER_AGENT`는 저장소에 실제 값을 기록하지 않고 Cloudflare의 런타임 비밀값으로 설정하며, 괄호 안에는 공개 접근 가능한 연락처 URL을 사용합니다.
 
 ## 채택하지 않은 출처
 

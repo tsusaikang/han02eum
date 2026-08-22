@@ -1,7 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { normalizeLookupWord, requestWiktionaryEntry } from "../server.mjs";
+import { normalizeLookupWord, requestWiktionaryEntry } from "../src/dictionary-api.js";
+
+const TEST_USER_AGENT = "MalgyeolTest/1.0 (https://example.test/contact)";
 
 test("normalizeLookupWord normalizes Unicode and whitespace", () => {
   assert.equal(normalizeLookupWord("  hello   world  "), "hello world");
@@ -27,7 +29,7 @@ test("requestWiktionaryEntry maps a successful response to the public contract",
 
   const result = await requestWiktionaryEntry("hello", {
     fetchImpl,
-    userAgent: "MalgyeolTest/1.0 (https://example.test/contact)"
+    userAgent: TEST_USER_AGENT
   });
 
   assert.equal(result.status, 200);
@@ -38,7 +40,7 @@ test("requestWiktionaryEntry maps a successful response to the public contract",
   assert.equal(requestedUrl.hostname, "en.wiktionary.org");
   assert.equal(requestedUrl.searchParams.get("action"), "parse");
   assert.equal(requestedUrl.searchParams.get("page"), "hello");
-  assert.equal(requestedOptions.headers["User-Agent"], "MalgyeolTest/1.0 (https://example.test/contact)");
+  assert.equal(requestedOptions.headers["User-Agent"], TEST_USER_AGENT);
 });
 
 test("requestWiktionaryEntry returns a clear not-found result", async () => {
@@ -46,7 +48,10 @@ test("requestWiktionaryEntry returns a clear not-found result", async () => {
     error: { code: "missingtitle", info: "The page does not exist" }
   }), { status: 200, headers: { "Content-Type": "application/json" } });
 
-  const result = await requestWiktionaryEntry("not-a-word", { fetchImpl });
+  const result = await requestWiktionaryEntry("not-a-word", {
+    fetchImpl,
+    userAgent: TEST_USER_AGENT
+  });
   assert.equal(result.status, 404);
   assert.match(result.body.error, /not-a-word/);
 });
@@ -56,7 +61,10 @@ test("requestWiktionaryEntry turns upstream throttling into a retryable response
     error: { code: "maxlag", info: "Waiting for replication" }
   }), { status: 503, headers: { "Content-Type": "application/json" } });
 
-  const result = await requestWiktionaryEntry("hello", { fetchImpl });
+  const result = await requestWiktionaryEntry("hello", {
+    fetchImpl,
+    userAgent: TEST_USER_AGENT
+  });
   assert.equal(result.status, 503);
   assert.match(result.body.error, /잠시/);
 });
@@ -66,8 +74,28 @@ test("requestWiktionaryEntry handles network failures without leaking internals 
     throw new Error("offline");
   };
 
-  const result = await requestWiktionaryEntry("hello", { fetchImpl });
+  const result = await requestWiktionaryEntry("hello", {
+    fetchImpl,
+    userAgent: TEST_USER_AGENT
+  });
   assert.equal(result.status, 503);
   assert.match(result.body.error, /연결/);
   assert.equal("detail" in result.body, false);
+});
+
+test("requestWiktionaryEntry rejects an oversized upstream response", async () => {
+  const fetchImpl = async () => new Response("{}", {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": String(6 * 1024 * 1024)
+    }
+  });
+
+  const result = await requestWiktionaryEntry("hello", {
+    fetchImpl,
+    userAgent: TEST_USER_AGENT
+  });
+  assert.equal(result.status, 502);
+  assert.match(result.body.error, /너무 커서/);
 });

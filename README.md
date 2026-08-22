@@ -2,22 +2,29 @@
 
 영어와 한국어 단어를 검색해 발음, 영한·영영·한영 뜻, 예문을 함께 보는 웹 사전 MVP입니다.
 
-## 실행
+운영 환경은 **Cloudflare Worker + Static Assets**입니다. 브라우저 화면과 `/api/lookup`이 한 도메인에서 제공되며, GitHub `main` 브랜치에 새 커밋이 올라오면 Cloudflare Workers Builds가 자동으로 검증하고 배포하도록 구성합니다.
 
-Node.js 20 이상에서 별도 패키지 설치 없이 실행됩니다.
+## 구조
+
+- `public/`: 브라우저 화면과 Wiktionary 결과 파서
+- `src/worker.js`: Cloudflare Worker 진입점
+- `src/handler.js`: 정적 파일/API 라우팅, Cloudflare 캐시, 오류 응답
+- `src/dictionary-api.js`: Wikimedia API 호출과 응답 검증
+- `wrangler.jsonc`: Worker·정적 자산·필수 운영값 설정
+- `docs/CLOUDFLARE_DEPLOYMENT.md`: GitHub 연동 배포 절차
+
+검색 결과는 영문 Wiktionary의 현재 공개 항목을 공식 MediaWiki API로 읽어 브라우저에서 구조화해 표시합니다. 원문 HTML을 화면에 직접 삽입하지 않고 텍스트만 추출합니다.
+
+## 검증
+
+Node.js 20 이상에서 의존성을 설치한 뒤 전체 검증을 실행합니다.
 
 ```sh
-npm start
+npm ci
+npm run verify
 ```
 
-브라우저에서 `http://127.0.0.1:4173`을 엽니다. 개발 중 파일 변경을 자동 반영하려면 `npm run dev`를 사용합니다.
-
-검증 명령은 다음과 같습니다.
-
-```sh
-npm test
-npm run check
-```
+운영 서비스는 로컬 서버를 계속 켜둘 필요가 없습니다. 필요할 때만 `.dev.vars.example`을 `.dev.vars`로 복사해 공개 연락처 값을 바꾸고 `npm run dev`로 로컬 확인을 할 수 있습니다.
 
 ## 현재 제공 범위
 
@@ -25,16 +32,16 @@ npm run check
 - 한국어 검색: 발음 표기 또는 로마자 표기, 영어 뜻, 제공되는 경우 예문
 - 검색 URL 공유와 뒤로 가기
 - 원문 링크, Wiktionary 리비전 번호, CC BY-SA 4.0 표시
-- 외부 호출을 줄이는 10분 메모리 캐시와 오류·호출량 제한 대응
-
-검색 결과는 영문 Wiktionary의 현재 공개 항목을 공식 MediaWiki API로 읽어, 브라우저 안에서 구조화해 표시합니다. 원문 HTML을 화면에 직접 삽입하지 않고 텍스트만 추출합니다.
+- Cloudflare 공유 캐시를 이용한 10분 API 캐시
+- Wikimedia 지연·호출 제한·비정상 응답·대용량 응답 방어
 
 ## 배포 전 필수 설정
 
-Wikimedia의 User-Agent 정책에 맞게 공개 연락처가 포함된 값을 지정해야 합니다.
+Cloudflare Worker 이름은 `wrangler.jsonc`의 `malgyeol-dictionary`와 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
 
-```sh
-WIKIMEDIA_USER_AGENT="MalgyeolDictionary/0.1 (https://example.com/contact)" NODE_ENV=production npm start
-```
+- 이름: `WIKIMEDIA_USER_AGENT`
+- 값 예시: `MalgyeolDictionary/0.2 (https://github.com/OWNER/REPOSITORY)`
 
-운영 환경에서는 서버 한 대의 메모리 캐시 대신 공유 캐시, 요청 속도 제한, 관측 지표를 추가하는 것이 좋습니다. 데이터 선택과 라이선스 판단은 [데이터 출처 문서](./docs/DATA_SOURCES.md), 현재 공식 상태는 [프로젝트 상태 문서](./docs/PROJECT_STATE.md)를 확인하세요.
+괄호 안에는 실제로 공개 접근 가능한 저장소나 연락처 페이지를 넣어야 합니다. 이 값이 없으면 배포 검증이 실패하고 API도 안전하게 503을 반환합니다.
+
+GitHub 연결과 Workers Builds 입력값은 [Cloudflare 배포 안내](./docs/CLOUDFLARE_DEPLOYMENT.md), 데이터 선택과 라이선스 판단은 [데이터 출처 문서](./docs/DATA_SOURCES.md), 현재 공식 상태는 [프로젝트 상태 문서](./docs/PROJECT_STATE.md)를 확인하세요.
