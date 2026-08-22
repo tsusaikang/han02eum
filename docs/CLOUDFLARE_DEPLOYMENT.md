@@ -23,7 +23,7 @@ Cloudflare 연결 이후의 `main` 푸시는 운영 배포를 시작할 수 있�
 
 ## 3. Cloudflare Worker와 필수값 준비
 
-Cloudflare 대시보드에서 Worker 이름을 정확히 `hanyeong-ieum-dictionary`로 만든다. 이 이름은 `wrangler.jsonc`의 `name`과 같아야 합니다.
+Cloudflare 대시보드에서 Worker 이름을 정확히 `han02eum`으로 만든다. 이 이름은 `wrangler.jsonc`의 `name`과 같아야 합니다.
 
 Worker의 **Settings > Variables & Secrets**에 다음 값을 런타임 비밀값으로 추가합니다.
 

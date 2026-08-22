@@ -18,7 +18,7 @@
 ## 확정된 결정과 이유
 
 1. 서비스 이름은 `한영이음`으로 한다. 영어와 한국어를 잇는 사전이라는 역할이 이름에서 바로 드러나고 발음이 쉽기 때문이다.
-2. 영문 기술 식별자와 Worker 이름은 `hanyeong-ieum-dictionary`로 통일한다. Cloudflare 프로젝트 이름과 `wrangler.jsonc`의 이름이 달라 빌드가 실패하는 것을 방지한다.
+2. npm 패키지 식별자는 `hanyeong-ieum-dictionary`, GitHub 저장소와 Cloudflare Worker 이름은 `han02eum`으로 한다. 이미 생성된 짧은 `han02eum.dwnc.workers.dev` 주소를 유지하며, Cloudflare 프로젝트와 `wrangler.jsonc`의 Worker 이름은 반드시 일치시킨다.
 3. 새 운영 기반은 Cloudflare Workers Static Assets로 한다. 정적 화면과 서버 API를 한 배포 단위와 같은 출처에서 제공할 수 있다.
 4. Git 연동은 Cloudflare Workers Builds가 GitHub `main` 브랜치를 감시하는 방식으로 한다. 사용자가 선택한 운영 흐름이며 푸시마다 검증·배포 이력을 남길 수 있다.
 5. Wikimedia 호출은 브라우저가 아니라 Worker가 수행한다. 공개 연락처 User-Agent, 캐시, 제한 시간, 오류 처리를 한곳에서 관리하기 위해서다.
@@ -38,8 +38,11 @@
 - API와 정적 자산 보안 헤더, 검색어를 남기지 않는 최소 오류 로그 설정
 - Node 순수 로직 테스트와 Cloudflare 런타임 라우팅 테스트 구성
 - GitHub/Cloudflare 연결 절차와 검증 명령 문서화
-- 서비스 이름을 `한영이음`, 영문 기술 식별자를 `hanyeong-ieum-dictionary`로 확정하고 화면·설정·문서에 반영
+- 서비스 이름을 `한영이음`, npm 패키지 식별자를 `hanyeong-ieum-dictionary`, 배포 Worker 이름을 `han02eum`으로 확정하고 화면·설정·문서에 반영
 - 컨텍스트 한계 전에 공식 상태와 인수인계를 먼저 갱신하도록 프로젝트 지침 추가
+- Cloudflare Worker `han02eum`과 GitHub `tsusaikang/han02eum` 연결
+- Workers Builds를 `main`, `npm run verify`, `npm run deploy`로 설정하고 비운영 브랜치 자동 빌드 비활성화
+- `WIKIMEDIA_USER_AGENT` 런타임 Secret 등록 및 암호화 표시 확인
 
 ## 산출물과 관련 파일
 
@@ -70,16 +73,16 @@
 ## 미해결 문제
 
 - GitHub 저장소는 `tsusaikang/han02eum`으로 정했고 로컬 `origin`에 연결했다. 비로그인 HTTP 요청에서 200 응답을 확인해 공개 저장소 및 Wikimedia 공개 연락처 URL로 사용하기로 했다.
-- Cloudflare 계정에서 Worker 생성, 런타임 비밀값 등록, GitHub 연결이 필요하다.
+- 최초 Workers Build는 Cloudflare Worker 이름 `han02eum`과 당시 `wrangler.jsonc` 이름 불일치로 실패했다. 저장소 설정을 `han02eum`으로 수정했으며 새 푸시로 재검증해야 한다.
 - 첫 실배포 뒤 실제 영어·한국어 검색과 모바일 화면을 검수해야 한다.
 - 코드 공개 라이선스와 상업 이용 여부는 아직 사용자 확정이 필요하다.
 - Wiktionary 항목별 번역·예문 품질 편차와 문서 구조 변경 가능성은 남아 있다.
 
 ## 다음 단계
 
-1. Cloudflare Worker `hanyeong-ieum-dictionary`에 필수 비밀값을 등록한다.
-2. GitHub 저장소를 Workers Builds에 연결하고 `main` 자동 배포를 활성화한다.
-3. 첫 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
+1. Worker 이름 정합성 수정과 설정 문서를 커밋하고 GitHub `main`에 푸시한다.
+2. Cloudflare가 새 푸시를 감지해 `npm run verify`와 `npm run deploy`를 성공시키는지 확인한다.
+3. 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
 4. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
 
 ## 중요한 제약과 주의사항
@@ -103,6 +106,6 @@
 
 ## 인수인계 체크포인트
 
-Cloudflare용 코드 전환과 이름 변경 검증을 완료했고 서비스 이름은 `한영이음`으로 확정됐다. 공개 GitHub 저장소 `tsusaikang/han02eum`에 `main`을 최초 푸시했으며 해당 URL을 Wikimedia 공개 연락처로 사용한다. 다음 단계부터는 Cloudflare 계정 상태를 바꾸는 작업이다. Worker 비밀값 등록과 GitHub Builds 연결 전에는 실배포가 시작되지 않는다.
+Cloudflare Worker `han02eum`과 GitHub 저장소 연결, 자동 빌드 명령, 운영 브랜치, 런타임 Secret 설정을 완료했다. 최초 빌드는 Worker 이름 불일치로 실패했으며, 저장소의 `wrangler.jsonc` 이름을 `han02eum`으로 수정한 뒤 전체 검증과 배포 드라이런을 통과했다. 다음 단계는 이 변경을 `main`에 푸시해 Cloudflare 자동 빌드·배포와 실 URL 동작을 확인하는 것이다.
 
 현재 컨텍스트로 계속하는 편이 효율적이므로 새 작업은 아직 필요하지 않다.

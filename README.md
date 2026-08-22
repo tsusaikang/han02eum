@@ -37,7 +37,7 @@ npm run verify
 
 ## 배포 전 필수 설정
 
-Cloudflare Worker 이름은 `wrangler.jsonc`의 `hanyeong-ieum-dictionary`와 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
+Cloudflare Worker 이름은 `wrangler.jsonc`의 `han02eum`과 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
 
 - 이름: `WIKIMEDIA_USER_AGENT`
 - 값 예시: `HanyeongIeumDictionary/0.2 (https://github.com/tsusaikang/han02eum)`
