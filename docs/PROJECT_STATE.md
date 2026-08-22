@@ -63,7 +63,7 @@
 - `npm run verify`: 통과(Node 로직·캐시 11/11, Worker 런타임 3/3 포함)
 - `npm run deploy:dry-run`: 통과(정적 파일 6개 인식, 번들 8.81 KiB / gzip 3.15 KiB)
 - `wrangler check startup`: 통과(로컬 시작 프로파일 17.8 ms; 실서버 성능 수치는 아님)
-- 외부 GitHub 푸시와 Cloudflare 실배포는 아직 수행하지 않음
+- GitHub `main` 최초 푸시 완료, Cloudflare 실배포는 아직 수행하지 않음
 
 기존 MVP에서 확인한 `hello`, `안녕`, 404, 데스크톱·모바일 화면 결과는 전환 전 기준이다. Worker 전환 후 실 URL 브라우저 검수는 첫 배포 뒤 다시 수행해야 한다.
 
@@ -77,12 +77,10 @@
 
 ## 다음 단계
 
-1. `한영이음` 이름 반영 변경을 로컬 커밋으로 보존한다.
-2. GitHub 원격 저장소에 `main`을 처음 푸시한다.
-3. Cloudflare Worker `hanyeong-ieum-dictionary`에 필수 비밀값을 등록한다.
-4. GitHub 저장소를 Workers Builds에 연결하고 `main` 자동 배포를 활성화한다.
-5. 첫 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
-6. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
+1. Cloudflare Worker `hanyeong-ieum-dictionary`에 필수 비밀값을 등록한다.
+2. GitHub 저장소를 Workers Builds에 연결하고 `main` 자동 배포를 활성화한다.
+3. 첫 배포 URL에서 `hello`, `안녕`, 미존재 단어, 캐시 HIT, 모바일 화면을 검수한다.
+4. 필요하면 workers.dev 주소 대신 사용자 도메인을 연결한다.
 
 ## 중요한 제약과 주의사항
 
@@ -97,13 +95,14 @@
 ## Git 체크포인트
 
 - 로컬 저장소는 `main` 브랜치이며 전환 전 기준 커밋은 `b7ae0a2`이다.
-- GitHub 원격 `origin`은 `https://github.com/tsusaikang/han02eum.git`에 연결했다.
-- 읽기 전용 원격 조회 결과 브랜치나 커밋 참조가 없어 빈 저장소로 확인됐다.
-- 원격 연결만 설정했으며 아직 커밋을 푸시하지 않았다.
+- GitHub 원격 `origin`은 SSH 주소 `git@github.com:tsusaikang/han02eum.git`에 연결했고, 공개 주소는 `https://github.com/tsusaikang/han02eum`이다.
+- HTTPS 푸시는 로컬 인증 정보가 없어 중단됐고 아무것도 전송되지 않았다. 기존 SSH 키가 GitHub 계정 `tsusaikang`으로 인증되는 것을 확인한 뒤 같은 저장소로 전환했다.
+- `main` 최초 푸시를 완료했고 로컬 브랜치는 `origin/main`을 추적한다.
+- 서비스 이름 변경과 프로젝트 지침은 커밋 `9adbb12`로 원격에 보존됐다.
 - Cloudflare 전환 변경은 최종 전체 검증을 통과해 새 로컬 커밋으로 보존했다.
 
 ## 인수인계 체크포인트
 
-Cloudflare용 코드 전환과 이름 변경 검증까지 완료됐고 서비스 이름은 `한영이음`으로 확정됐다. GitHub 원격은 공개 저장소 `tsusaikang/han02eum`에 연결했으며 해당 URL을 Wikimedia 공개 연락처로 사용한다. 이름 반영 변경은 아직 커밋·푸시 전이다. 다음 작업은 변경을 커밋하고 `main`을 처음 푸시하는 것이다.
+Cloudflare용 코드 전환과 이름 변경 검증을 완료했고 서비스 이름은 `한영이음`으로 확정됐다. 공개 GitHub 저장소 `tsusaikang/han02eum`에 `main`을 최초 푸시했으며 해당 URL을 Wikimedia 공개 연락처로 사용한다. 다음 단계부터는 Cloudflare 계정 상태를 바꾸는 작업이다. Worker 비밀값 등록과 GitHub Builds 연결 전에는 실배포가 시작되지 않는다.
 
 현재 컨텍스트로 계속하는 편이 효율적이므로 새 작업은 아직 필요하지 않다.
