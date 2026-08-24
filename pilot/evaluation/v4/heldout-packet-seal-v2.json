@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "meaning-link-heldout-packet-seal/v2",
+  "sealId": "meaning-link-v4-heldout-10-v2-seal",
+  "sealedDate": "2026-08-24",
+  "contractId": "bilingual-meaning-link-v4-heldout-packet-v2-preregistration/v1",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "caseCount": 10,
+  "sealedFiles": [
+    {
+      "path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V2_PREREGISTRATION.md",
+      "sha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v2.md",
+      "sha256": "160cd32ad08b6417926a5821f6c2c705ec96fbf33a5f9065a653e4e442bb9817"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-adjudication-schema-v2.json",
+      "sha256": "a82d356bab665d6d8e45f6eeec3e50f6cbab93b53dae6a8771ee15fbda52d6e7"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-packet-seal-v2.json",
+      "integrityMode": "canonical-json-projection",
+      "integrityReference": "/sealSelfIntegrity"
+    }
+  ],
+  "identitySeals": {
+    "serialization": "UTF-8 values in evidence order, one value followed by LF including the final value",
+    "orderedCaseIdsSha256": "670c5814981f912ce3b704ee2373ae2cb87505cbe26280b1a58a8961ca369eac",
+    "orderedSourceIdsSha256": "8477af01e53eeb7d8fb3444d2ccf47231051eaf1ecddfd113332676556ece795",
+    "sortedUniqueSourceIdsSha256": "76d451a2fd794458283ba7c5814d853468edf03b4577d81badd60b646b592b1a",
+    "orderedTargetIdsSha256": "e5e37903bffba2ed2117388534f89f579aabd00fd45d918b284b52cc190ca394",
+    "orderedPairIdsSha256": "9ce75c487ba9c475a818ce6c3fec4c7c8977a4f91b66957271a53eae34ed2dac",
+    "sourceIdDuplicateCount": 0,
+    "pairIdDuplicateCount": 0
+  },
+  "requiredExclusions": {
+    "serialization": "UTF-8 source IDs in the source artifact's stated order, one ID followed by LF including the final ID",
+    "sets": [
+      {
+        "name": "prior-v3-seven",
+        "path": "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+        "fileSha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360",
+        "jsonSelector": ".cases[].sourceId",
+        "count": 7,
+        "orderedIdsSha256": "94c3d4179190dafb150ef33447adbd72418756c9aa19468f139f92e60dbfa137",
+        "overlapWithPacketCount": 0
+      },
+      {
+        "name": "same-sample-one-hundred",
+        "path": "pilot/evaluation/ai-mapping-sample-100-v1.json",
+        "fileSha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b",
+        "jsonSelector": ".orderedSourceIds[]",
+        "count": 100,
+        "orderedIdsSha256": "b3b07e21cf31d973ee871b3156830c57e2b475bd422633677db8f34fb057e40c",
+        "overlapWithPacketCount": 0
+      },
+      {
+        "name": "heldout-v1-ten",
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "fileSha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+        "jsonSelector": ".cases[].source.id",
+        "count": 10,
+        "orderedIdsSha256": "84f9776fd7996298b14cb85d740b58fb5e126c94f282be2ab1b8b47d8893feee",
+        "overlapWithPacketCount": 0
+      }
+    ],
+    "sortedUniqueUnionCount": 110,
+    "sortedUniqueUnionIdsSha256": "690acc1c022ce319618bacfda210486014e188f3ae94fc5ef49cca014a35d71c",
+    "packetOverlapWithUnionCount": 0
+  },
+  "sourceSnapshotIntegrity": {
+    "candidateSnapshot": {
+      "path": ".local/pilot/mapping-candidates.jsonl",
+      "sha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c"
+    },
+    "candidateManifest": {
+      "path": ".local/pilot/mapping-candidates.jsonl.manifest.json",
+      "sha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029"
+    },
+    "sourceSnapshot": {
+      "path": ".local/pilot/wiktionary-senses.jsonl",
+      "sha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+      "recordCount": 1005
+    },
+    "targetSnapshot": {
+      "path": ".local/pilot/krdict-en-senses.jsonl",
+      "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+      "recordCount": 71058
+    }
+  },
+  "capitalizationEligibility": {
+    "searchedSourceSnapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+    "searchedFields": ["englishGloss", "sourceSenseLabels"],
+    "caseInsensitivePattern": "capitali[sz]|uppercase|lowercase",
+    "matchingCount": 1,
+    "matchingIdsSha256": "60f663e01e40ce500a3dfe78f4fc4a4a30368a7ae6ef75fe9d7061379222ee8d",
+    "eligibleAfterExclusionsCount": 0,
+    "eligibleIdsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fallbackOtherExplicitSourceEvidenceUsed": true,
+    "selectedCaseCapitalizationConst": "unknown",
+    "koreanTargetCapitalizationConflictAllowed": false,
+    "exampleCapitalizationCountsAsQualifier": false
+  },
+  "normativeCoreContract": {
+    "caseFieldsInOrder": [
+      "caseId",
+      "sourceId",
+      "targetId",
+      "semantic.targetRelationToSource",
+      "usage.register",
+      "usage.domain",
+      "usage.temporal",
+      "usage.regional",
+      "usage.capitalization",
+      "example.verdict",
+      "example.evaluatedSourceExampleIds",
+      "example.targetSenseAttested",
+      "example.counterexampleSourceExampleId"
+    ],
+    "semanticDiagnosticBooleansPresent": false,
+    "semanticMismatchCodesPresent": false,
+    "usageMismatchCodesPresent": false,
+    "exampleMismatchCodesPresent": false,
+    "freeTextInsideCoreAllowed": false,
+    "topLevelNonNormativeNotesAffectCore": false,
+    "topLevelNonNormativeNotesPresenceAffectsCore": false,
+    "usageAxesAreCaseSpecificSchemaConsts": true
+  },
+  "orderedCoreSerialization": {
+    "encoding": "UTF-8",
+    "container": "compact JSON array",
+    "caseOrder": "evidence.caseOrder",
+    "objectKeyOrder": ["caseId", "sourceId", "targetId", "semantic", "usage", "example"],
+    "semanticKeyOrder": ["targetRelationToSource"],
+    "usageKeyOrder": ["register", "domain", "temporal", "regional", "capitalization"],
+    "exampleKeyOrder": ["verdict", "evaluatedSourceExampleIds", "targetSenseAttested", "counterexampleSourceExampleId"],
+    "trailingNewline": false,
+    "consensusRequirement": "byte-for-byte-E-equals-F",
+    "oneFieldDifferenceResult": "whole-packet-NO-GO"
+  },
+  "semanticGoldDerivation": {
+    "positiveRequires": {
+      "targetRelationToSource": "exact",
+      "exampleVerdict": "pass",
+      "fullOrderedUsableSourceExampleCoverage": true,
+      "targetSenseAttested": true,
+      "counterexampleSourceExampleId": null
+    },
+    "otherwiseValidConsensusCase": "negative",
+    "usageIncludedInSemanticGold": false
+  },
+  "publicationEligibilityDerivation": {
+    "requiresSemanticPositive": true,
+    "allowedUsageValues": ["match", "source-only-preservable", "not-applicable"],
+    "vetoUsageValues": ["unknown", "conflict", "target-only"],
+    "allFiveAxesMustBeAllowed": true,
+    "deterministicLayerCanPromoteSemanticLabel": false,
+    "deterministicLayerCanPromoteApprovalFalseToTrue": false,
+    "deterministicLayerCanVeto": true
+  },
+  "heldoutAdmission": {
+    "requiredAdjudicators": ["E", "F"],
+    "independent": true,
+    "orderedTenCaseCoreMustBeByteIdentical": true,
+    "minimumSemanticPositive": 4,
+    "minimumSemanticNegative": 4,
+    "majorityAllowed": false,
+    "tieBreakAllowed": false,
+    "additionalResolverAllowed": false,
+    "postResultDiscussionOrRevisionAllowed": false,
+    "methodologyAuditGoRequired": true,
+    "resultAuditGoRequired": true
+  },
+  "futureProviderGate": {
+    "caseCount": 10,
+    "modelCount": 2,
+    "repetitionsPerModel": 3,
+    "attemptCount": 60,
+    "modelIdentitySeedAndTemperature": "inherit-exactly-from-base-contract",
+    "fullFingerprintExactRequired": 60,
+    "semanticGoldExactRequired": 60,
+    "publicationEligibilityApprovalExactRequired": 60,
+    "errorsAllowed": 0,
+    "negativeApprovalEscapesAllowed": 0,
+    "retryAllowed": false,
+    "bestOfNAllowed": false,
+    "legacySevenBeforeGateAllowed": false,
+    "sampleOneHundredBeforeGateAllowed": false
+  },
+  "methodAuditorExactReadList": [
+    {"path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md", "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247"},
+    {"path": "pilot/evaluation/v4/preregistration-seal-v2.json", "sha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867"},
+    {"path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V2_PREREGISTRATION.md", "sha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d"},
+    {"path": "pilot/evaluation/v4/heldout-evidence-v2.json", "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"},
+    {"path": "pilot/evaluation/v4/heldout-adjudication-instructions-v2.md", "sha256": "160cd32ad08b6417926a5821f6c2c705ec96fbf33a5f9065a653e4e442bb9817"},
+    {"path": "pilot/evaluation/v4/heldout-adjudication-schema-v2.json", "sha256": "a82d356bab665d6d8e45f6eeec3e50f6cbab93b53dae6a8771ee15fbda52d6e7"},
+    {"path": "pilot/evaluation/v4/heldout-packet-seal-v2.json", "integrityMode": "canonical-json-projection", "integrityReference": "/sealSelfIntegrity"},
+    {"path": "pilot/evaluation/ai-mapping-counterexamples-v1.json", "sha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360", "readPurpose": "source-ID exclusion only"},
+    {"path": "pilot/evaluation/ai-mapping-sample-100-v1.json", "sha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b", "readPurpose": "source-ID exclusion only"},
+    {"path": "pilot/evaluation/v4/heldout-evidence-v1.json", "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6", "readPurpose": "source-ID exclusion only"},
+    {"path": ".local/pilot/mapping-candidates.jsonl", "sha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c"},
+    {"path": ".local/pilot/mapping-candidates.jsonl.manifest.json", "sha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029"},
+    {"path": ".local/pilot/wiktionary-senses.jsonl", "sha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc"},
+    {"path": ".local/pilot/krdict-en-senses.jsonl", "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef"}
+  ],
+  "blindAdjudicatorExactReadList": [
+    {"path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md", "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247"},
+    {"path": "pilot/evaluation/v4/heldout-evidence-v2.json", "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"},
+    {"path": "pilot/evaluation/v4/heldout-adjudication-instructions-v2.md", "sha256": "160cd32ad08b6417926a5821f6c2c705ec96fbf33a5f9065a653e4e442bb9817"},
+    {"path": "pilot/evaluation/v4/heldout-adjudication-schema-v2.json", "sha256": "a82d356bab665d6d8e45f6eeec3e50f6cbab93b53dae6a8771ee15fbda52d6e7"},
+    {"path": "pilot/evaluation/v4/heldout-packet-seal-v2.json", "integrityMode": "canonical-json-projection", "integrityReference": "/sealSelfIntegrity"}
+  ],
+  "blindReadListNeutrality": {
+    "fileCount": 5,
+    "packetCurationPreregistrationIncluded": false,
+    "anticipatedRolePresent": false,
+    "anticipatedLabelPresent": false,
+    "priorAdjudicationOrDisagreementPresent": false,
+    "goldPresent": false
+  },
+  "contractState": {
+    "independentMethodologyAuditGo": false,
+    "blankFormsAuthorized": false,
+    "adjudicationAuthorized": false,
+    "completedFormsPresent": false,
+    "exactConsensusPresent": false,
+    "finalGoldPresent": false,
+    "providerCallsAuthorized": false,
+    "providerCallsObserved": 0,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "prohibitions": {
+    "blankFormsBeforeMethodologyAuditGo": true,
+    "adjudicationBeforeMethodologyAuditGo": true,
+    "providerOrNetworkCalls": true,
+    "projectAiUseForAdjudication": true,
+    "majorityTieBreakOrResolver": true,
+    "retry": true,
+    "legacySevenBeforeHeldoutGate": true,
+    "sample100BeforeHeldoutGate": true,
+    "gitPush": true,
+    "productionDeploy": true,
+    "overwriteOrDeleteExistingArtifacts": true
+  },
+  "sealSelfIntegrity": {
+    "algorithm": "SHA-256",
+    "projection": "RFC 8259 JSON parsed, delete top-level sealSelfIntegrity, recursively sort object keys, emit compact UTF-8 JSON with no trailing newline",
+    "referenceCommand": "jq -cS -j 'del(.sealSelfIntegrity)' pilot/evaluation/v4/heldout-packet-seal-v2.json | shasum -a 256",
+    "projectionSha256": "47688dd3f5d15adf4a1aa7ae5fd5712950de2a16930194afc906a4f381818074"
+  }
+}

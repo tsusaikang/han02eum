@@ -1,0 +1,383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://han02eum.local/schemas/v4-heldout-resolver-adjudication-v1.json",
+  "title": "V4 blind held-out resolver C adjudication form",
+  "description": "Resolver C form. nonNormativeNotes are excluded from controlled categorical fingerprints, consensus, gold, and admission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "formId",
+    "packetId",
+    "packetSha256",
+    "protocolId",
+    "resolverProtocolSealSha256",
+    "resolverExecutionSealSha256",
+    "adjudicatorSlot",
+    "adjudicatorPseudonym",
+    "status",
+    "adjudications",
+    "attestation"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "bilingual-heldout-resolver-adjudication/v1" },
+    "formId": { "const": "meaning-link-v4-heldout-10-resolver-c-v1" },
+    "packetId": { "const": "meaning-link-v4-heldout-10-v1" },
+    "packetSha256": { "const": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6" },
+    "protocolId": { "const": "bilingual-meaning-link-v4-resolver-preregistration/v1" },
+    "resolverProtocolSealSha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "resolverExecutionSealSha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "adjudicatorSlot": { "const": "resolver-c" },
+    "adjudicatorPseudonym": { "type": ["string", "null"], "minLength": 1 },
+    "status": { "enum": ["unstarted", "completed", "abstained"] },
+    "adjudications": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-01" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-02" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-03" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-04" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-05" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-06" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-07" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-08" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-09" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/adjudication" }, { "properties": { "caseId": { "const": "HV4-10" } } }] }
+      ],
+      "items": false
+    },
+    "attestation": { "$ref": "#/$defs/attestation" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "completed" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "resolverProtocolSealSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "resolverExecutionSealSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "adjudicatorPseudonym": { "type": "string", "minLength": 1 },
+          "adjudications": {
+            "contains": { "$ref": "#/$defs/completedAdjudication" },
+            "minContains": 10,
+            "maxContains": 10
+          },
+          "attestation": { "$ref": "#/$defs/completedAttestation" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "semanticRelation": {
+      "type": ["string", "null"],
+      "enum": [null, "exact", "target-narrower", "target-broader", "overlap", "disjoint", "insufficient"]
+    },
+    "usageValue": {
+      "type": ["string", "null"],
+      "enum": [null, "match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"]
+    },
+    "semanticCode": {
+      "enum": [
+        "SEM_RELATION_TARGET_NARROWER",
+        "SEM_RELATION_TARGET_BROADER",
+        "SEM_RELATION_OVERLAP",
+        "SEM_RELATION_DISJOINT",
+        "SEM_RELATION_INSUFFICIENT",
+        "SEM_REFERENT_TYPE_FALSE",
+        "SEM_EVENT_PARTICIPANTS_FALSE",
+        "SEM_NECESSARY_CONDITIONS_FALSE",
+        "SEM_CRITICAL_OTHER"
+      ]
+    },
+    "usageCode": {
+      "enum": [
+        "USAGE_REGISTER_TARGET_ONLY",
+        "USAGE_REGISTER_CONFLICT",
+        "USAGE_REGISTER_UNKNOWN",
+        "USAGE_DOMAIN_TARGET_ONLY",
+        "USAGE_DOMAIN_CONFLICT",
+        "USAGE_DOMAIN_UNKNOWN",
+        "USAGE_TEMPORAL_TARGET_ONLY",
+        "USAGE_TEMPORAL_CONFLICT",
+        "USAGE_TEMPORAL_UNKNOWN",
+        "USAGE_REGIONAL_TARGET_ONLY",
+        "USAGE_REGIONAL_CONFLICT",
+        "USAGE_REGIONAL_UNKNOWN",
+        "USAGE_CAPITALIZATION_TARGET_ONLY",
+        "USAGE_CAPITALIZATION_CONFLICT",
+        "USAGE_CAPITALIZATION_UNKNOWN",
+        "USAGE_CRITICAL_OTHER"
+      ]
+    },
+    "exampleCode": {
+      "enum": [
+        "EXAMPLE_VERDICT_FAIL",
+        "EXAMPLE_VERDICT_INSUFFICIENT",
+        "EXAMPLE_SOURCE_COVERAGE_INCOMPLETE",
+        "EXAMPLE_TARGET_SENSE_UNATTESTED",
+        "EXAMPLE_COUNTEREXAMPLE_PRESENT",
+        "EXAMPLE_CRITICAL_OTHER"
+      ]
+    },
+    "semanticMismatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "codes"],
+      "properties": {
+        "present": { "type": ["boolean", "null"] },
+        "codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/semanticCode" }
+        }
+      }
+    },
+    "usageMismatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "codes"],
+      "properties": {
+        "present": { "type": ["boolean", "null"] },
+        "codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/usageCode" }
+        }
+      }
+    },
+    "exampleMismatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "codes"],
+      "properties": {
+        "present": { "type": ["boolean", "null"] },
+        "codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/exampleCode" }
+        }
+      }
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caseId", "status", "normative", "nonNormativeNotes"],
+      "properties": {
+        "caseId": { "type": "string", "pattern": "^HV4-(0[1-9]|10)$" },
+        "status": { "enum": ["unstarted", "completed", "abstained"] },
+        "normative": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["semantic", "usage", "exampleApplicability"],
+          "properties": {
+            "semantic": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "targetRelationToSource",
+                "referentTypeMatch",
+                "eventAndParticipantsMatch",
+                "necessaryConditionsMatch",
+                "mismatch"
+              ],
+              "properties": {
+                "targetRelationToSource": { "$ref": "#/$defs/semanticRelation" },
+                "referentTypeMatch": { "type": ["boolean", "null"] },
+                "eventAndParticipantsMatch": { "type": ["boolean", "null"] },
+                "necessaryConditionsMatch": { "type": ["boolean", "null"] },
+                "mismatch": { "$ref": "#/$defs/semanticMismatch" }
+              }
+            },
+            "usage": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["register", "domain", "temporal", "regional", "capitalization", "mismatch"],
+              "properties": {
+                "register": { "$ref": "#/$defs/usageValue" },
+                "domain": { "$ref": "#/$defs/usageValue" },
+                "temporal": { "$ref": "#/$defs/usageValue" },
+                "regional": { "$ref": "#/$defs/usageValue" },
+                "capitalization": { "$ref": "#/$defs/usageValue" },
+                "mismatch": { "$ref": "#/$defs/usageMismatch" }
+              }
+            },
+            "exampleApplicability": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "evaluatedSourceExampleIds",
+                "targetSenseAttested",
+                "counterexampleSourceExampleId",
+                "mismatch"
+              ],
+              "properties": {
+                "verdict": { "type": ["string", "null"], "enum": [null, "pass", "fail", "insufficient"] },
+                "evaluatedSourceExampleIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "type": "string", "pattern": "^source-example:[0-9]+$" }
+                },
+                "targetSenseAttested": { "type": ["boolean", "null"] },
+                "counterexampleSourceExampleId": {
+                  "type": ["string", "null"],
+                  "pattern": "^source-example:[0-9]+$"
+                },
+                "mismatch": { "$ref": "#/$defs/exampleMismatch" }
+              }
+            }
+          }
+        },
+        "nonNormativeNotes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "semanticMismatchDescription",
+            "usageMismatchDescription",
+            "exampleMismatchDescription",
+            "rationale"
+          ],
+          "properties": {
+            "semanticMismatchDescription": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "usageMismatchDescription": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "exampleMismatchDescription": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "rationale": { "type": ["string", "null"], "minLength": 1, "maxLength": 800 }
+          }
+        }
+      }
+    },
+    "completedMismatch": {
+      "type": "object",
+      "properties": {
+        "present": { "type": "boolean" }
+      },
+      "required": ["present"]
+    },
+    "completedAdjudication": {
+      "type": "object",
+      "properties": {
+        "status": { "const": "completed" },
+        "normative": {
+          "type": "object",
+          "properties": {
+            "semantic": {
+              "type": "object",
+              "properties": {
+                "targetRelationToSource": {
+                  "enum": ["exact", "target-narrower", "target-broader", "overlap", "disjoint", "insufficient"]
+                },
+                "referentTypeMatch": { "type": "boolean" },
+                "eventAndParticipantsMatch": { "type": "boolean" },
+                "necessaryConditionsMatch": { "type": "boolean" },
+                "mismatch": { "$ref": "#/$defs/completedMismatch" }
+              }
+            },
+            "usage": {
+              "type": "object",
+              "properties": {
+                "register": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "domain": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "temporal": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "regional": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "capitalization": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "mismatch": { "$ref": "#/$defs/completedMismatch" }
+              }
+            },
+            "exampleApplicability": {
+              "type": "object",
+              "properties": {
+                "verdict": { "enum": ["pass", "fail", "insufficient"] },
+                "targetSenseAttested": { "type": "boolean" },
+                "mismatch": { "$ref": "#/$defs/completedMismatch" }
+              }
+            }
+          }
+        }
+      },
+      "required": ["status", "normative"]
+    },
+    "filesRead": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "prefixItems": [
+        { "const": "docs/AI_MAPPING_V4_PREREGISTRATION.md" },
+        { "const": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md" },
+        { "const": "pilot/evaluation/v4/heldout-evidence-v1.json" },
+        { "const": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json" },
+        { "const": "pilot/evaluation/v4/resolver-protocol-seal-v1.json" },
+        { "const": "pilot/evaluation/v4/resolver-c-form-v1.blank.json" },
+        { "const": "pilot/evaluation/v4/resolver-execution-seal-v1.json" }
+      ],
+      "items": false
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workedIndependently",
+        "didNotReadPrimaryAForm",
+        "didNotReadPrimaryBForm",
+        "didNotReadPrimaryResultsOrDisagreementDetails",
+        "didNotReadPriorReportsFixturesAuditsOrAiResults",
+        "didNotCommunicateWithPrimaryAdjudicators",
+        "didNotUseInternetProviderOrProjectAi",
+        "usedOnlyExactReadList",
+        "methodologyAuditGoObservedViaExecutionSeal",
+        "filesRead",
+        "completedAt"
+      ],
+      "properties": {
+        "workedIndependently": { "type": ["boolean", "null"] },
+        "didNotReadPrimaryAForm": { "type": ["boolean", "null"] },
+        "didNotReadPrimaryBForm": { "type": ["boolean", "null"] },
+        "didNotReadPrimaryResultsOrDisagreementDetails": { "type": ["boolean", "null"] },
+        "didNotReadPriorReportsFixturesAuditsOrAiResults": { "type": ["boolean", "null"] },
+        "didNotCommunicateWithPrimaryAdjudicators": { "type": ["boolean", "null"] },
+        "didNotUseInternetProviderOrProjectAi": { "type": ["boolean", "null"] },
+        "usedOnlyExactReadList": { "type": ["boolean", "null"] },
+        "methodologyAuditGoObservedViaExecutionSeal": { "type": ["boolean", "null"] },
+        "filesRead": { "$ref": "#/$defs/filesRead" },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "completedAttestation": {
+      "type": "object",
+      "properties": {
+        "workedIndependently": { "const": true },
+        "didNotReadPrimaryAForm": { "const": true },
+        "didNotReadPrimaryBForm": { "const": true },
+        "didNotReadPrimaryResultsOrDisagreementDetails": { "const": true },
+        "didNotReadPriorReportsFixturesAuditsOrAiResults": { "const": true },
+        "didNotCommunicateWithPrimaryAdjudicators": { "const": true },
+        "didNotUseInternetProviderOrProjectAi": { "const": true },
+        "usedOnlyExactReadList": { "const": true },
+        "methodologyAuditGoObservedViaExecutionSeal": { "const": true },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "workedIndependently",
+        "didNotReadPrimaryAForm",
+        "didNotReadPrimaryBForm",
+        "didNotReadPrimaryResultsOrDisagreementDetails",
+        "didNotReadPriorReportsFixturesAuditsOrAiResults",
+        "didNotCommunicateWithPrimaryAdjudicators",
+        "didNotUseInternetProviderOrProjectAi",
+        "usedOnlyExactReadList",
+        "methodologyAuditGoObservedViaExecutionSeal",
+        "filesRead",
+        "completedAt"
+      ]
+    }
+  }
+}

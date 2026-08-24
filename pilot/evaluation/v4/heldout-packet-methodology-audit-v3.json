@@ -1,0 +1,355 @@
+{
+  "schemaVersion": "meaning-link-heldout-packet-methodology-audit/v3",
+  "auditId": "meaning-link-v4-heldout-10-v2-protocol-v3-independent-methodology-reaudit",
+  "auditedDate": "2026-08-24",
+  "auditorRole": "independent-methodology-auditor",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "contractId": "bilingual-meaning-link-v4-heldout-packet-protocol-v3-preregistration/v1",
+  "verdict": "GO",
+  "methodAuditGo": true,
+  "blankFormsAllowed": true,
+  "adjudicationAllowed": false,
+  "decisionRule": "Any P0 or P1 finding requires NO-GO. Adjudication remains disallowed until the post-GO blank forms and neutral execution seal are materialized and cross-file validated.",
+  "decisionReason": "The evidence packet is unchanged from the exact v2 audit input, the v2 packet-content passes are safely inherited by audit SHA, both prior P1 findings are closed at protocol level, and no new P0 or P1 finding was found. One non-blocking P2 concerns byte-level blank-template precision.",
+  "exactReadAttestation": {
+    "requiredInputFileCount": 6,
+    "actualInputFileCount": 6,
+    "exactInputListMatched": true,
+    "additionalProjectInputFilesRead": false,
+    "formsRead": 0,
+    "executionSealsRead": 0,
+    "adjudicationResultsRead": 0,
+    "otherAuditArtifactsRead": 0,
+    "projectStateRead": false,
+    "futureArtifactExistenceCheckedByMetadataOnly": true,
+    "createdOutputReadBackForJsonParseAndShaOnly": true,
+    "networkUsed": false,
+    "providerCallsMade": 0,
+    "projectAiUsedForAdjudication": false,
+    "legacySevenExecuted": false,
+    "sampleOneHundredExecuted": false,
+    "gitPushPerformed": false,
+    "deploymentPerformed": false,
+    "inputFiles": [
+      {
+        "path": "pilot/evaluation/v4/heldout-packet-methodology-audit-v2.json",
+        "actualSha256": "47645141ea18cbe85758c7fef2a0085208913a8b409b58d6bf243dbff7dfeb45",
+        "expectedSha256": "47645141ea18cbe85758c7fef2a0085208913a8b409b58d6bf243dbff7dfeb45",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "actualSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "expectedSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "match": true
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V3_PREREGISTRATION.md",
+        "actualSha256": "376960bd0a558b66af4b9ae92ee80f922f23349ec06d879762561e33228b90be",
+        "expectedSha256": "376960bd0a558b66af4b9ae92ee80f922f23349ec06d879762561e33228b90be",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+        "actualSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "expectedSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+        "actualSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "expectedSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-packet-protocol-seal-v3.json",
+        "actualRawSha256": "04180df753761cc4478ed6bb56188f3012debc922f5d5dcfa602c67761b51b00",
+        "integrityMode": "canonical-json-projection",
+        "actualProjectionSha256": "47415239d171777ea40fa6c24e49f0a15ec8fa61e1c8b38f496a5a30d85da8d4",
+        "expectedProjectionSha256": "47415239d171777ea40fa6c24e49f0a15ec8fa61e1c8b38f496a5a30d85da8d4",
+        "match": true
+      }
+    ]
+  },
+  "parseAndIntegrityChecks": {
+    "jsonDocumentCount": 4,
+    "jsonDocumentsParsed": 4,
+    "markdownDocumentCount": 2,
+    "methodAuditorExactReadListMatchesAttestedInputs": true,
+    "allRawHashEntriesInMethodAuditorReadListMatch": true,
+    "sealedProtocolFileHashesMatch": true,
+    "protocolSealSelfProjectionRule": "Parse RFC 8259 JSON, delete top-level sealSelfIntegrity, recursively sort object keys, emit compact UTF-8 JSON without a trailing newline.",
+    "protocolSealSelfProjectionMatches": true,
+    "passed": true
+  },
+  "v2AuditInheritance": {
+    "sourceAuditPath": "pilot/evaluation/v4/heldout-packet-methodology-audit-v2.json",
+    "sourceAuditRawSha256": "47645141ea18cbe85758c7fef2a0085208913a8b409b58d6bf243dbff7dfeb45",
+    "sourceAuditVerdict": "NO-GO",
+    "sourceAuditBlockingFindings": [
+      "P1-001",
+      "P1-002"
+    ],
+    "sourceAuditEvidenceSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+    "currentEvidenceSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+    "protocolSealEvidenceSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+    "evidenceIdentityUnchanged": true,
+    "inheritedPassedAreas": {
+      "sourceTargetPairAndExclusionIdentity": true,
+      "sourceTargetTextExamplesCandidateMembershipAndProvenance": true,
+      "tenCasePartOfSpeechCoverage": true,
+      "fourLanguageRuleCoverage": true,
+      "fiftyUsageConstDerivations": true,
+      "relationBasedSemanticGoldAndPublicationSeparation": true,
+      "fourPositiveAndFourNegativeStructuralSatisfiability": true,
+      "futureSixtyAttemptGate": true
+    },
+    "oldProtocolFailuresInheritedAsPasses": false,
+    "inheritanceAllowed": true,
+    "reason": "The prior audit is itself SHA-bound by the v3 protocol seal, the evidence raw SHA is identical in the prior audit, current input, and v3 seal, and the inherited areas were explicitly marked passed independently of the two protocol-only P1 findings."
+  },
+  "evidenceIdentityChecks": {
+    "caseCount": 10,
+    "orderedCaseIdsLfSha256": "670c5814981f912ce3b704ee2373ae2cb87505cbe26280b1a58a8961ca369eac",
+    "orderedSourceIdsLfSha256": "8477af01e53eeb7d8fb3444d2ccf47231051eaf1ecddfd113332676556ece795",
+    "orderedTargetIdsLfSha256": "e5e37903bffba2ed2117388534f89f579aabd00fd45d918b284b52cc190ca394",
+    "orderedPairIdsLfSha256": "9ce75c487ba9c475a818ce6c3fec4c7c8977a4f91b66957271a53eae34ed2dac",
+    "matchesV2AuditAndV3ProtocolSeal": true,
+    "passed": true
+  },
+  "preGoMaterializationState": {
+    "checkedByFilesystemMetadataOnly": true,
+    "eBlankPresent": false,
+    "fBlankPresent": false,
+    "executionSealPresent": false,
+    "methodologyAuditV3PresentBeforeThisAuditWasWritten": false,
+    "contractStateConsistent": true
+  },
+  "priorP1ClosureChecks": [
+    {
+      "priorFindingId": "P1-001",
+      "title": "Blind read-list history and conflicting contracts",
+      "closureStatus": "CLOSED",
+      "checks": {
+        "blindFileCountPerSlot": 5,
+        "commonFilesAreEvidenceNeutralInstructionsAndCompletedSchemaOnly": true,
+        "fourthFileIsOwnNeutralBlankOnly": true,
+        "fifthFileIsNeutralExecutionSealOnly": true,
+        "authorPreregistrationIncluded": false,
+        "protocolSealIncluded": false,
+        "methodologyAuditIncluded": false,
+        "projectStateIncluded": false,
+        "priorPacketSealIncluded": false,
+        "priorFormsResultsOrDisagreementsIncluded": false,
+        "otherSlotBlankContentIncluded": false,
+        "caseSpecificAnticipatedRoleLabelGoldOrPriorOutcomePresent": false,
+        "neutralInstructionsSelfContained": true,
+        "relationOnlySemanticCoreUnambiguous": true
+      }
+    },
+    {
+      "priorFindingId": "P1-002",
+      "title": "Missing post-audit authorization and output identity chain",
+      "closureStatus": "CLOSED",
+      "checks": {
+        "blankCreationRequiresCleanV3MethodologyGo": true,
+        "executionSealCreationRequiresCleanV3MethodologyGoAndBothBlankHashes": true,
+        "postGoCustodianRoleFixed": true,
+        "adjudicatorMustAttestUnseenMethodologyState": false,
+        "adjudicatorMustAttestUnseenAuthorizationState": false,
+        "slotFormIdAndCompletedOutputPathFixed": true,
+        "ownBlankPathBoundBySlot": true,
+        "completedExecutionSealShaRequired": true,
+        "completedExactFiveFileReadListRequired": true,
+        "schemaAndMandatoryCrossFileValidationRequired": true,
+        "blankPreservedAndCompletedOutputCreatedSeparately": true
+      }
+    }
+  ],
+  "blindReadListNeutralityChecks": {
+    "commonStaticFiles": [
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+        "sha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+        "sha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88"
+      }
+    ],
+    "slotSpecificFourthFile": {
+      "E": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json",
+      "F": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.blank.json"
+    },
+    "fifthFile": "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+    "staticEvidenceCaseSpecificAnticipatedRolePresent": false,
+    "staticEvidenceCaseSpecificAnticipatedLabelPresent": false,
+    "staticEvidenceGoldOrPublicationOutcomePresent": false,
+    "instructionsPriorPacketHistoryOrObsoleteActorsPresent": false,
+    "schemaMethodologyAuthorizationOrAuditOutcomeFieldsPresent": false,
+    "blankContractForbidsHistoryStatusAuthorizationAuditOutcomeAdjudicationOutcomeLabelsGoldScoresAndHints": true,
+    "executionSealAllowedKeys": [
+      "path",
+      "sha256"
+    ],
+    "executionSealTopLevelMetadataAllowed": false,
+    "oppositeSlotExposureLimitedToBlankPathAndSha": true,
+    "oppositeSlotResultPathShaOrContentExposed": false,
+    "historyAuthorizationOrPriorOutcomeLeakCount": 0,
+    "passed": true
+  },
+  "executionSealAcyclicityChecks": {
+    "blankBindingBeforeSeal": {
+      "executionSealBindingCompleted": false,
+      "executionSealSha256": null,
+      "readListAttestation": null
+    },
+    "executionSealContains": "Ordered raw SHA entries for three static files and two blank inputs only.",
+    "executionSealContainsOwnSha": false,
+    "executionSealContainsCompletedOutputSha": false,
+    "completedOutputsContainExecutionSealSha": true,
+    "completedOutputsIncludedInExecutionSeal": false,
+    "dependencyOrder": [
+      "static evidence/instructions/schema",
+      "post-GO E/F blank inputs with null execution binding",
+      "neutral execution seal over the static files and blanks",
+      "separate completed E/F outputs bound to the execution-seal raw SHA"
+    ],
+    "hashDependencyCyclePresent": false,
+    "peerAdjudicationOutcomeExposurePresent": false,
+    "passed": true
+  },
+  "schemaAndBindingChecks": {
+    "draft": "2020-12",
+    "completedFormOnly": true,
+    "exactTenCaseArrayLengthEnforced": true,
+    "caseOrderEnforcedByPrefixItems": true,
+    "caseSourceTargetIdentityConstsMatchEvidence": "10/10",
+    "usageConstsMatchEvidence": "50/50",
+    "orderedFullUsableSourceExampleCoverageConstsMatchEvidence": "10/10",
+    "counterexampleEnumsRestrictedToCaseUsableIds": "10/10",
+    "passFailInsufficientConsistencyEnforced": true,
+    "diagnosticSemanticBooleansAllowed": false,
+    "semanticMismatchCodesAllowed": false,
+    "coreAdditionalPropertiesRejected": true,
+    "topLevelMethodologyStateAttestationRequired": false,
+    "topLevelAuthorizationStateAttestationRequired": false,
+    "readListAttestationObservableFieldsOnly": true,
+    "executionSealBindingCompletedConst": true,
+    "executionSealShaLowercaseLexicalFormEnforced": true,
+    "slotBranches": [
+      {
+        "slot": "E",
+        "formId": "meaning-link-v4-heldout-10-v2-E-v3",
+        "completedOutputPath": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+        "ownBlankPath": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json"
+      },
+      {
+        "slot": "F",
+        "formId": "meaning-link-v4-heldout-10-v2-F-v3",
+        "completedOutputPath": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.completed.json",
+        "ownBlankPath": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.blank.json"
+      }
+    ],
+    "exactFivePathsAndOrderEnforced": true,
+    "actualShaEqualityRequiresCrossFileValidator": true,
+    "crossFileValidatorMandatory": true,
+    "passed": true
+  },
+  "coreAndGatePreservationChecks": {
+    "relationDirection": "target-to-source",
+    "relationVocabulary": [
+      "exact",
+      "broader",
+      "narrower",
+      "overlap",
+      "disjoint"
+    ],
+    "relationOnlySemanticCore": true,
+    "usageAxisOrder": [
+      "register",
+      "domain",
+      "temporal",
+      "regional",
+      "capitalization"
+    ],
+    "caseSpecificUsageConstCount": 50,
+    "exampleFullOrderedCoverageRequired": true,
+    "exampleVerdictAttestationCounterexampleConsistencyRequired": true,
+    "targetExamplesNonExclusive": true,
+    "fourLanguageRulesRetained": true,
+    "orderedTenCaseEEqualsFByteIdentityRequired": true,
+    "directByteComparisonInAdditionToShaRequired": true,
+    "oneFieldDifferenceRejectsWholeRound": true,
+    "majorityAllowed": false,
+    "tieBreakAllowed": false,
+    "additionalResolverAllowed": false,
+    "postResultDiscussionOrRevisionAllowed": false,
+    "minimumSemanticPositive": 4,
+    "minimumSemanticNegative": 4,
+    "fourPlusFourStructurallySatisfiable": true,
+    "semanticGoldSeparatedFromPublicationEligible": true,
+    "publicationVetoValues": [
+      "unknown",
+      "conflict",
+      "target-only"
+    ],
+    "deterministicLayerVetoOnly": true,
+    "futureAttemptArithmetic": "10 cases x 2 models x 3 repetitions = 60 attempts",
+    "futureFullFingerprintExactRequired": "60/60",
+    "futureSemanticGoldExactRequired": "60/60",
+    "futureFinalApprovalExactRequired": "60/60",
+    "futureErrorsAndNegativeApprovalEscapesAllowed": 0,
+    "retryBestOfNMajorityAverageSelectiveRerunOrSelectionAllowed": false,
+    "legacySevenBeforeHeldoutGateAllowed": false,
+    "sampleOneHundredBeforeHeldoutGateAllowed": false,
+    "passed": true
+  },
+  "findings": [
+    {
+      "id": "P2-001",
+      "priority": "P2",
+      "title": "The future blank form is content-constrained but not fully byte-deterministic from the sealed contract alone.",
+      "evidence": [
+        "The preregistration requires deterministic blanks and identifies fixed identities, constants, null execution-binding fields, key order, and one trailing newline.",
+        "It does not fix the exact placeholder representation for every unfilled judgment field, such as omission versus null, or define a dedicated blank-conformance schema or validator.",
+        "The later execution seal will still bind the actual blank raw bytes, and completed schema plus cross-file validation prevents silent identity substitution."
+      ],
+      "impact": "Two compliant custodians could produce byte-different neutral blanks, and neutrality is a required post-GO inspection rather than a fully mechanical construction proof. The actual-SHA execution seal contains the variance and therefore this does not reopen either P1 or block methodology GO.",
+      "recommendedRemediation": [
+        "Before distribution, use one exact blank template or a dedicated blank validator that fixes allowed keys, static consts, placeholder representation, forbidden content, key order, and trailing newline.",
+        "Record the validator result together with the materialized blank hashes before creating the execution seal."
+      ],
+      "blocksGo": false
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 1
+  },
+  "deferredPostGoMaterializationChecks": [
+    "Create each blank only after this exact audit artifact has verdict GO, methodAuditGo true, and P0/P1 counts zero.",
+    "Verify each blank is neutral, has the fixed slot/form/output identity and case constants, retains null execution binding fields, and contains no prohibited content.",
+    "Preserve both blank raw bytes, calculate their raw SHA-256 values, then create the compact five-entry path/SHA-only execution seal with no trailing newline.",
+    "Verify the execution seal entries against actual raw bytes, compute its own external raw SHA-256, and do not embed that SHA in the seal.",
+    "Keep adjudication disallowed until the exact five-file inputs per slot and all cross-file hashes pass; completed outputs must then be created separately at their fixed paths.",
+    "Before consensus, validate both completed forms against the schema and the mandatory cross-file binding contract."
+  ],
+  "requiredStateAfterAudit": {
+    "methodAuditGo": true,
+    "blankFormsAllowed": true,
+    "executionSealCreationAllowedAfterBothBlankHashes": true,
+    "adjudicationAllowed": false,
+    "providerCallsAllowed": false,
+    "legacySevenAllowed": false,
+    "sampleOneHundredAllowed": false,
+    "gitPushAllowed": false,
+    "productionDeployAllowed": false
+  }
+}

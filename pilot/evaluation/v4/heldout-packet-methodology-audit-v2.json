@@ -1,0 +1,462 @@
+{
+  "schemaVersion": "meaning-link-heldout-packet-methodology-audit/v2",
+  "auditId": "meaning-link-v4-heldout-10-v2-independent-methodology-audit",
+  "auditedDate": "2026-08-24",
+  "auditorRole": "independent-methodology-auditor",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "contractId": "bilingual-meaning-link-v4-heldout-packet-v2-preregistration/v1",
+  "verdict": "NO-GO",
+  "methodAuditGo": false,
+  "blankFormsAllowed": false,
+  "adjudicationAllowed": false,
+  "decisionRule": "Any P0 or P1 finding requires NO-GO.",
+  "decisionReason": "Two P1 findings make the blind contract internally inconsistent and leave no sealed, truthfully attestable post-audit authorization and blank-output identity path.",
+  "exactReadAttestation": {
+    "requiredInputFileCount": 14,
+    "actualInputFileCount": 14,
+    "exactInputListMatched": true,
+    "additionalProjectInputFilesRead": false,
+    "formsRead": 0,
+    "adjudicationResultsRead": 0,
+    "priorAuditArtifactsRead": 0,
+    "projectStateRead": false,
+    "exclusionArtifactsUsedForSourceIdVerificationOnly": true,
+    "createdOutputReadBackForJsonParseAndShaOnly": true,
+    "networkUsed": false,
+    "providerCallsMade": 0,
+    "projectAiUsedForAdjudication": false,
+    "legacySevenExecuted": false,
+    "sampleOneHundredExecuted": false,
+    "gitPushPerformed": false,
+    "deploymentPerformed": false,
+    "inputFiles": [
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+        "actualSha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247",
+        "expectedSha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/preregistration-seal-v2.json",
+        "actualSha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867",
+        "expectedSha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867",
+        "match": true
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V2_PREREGISTRATION.md",
+        "actualSha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d",
+        "expectedSha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "actualSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "expectedSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v2.md",
+        "actualSha256": "160cd32ad08b6417926a5821f6c2c705ec96fbf33a5f9065a653e4e442bb9817",
+        "expectedSha256": "160cd32ad08b6417926a5821f6c2c705ec96fbf33a5f9065a653e4e442bb9817",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v2.json",
+        "actualSha256": "a82d356bab665d6d8e45f6eeec3e50f6cbab93b53dae6a8771ee15fbda52d6e7",
+        "expectedSha256": "a82d356bab665d6d8e45f6eeec3e50f6cbab93b53dae6a8771ee15fbda52d6e7",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-packet-seal-v2.json",
+        "actualRawSha256": "543cacc834b3d4239a8c6b2b208e3b5c0ed15a8afe0df1efb18246a76a11ca1d",
+        "integrityMode": "canonical-json-projection",
+        "actualProjectionSha256": "47688dd3f5d15adf4a1aa7ae5fd5712950de2a16930194afc906a4f381818074",
+        "expectedProjectionSha256": "47688dd3f5d15adf4a1aa7ae5fd5712950de2a16930194afc906a4f381818074",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+        "actualSha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360",
+        "expectedSha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360",
+        "match": true,
+        "usedFields": [
+          ".cases[].sourceId"
+        ]
+      },
+      {
+        "path": "pilot/evaluation/ai-mapping-sample-100-v1.json",
+        "actualSha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b",
+        "expectedSha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b",
+        "match": true,
+        "usedFields": [
+          ".orderedSourceIds[]"
+        ]
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "actualSha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+        "expectedSha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+        "match": true,
+        "usedFields": [
+          ".cases[].source.id"
+        ]
+      },
+      {
+        "path": ".local/pilot/mapping-candidates.jsonl",
+        "actualSha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c",
+        "expectedSha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/mapping-candidates.jsonl.manifest.json",
+        "actualSha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029",
+        "expectedSha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/wiktionary-senses.jsonl",
+        "actualSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+        "expectedSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/krdict-en-senses.jsonl",
+        "actualSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+        "expectedSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+        "match": true
+      }
+    ]
+  },
+  "parseAndIntegrityChecks": {
+    "jsonDocumentCount": 8,
+    "jsonDocumentsParsed": 8,
+    "jsonlFileCount": 3,
+    "jsonlFilesParsed": 3,
+    "jsonlRecordCounts": {
+      "mappingCandidatesRows": 1005,
+      "mappingCandidatesNonEmptyRows": 1002,
+      "mappingCandidatesEmptyRows": 3,
+      "wiktionarySenseRows": 1005,
+      "krdictSenseRows": 71058
+    },
+    "candidateManifestHashesAndCountsConsistent": true,
+    "methodAuditorExactReadListMatchesAttestedInputs": true,
+    "allRawHashEntriesInMethodAuditorReadListMatch": true,
+    "packetSealSelfProjectionRule": "Parse RFC 8259 JSON, delete top-level sealSelfIntegrity, recursively sort object keys, emit compact UTF-8 JSON without a trailing newline.",
+    "packetSealSelfProjectionMatches": true,
+    "basePreregistrationSealEntriesWithinAllowedScopeMatch": true
+  },
+  "identityAndExclusionChecks": {
+    "caseCount": 10,
+    "sourceIdCount": 10,
+    "sourceIdDuplicateCount": 0,
+    "targetIdCount": 10,
+    "targetIdDuplicateCount": 0,
+    "sourceTargetIdStringOverlapCount": 0,
+    "pairIdCount": 10,
+    "pairIdDuplicateCount": 0,
+    "pairSyntaxExact": true,
+    "orderedCaseIdsLfSha256": "670c5814981f912ce3b704ee2373ae2cb87505cbe26280b1a58a8961ca369eac",
+    "orderedSourceIdsLfSha256": "8477af01e53eeb7d8fb3444d2ccf47231051eaf1ecddfd113332676556ece795",
+    "sortedUniqueSourceIdsLfSha256": "76d451a2fd794458283ba7c5814d853468edf03b4577d81badd60b646b592b1a",
+    "orderedTargetIdsLfSha256": "e5e37903bffba2ed2117388534f89f579aabd00fd45d918b284b52cc190ca394",
+    "orderedPairIdsLfSha256": "9ce75c487ba9c475a818ce6c3fec4c7c8977a4f91b66957271a53eae34ed2dac",
+    "exclusionSets": [
+      {
+        "name": "prior-v3-seven",
+        "count": 7,
+        "orderedIdsLfSha256": "94c3d4179190dafb150ef33447adbd72418756c9aa19468f139f92e60dbfa137",
+        "overlapWithPacketCount": 0
+      },
+      {
+        "name": "same-sample-one-hundred",
+        "count": 100,
+        "orderedIdsLfSha256": "b3b07e21cf31d973ee871b3156830c57e2b475bd422633677db8f34fb057e40c",
+        "overlapWithPacketCount": 0
+      },
+      {
+        "name": "heldout-v1-ten",
+        "count": 10,
+        "orderedIdsLfSha256": "84f9776fd7996298b14cb85d740b58fb5e126c94f282be2ab1b8b47d8893feee",
+        "overlapWithPacketCount": 0
+      }
+    ],
+    "sortedUniqueExclusionUnionCount": 110,
+    "sortedUniqueExclusionUnionLfSha256": "690acc1c022ce319618bacfda210486014e188f3ae94fc5ef49cca014a35d71c",
+    "packetSourceOverlapWithExclusionUnionCount": 0,
+    "passed": true
+  },
+  "evidenceAccuracyChecks": {
+    "sourceRecordsExact": "10/10",
+    "targetRecordsExact": "10/10",
+    "candidatePairsPresent": "10/10",
+    "candidateSourcePayloadsExact": "10/10",
+    "candidateTargetPayloadsExact": "10/10",
+    "sourceDefinitionsPartsOfSpeechLabelsAndProvenanceExact": "10/10",
+    "targetDefinitionsPartsOfSpeechExamplesAndProvenanceExact": "10/10",
+    "rawSourceExampleEntriesPreserved": "14/14",
+    "usableSourceExamplesWithStableIds": "13/13",
+    "unusableLexicographicCrossReferencesPreserved": "1/1",
+    "targetExampleCount": 30,
+    "minimumTargetExamplesPerCase": 3,
+    "sourceTargetPartOfSpeechMatches": "10/10",
+    "sourcePartOfSpeechDistribution": {
+      "noun": 6,
+      "verb": 2,
+      "adjective": 2
+    },
+    "passed": true
+  },
+  "languageRuleCoverageChecks": {
+    "grammaticalPluralNotLexicalCollective": {
+      "covered": true,
+      "caseIds": [
+        "v2-case-03"
+      ]
+    },
+    "lexicalCollectiveOrGroupVersusEventOrState": {
+      "covered": true,
+      "caseIds": [
+        "v2-case-04"
+      ]
+    },
+    "targetExampleListNonExclusivity": {
+      "covered": true,
+      "caseIds": [
+        "v2-case-08"
+      ],
+      "absenceOfMatchingTargetCollocationDoesNotForceFailOrInsufficient": true
+    },
+    "koreanCapitalizationAbsenceRule": {
+      "covered": true,
+      "sourceSnapshotPatternMatchCount": 1,
+      "eligibleAfterExclusionsCount": 0,
+      "allSelectedCapitalizationValues": "unknown",
+      "exampleInitialsAndProperNamesDoNotCreateSenseLevelEvidence": true,
+      "koreanTargetCapitalizationConflictCreated": false
+    },
+    "explicitSourceOnlyUsage": {
+      "register": [
+        "v2-case-05"
+      ],
+      "domain": [
+        "v2-case-02",
+        "v2-case-09"
+      ],
+      "temporal": [
+        "v2-case-07"
+      ],
+      "regional": [
+        "v2-case-05"
+      ],
+      "allCovered": true
+    },
+    "passed": true
+  },
+  "usageConstChecks": {
+    "axisOrder": [
+      "register",
+      "domain",
+      "temporal",
+      "regional",
+      "capitalization"
+    ],
+    "caseAxisCount": 50,
+    "uniquelyDerivedFromStructuredExplicitEvidence": "50/50",
+    "targetMetadataAbsentAxes": 50,
+    "sourceExplicitTargetAbsentAxes": 5,
+    "sourceAbsentTargetAbsentAxes": 45,
+    "sourceOnlyPreservableValues": 5,
+    "unknownValues": 45,
+    "conflictValues": 0,
+    "schemaConstsMatchEvidence": "50/50",
+    "semanticDefinitionMismatchDuplicatedAsUsageConflict": false,
+    "passed": true
+  },
+  "blindReadListChecks": {
+    "fileCount": 5,
+    "caseSpecificAnticipatedRolePresent": false,
+    "caseSpecificAnticipatedLabelPresent": false,
+    "caseSpecificGoldPresent": false,
+    "priorCaseAdjudicationOrDisagreementPresent": false,
+    "authorFacingPriorMethodologyHistoryPresent": true,
+    "obsoletePacketIdentityPresent": "meaning-link-v4-heldout-10-v1",
+    "obsoleteAdjudicatorIdentityPresent": [
+      "C",
+      "D"
+    ],
+    "currentPacketIdentity": "meaning-link-v4-heldout-10-v2",
+    "currentAdjudicatorIdentity": [
+      "E",
+      "F"
+    ],
+    "conflictingSemanticFingerprintContractsPresent": true,
+    "staleFalseGateStatePresentInBlindFiles": true,
+    "sealNeutralityClaimFullyAccurate": false,
+    "strictBlindnessAndContractCoherencePassed": false
+  },
+  "schemaAndConsensusChecks": {
+    "exactTenCaseArrayLengthEnforced": true,
+    "caseOrderEnforcedByPrefixItems": true,
+    "caseSourceTargetIdentityConstsMatchEvidence": "10/10",
+    "usageConstsMatchEvidence": "50/50",
+    "orderedFullUsableSourceExampleCoverageConstsMatchEvidence": "10/10",
+    "counterexampleEnumsRestrictedToCaseUsableIds": "10/10",
+    "passAttestationAndCounterexampleConsistencyEnforced": true,
+    "failAttestationAndCounterexampleConsistencyEnforced": true,
+    "insufficientAttestationAndCounterexampleConsistencyEnforced": true,
+    "coreAdditionalPropertiesRejected": true,
+    "topLevelNotesExcludedFromCore": true,
+    "objectKeyOrderReconstructionSpecifiedOutsideJsonSchema": true,
+    "compactUtf8NoTrailingNewlineSerializationSpecified": true,
+    "directByteComparisonInAdditionToShaRequired": true,
+    "wholeRoundExactEEqualsFRequired": true,
+    "majorityAllowed": false,
+    "tieBreakAllowed": false,
+    "additionalResolverAllowed": false,
+    "postResultDiscussionOrRevisionAllowed": false,
+    "structuralEnforcementPassed": true
+  },
+  "semanticAndPublicationChecks": {
+    "relationVocabulary": [
+      "exact",
+      "broader",
+      "narrower",
+      "overlap",
+      "disjoint"
+    ],
+    "relationDirection": "target-to-source",
+    "exactDefinitionRetainsReferentEventParticipantsAndNecessaryConditions": true,
+    "diagnosticBooleansNeededForRelationBasedGold": false,
+    "packetSpecificRelationBasedGoldIsSufficient": true,
+    "semanticGoldUsesRelationAndExampleOnly": true,
+    "usageIncludedInSemanticGold": false,
+    "publicationEligibleRequiresSemanticPositive": true,
+    "publicationVetoValues": [
+      "unknown",
+      "conflict",
+      "target-only"
+    ],
+    "allFiveUsageAxesMustBeAllowedForPublication": true,
+    "deterministicLayerCanPromoteSemanticLabel": false,
+    "deterministicLayerCanPromoteApprovalFalseToTrue": false,
+    "deterministicLayerVetoOnly": true,
+    "allPacketCasesPublicationIneligibleUnderSealedUsageConsts": true,
+    "semanticPositiveCanRemainPositiveWhenPublicationIneligible": true,
+    "packetSpecificDerivationPassed": true,
+    "adjudicatorFacingCrossFileContractUnambiguous": false
+  },
+  "satisfiabilityChecks": {
+    "positiveWitnessCore": "exact relation plus pass, full ordered example coverage, target attested true, counterexample null, and case-specific usage consts",
+    "negativeWitnessCore": "non-exact relation plus a schema-consistent example block and case-specific usage consts",
+    "eachCasePositiveWitnessStructurallyAvailable": true,
+    "eachCaseNegativeWitnessStructurallyAvailable": true,
+    "fourPositiveAndFourNegativeInDistinctCasesSatisfiable": true,
+    "tenOfTenExactEEqualsFWitnessSatisfiable": true,
+    "allCapitalizationUnknownBlocksPublicationButNotSemanticPositive": true,
+    "passed": true
+  },
+  "futureProviderGateChecks": {
+    "caseCount": 10,
+    "modelCount": 2,
+    "repetitionsPerModel": 3,
+    "attemptCount": 60,
+    "arithmeticExact": true,
+    "fullNormativeFingerprintExactRequired": "60/60",
+    "semanticGoldExactRequired": "60/60",
+    "finalApprovalMustEqualPublicationEligible": "60/60",
+    "errorsRefusalsTruncationsTimeoutsProvenanceAndCoverageFailuresAllowed": 0,
+    "negativeApprovalEscapesAllowed": 0,
+    "retryAllowed": false,
+    "bestOfNAllowed": false,
+    "majorityOrAverageAllowed": false,
+    "selectiveRerunOrResultSelectionAllowed": false,
+    "legacySevenBeforeGateAllowed": false,
+    "sampleOneHundredBeforeGateAllowed": false,
+    "passed": true
+  },
+  "authorizationTransitionChecks": {
+    "packetSealIsSelfIntegrityProtected": true,
+    "sealedMethodologyAuditGo": false,
+    "sealedBlankFormsAuthorized": false,
+    "sealedAdjudicationAuthorized": false,
+    "schemaRequiresMethodologyAuditGoObservedTrue": true,
+    "schemaRequiresBlankFormsAuthorizedObservedTrue": true,
+    "schemaRequiresSealedReadListOnlyTrue": true,
+    "methodologyAuditArtifactInBlindReadList": false,
+    "postAuditAuthorizationArtifactInBlindReadList": false,
+    "postAuditAuthorizationArtifactContractSpecified": false,
+    "blankFormIdentityOrHashContractSpecified": false,
+    "adjudicatorOutputIdentityBindingSpecified": false,
+    "truthfulValidSubmissionPathPresent": false,
+    "passed": false
+  },
+  "findings": [
+    {
+      "id": "P1-001",
+      "priority": "P1",
+      "title": "The blind five-file read list contains author-facing history and mutually inconsistent packet contracts.",
+      "evidence": [
+        "The first blind file identifies meaning-link-v4-heldout-10-v1 and the C/D v5 round, recounts a prior v4 methodology-audit failure, and defines a full fingerprint containing three semantic diagnostic booleans and mismatch fields.",
+        "The current packet is meaning-link-v4-heldout-10-v2 with E/F, and its instructions and schema prohibit those diagnostic booleans and use a relation-only normative semantic core.",
+        "No explicit precedence or override rule tells a blind adjudicator which contradictory base-versus-packet contract controls.",
+        "The seal nevertheless asserts that prior adjudication or disagreement is absent and that the five-file list is neutral. No case-specific anticipated role, label, gold, or prior case result is present, but the stronger neutrality and contract-coherence claim is false."
+      ],
+      "impact": "E/F are exposed to irrelevant prior-method history and obsolete actor/packet state, and receive incompatible definitions of the normative fingerprint. This can bias interpretation and makes read-list compliance non-deterministic even though the schema itself is structurally strict.",
+      "requiredRemediation": [
+        "Replace the blind-facing base file with a clean, packet-v2-specific normative contract that omits prior audit history, obsolete packet/adjudicator identities, stale gate state, and superseded fingerprint fields.",
+        "Keep author-facing history outside the blind read list.",
+        "Seal the replacement file and make precedence between base and packet contracts explicit before a new methodology audit."
+      ],
+      "blocksGo": true
+    },
+    {
+      "id": "P1-002",
+      "priority": "P1",
+      "title": "No immutable post-audit authorization and blank-output identity chain exists.",
+      "evidence": [
+        "The self-integrity-protected packet seal fixes independentMethodologyAuditGo, blankFormsAuthorized, and adjudicationAuthorized to false and prohibits overwrite of existing artifacts.",
+        "The instructions require E/F to start only after methodology GO and blankFormsAuthorized=true, while the schema requires both true observations and sealedReadListOnly=true.",
+        "The exact five-file blind read list contains neither the methodology audit output nor a later authorization artifact; modifying the original seal would invalidate its audited projection.",
+        "No chained execution seal format binds the audit-output SHA, authorized blank-form hashes or deterministic identities, E/F assignments, and output identities before adjudication."
+      ],
+      "impact": "Under the sealed materials, E/F cannot both remain within the exact read list and truthfully attest that GO and blank-form authorization were observed. An unsealed or substituted blank form/output could also be introduced after audit without an auditable identity chain.",
+      "requiredRemediation": [
+        "Specify and create only after a clean methodology GO an immutable neutral execution-authorization seal chained to the packet-seal projection and exact methodology-audit output SHA.",
+        "Bind exact blank-form identities or hashes, adjudicator assignments E/F, permitted output identities, and the start authorization in that seal without including labels or results.",
+        "Make the authorization seal part of the adjudicator-observable sealed read contract and replace bare boolean attestations with exact authorization-seal identity attestations.",
+        "Re-seal and independently re-audit the revised contract before generating blank forms or beginning adjudication."
+      ],
+      "blocksGo": true
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 2,
+    "P2": 0
+  },
+  "passedNonBlockingAreas": [
+    "raw hashes and packet-seal self-projection",
+    "source, target, pair, and 110-ID exclusion identity",
+    "source and target text, examples, candidate membership, and provenance",
+    "ten-case part-of-speech coverage",
+    "language-rule coverage",
+    "all fifty deterministic usage const derivations without semantic-conflict duplication",
+    "schema structural enforcement of ordered cases, coverage, and example consistency",
+    "relation-based semanticGold derivation and publicationEligible separation",
+    "veto-only deterministic layer",
+    "whole-round byte-exact E=F with no majority or resolver",
+    "four-positive plus four-negative schema-level satisfiability",
+    "future sixty-attempt exact gate"
+  ],
+  "requiredStateAfterAudit": {
+    "methodAuditGo": false,
+    "blankFormsAllowed": false,
+    "adjudicationAllowed": false,
+    "providerCallsAllowed": false,
+    "legacySevenAllowed": false,
+    "sampleOneHundredAllowed": false,
+    "gitPushAllowed": false,
+    "productionDeployAllowed": false
+  }
+}

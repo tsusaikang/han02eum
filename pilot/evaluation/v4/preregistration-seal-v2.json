@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "bilingual-meaning-link-preregistration-seal/v2",
+  "sealId": "meaning-link-v4-base-preregistration-v2-seal",
+  "sealedDate": "2026-08-24",
+  "contractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "supersedesForV5Only": {
+    "contractId": "bilingual-meaning-link-v4-preregistration/v1",
+    "originalRemainsImmutable": true,
+    "changedDimension": "separate-semanticGold-from-publicationEligibility",
+    "priorExecutedResultsReinterpreted": false
+  },
+  "sealedFiles": [
+    {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+    },
+    {
+      "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+      "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-protocol-seal-v4.json",
+      "sha256": "1afcaf93d6c58e5eb1c034709f1279dc641ab8d4005a1eb3e9de0c6793ed4b23"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-methodology-audit-v4.json",
+      "sha256": "bfc1c8767dcec714a3b61feccee28e8715aa253b278dcb4bdf3fd1509cf08cf8"
+    },
+    {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+      "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247"
+    }
+  ],
+  "labelSeparationContract": {
+    "fullFingerprintIncludesUsage": true,
+    "semanticGoldInputs": [
+      "semantic.targetRelationToSource",
+      "semantic.referentTypeMatch",
+      "semantic.eventAndParticipantsMatch",
+      "semantic.necessaryConditionsMatch",
+      "example.verdict",
+      "example.evaluatedSourceExampleIds",
+      "example.targetSenseAttested",
+      "example.counterexampleSourceExampleId"
+    ],
+    "usageIncludedInSemanticGold": false,
+    "publicationEligibleRequiresSemanticPositive": true,
+    "publicationEligibleAllowedUsageValues": ["match", "source-only-preservable", "not-applicable"],
+    "publicationVetoUsageValues": ["conflict", "target-only", "unknown"],
+    "semanticPositiveIsAutomaticApproval": false,
+    "unknownMayBeConvertedToMatch": false
+  },
+  "heldoutAdmissionContract": {
+    "requiredExactConsensus": "byte-for-byte-C-equals-D-full-ten-case-fingerprint",
+    "minimumSemanticPositive": 4,
+    "minimumSemanticNegative": 4,
+    "publicationEligibleMinimum": null,
+    "majorityTieBreakOrAdditionalResolverAllowed": false,
+    "postResultChangesAllowed": false,
+    "structurallySatisfiableWithAllCapitalizationUnknown": true
+  },
+  "futureSixtyAttemptContract": {
+    "fullFingerprintMustMatchConsensus": true,
+    "semanticGoldMustMatchConsensus": true,
+    "finalApprovalMustEqualPublicationEligibility": true,
+    "semanticNegativeApprovalEscapesAllowed": 0,
+    "publicationIneligibleSemanticPositiveFalseApprovalIsPositiveMiss": false,
+    "attemptCount": 60,
+    "retryAllowed": false
+  },
+  "contractState": {
+    "finalGoldPresent": false,
+    "independentMethodologyAuditGo": false,
+    "blankFormsAuthorized": false,
+    "providerCallsAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "prohibitions": {
+    "reinterpretPriorResultsProhibited": true,
+    "unknownToMatchPromotionProhibited": true,
+    "semanticLabelPromotionByDeterministicLayerProhibited": true,
+    "falseToTrueApprovalPromotionProhibited": true,
+    "providerOrNetworkCallsProhibited": true,
+    "legacySevenRunProhibited": true,
+    "sample100RunProhibited": true,
+    "gitPushProhibited": true,
+    "productionDeployProhibited": true,
+    "overwriteOrDeleteOriginalsProhibited": true
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-protocol-seal/v3",
+  "sealId": "meaning-link-v4-heldout-10-replacement-readjudication-v3-seal",
+  "sealedDate": "2026-08-24",
+  "authorProtocolId": "bilingual-meaning-link-v4-replacement-readjudication/v3",
+  "neutralRoundId": "meaning-link-v4-blind-dual-10-v3",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "supersededMethodology": {
+    "v2ProtocolId": "bilingual-meaning-link-v4-replacement-readjudication/v2",
+    "v2AuditPath": "pilot/evaluation/v4/readjudication-methodology-audit-v2.json",
+    "v2AuditSha256": "f55818341728fb415e8d0479e18b7c651b9d02bce47fdf3a71207743e181d36e",
+    "v2AuditDecision": "NO-GO",
+    "v2ExecutionRemainsProhibited": true,
+    "v1V2FilesAndAuditsRemainImmutable": true
+  },
+  "rdma2P1001Disposition": {
+    "completedSemanticExactIffAllThreeBooleansTrue": true,
+    "completedSemanticNonExactRequiresAtLeastOneFalse": true,
+    "mechanism": "completedSemantic.oneOf with exact-all-true branch and non-exact-any-false branch",
+    "completedCapitalizationAllowedValues": ["source-only-preservable", "unknown"],
+    "forbiddenCapitalizationValues": ["conflict", "target-only", "match", "not-applicable"],
+    "caseConstants": {
+      "HV4-01": "unknown",
+      "HV4-02": "unknown",
+      "HV4-03": "unknown",
+      "HV4-04": "unknown",
+      "HV4-05": "source-only-preservable",
+      "HV4-06": "unknown",
+      "HV4-07": "source-only-preservable",
+      "HV4-08": "unknown",
+      "HV4-09": "unknown",
+      "HV4-10": "unknown"
+    },
+    "caseConstantsDerivedOnlyFromSealedEvidence": true,
+    "freeTextUsedForConstraint": false
+  },
+  "contractState": {
+    "finalGoldPresent": false,
+    "methodologyAuditGo": false,
+    "blankFormsAuthorized": false,
+    "executionAuthorized": false,
+    "readjudicationComplete": false,
+    "consensusComplete": false,
+    "readjudicationAdmissionGo": false,
+    "providerCallsAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "sealedFiles": [
+    {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+    },
+    {
+      "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+      "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+    },
+    {
+      "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+      "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+    },
+    {
+      "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+      "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+    },
+    {
+      "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+      "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+    },
+    {
+      "path": "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+      "sha256": "9eb1b0da7ef7fa7500723f0a6d9f7fc6abe0212a2f65a0220a1630fab4e057c0"
+    },
+    {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+      "sha256": "18eab2059c832bc1bca7a093c287f4ffba73423a1660435cc12d431ec35649e0"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v2.md",
+      "sha256": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v2.json",
+      "sha256": "a84adcea7ce58da302e731483018766a04f850e52eebd492863824043692af45"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+      "sha256": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-methodology-audit-v2.json",
+      "sha256": "f55818341728fb415e8d0479e18b7c651b9d02bce47fdf3a71207743e181d36e"
+    },
+    {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V3.md",
+      "sha256": "6f5dd4528ffe3e4cd59f24862945c145c3dd2923960fc740b8d1016ed272da2f"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v3.md",
+      "sha256": "4a767abcb74d5907921f9f1e76a83b02afcaf6eb82d06bb5a0d02443984d9cf1"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v3.json",
+      "sha256": "e97350b56e00480cbed5ea985986eb592e4d05c692c32113aa65e7008c7fdbec"
+    }
+  ],
+  "protocolAuthorReadAttestation": {
+    "existingInputsReadExactly": [
+      "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "pilot/evaluation/v4/heldout-seal-v1.json",
+      "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+      "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+      "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+      "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+      "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+      "pilot/evaluation/v4/readjudication-instructions-v2.md",
+      "pilot/evaluation/v4/readjudication-schema-v2.json",
+      "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+      "pilot/evaluation/v4/readjudication-methodology-audit-v2.json"
+    ],
+    "readPrimaryAForm": false,
+    "readPrimaryBForm": false,
+    "readDisagreementAuditOrCaseFieldValueDetails": false,
+    "readV2OrV3OutcomeFixtureOrAiResult": false,
+    "usedProviderNetworkOrProjectAi": false,
+    "ranLegacySeven": false,
+    "ranSample100": false,
+    "pushedOrDeployed": false
+  },
+  "exactReadLists": {
+    "methodologyAuditorV3": [
+      "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+      "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+      "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V3.md",
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "pilot/evaluation/v4/heldout-seal-v1.json",
+      "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+      "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+      "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+      "pilot/evaluation/v4/readjudication-instructions-v2.md",
+      "pilot/evaluation/v4/readjudication-schema-v2.json",
+      "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+      "pilot/evaluation/v4/readjudication-methodology-audit-v2.json",
+      "pilot/evaluation/v4/readjudication-instructions-v3.md",
+      "pilot/evaluation/v4/readjudication-schema-v3.json",
+      "pilot/evaluation/v4/readjudication-protocol-seal-v3.json"
+    ],
+    "adjudicatorC": [
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/readjudication-instructions-v3.md",
+      "pilot/evaluation/v4/readjudication-schema-v3.json",
+      "pilot/evaluation/v4/readjudication-c-form-v3.blank.json",
+      "pilot/evaluation/v4/readjudication-execution-seal-v3.json"
+    ],
+    "adjudicatorD": [
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/readjudication-instructions-v3.md",
+      "pilot/evaluation/v4/readjudication-schema-v3.json",
+      "pilot/evaluation/v4/readjudication-d-form-v3.blank.json",
+      "pilot/evaluation/v4/readjudication-execution-seal-v3.json"
+    ]
+  },
+  "neutralExecutionSealContract": {
+    "path": "pilot/evaluation/v4/readjudication-execution-seal-v3.json",
+    "createOnlyAfterIndependentMethodologyAuditGo": true,
+    "allowedTopLevelFields": ["schemaVersion", "manifestId", "packetId", "caseCount", "sealedFiles"],
+    "exactSealedFilePaths": [
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/readjudication-instructions-v3.md",
+      "pilot/evaluation/v4/readjudication-schema-v3.json",
+      "pilot/evaluation/v4/readjudication-c-form-v3.blank.json",
+      "pilot/evaluation/v4/readjudication-d-form-v3.blank.json"
+    ],
+    "mayContainOnlyPathsAndShaForSealedFiles": true,
+    "mayExposeAnyAdjudicationOutcomeOrHistory": false,
+    "mayExposeAuditDecisionOrAuthorizationState": false,
+    "mayReferenceAuthorFacingProtocolOrOlderArtifacts": false
+  },
+  "closedCoreAndComparisonContract": {
+    "schemaEnforcesSemanticIff": true,
+    "schemaEnforcesPacketBoundCapitalization": true,
+    "existingExampleConsistencyPreserved": true,
+    "categoricalFieldsCollectedDirectly": true,
+    "mismatchDerivedOnlyFromClosedFields": true,
+    "catchAllNormativeCodeAllowed": false,
+    "freeTextContentOrPresenceInCore": false,
+    "legacyAOrBNormalizationAllowed": false,
+    "canonicalization": "RFC-8785-JCS-UTF8",
+    "fingerprint": "SHA-256",
+    "consensusUnit": "ordered-ten-case-controlled-core-array",
+    "requiredRule": "byte-for-byte-C-equals-D",
+    "fieldSectionOrCaseMajorityAllowed": false,
+    "resolverTieBreakOrAdditionalAdjudicatorAllowed": false,
+    "anyDifferenceClosesWholePacketNoGo": true,
+    "minimumPositive": 4,
+    "minimumNegative": 4,
+    "postResultChangesAllowed": false
+  },
+  "requiredStaticWitnessChecks": [
+    "valid-completed-baseline-accepted",
+    "exact-with-any-false-rejected",
+    "non-exact-with-all-true-rejected",
+    "HV4-01-capitalization-conflict-rejected",
+    "HV4-01-capitalization-source-only-preservable-rejected",
+    "HV4-05-capitalization-unknown-rejected"
+  ],
+  "futureArtifacts": {
+    "methodologyAudit": "pilot/evaluation/v4/readjudication-methodology-audit-v3.json",
+    "blankFormC": "pilot/evaluation/v4/readjudication-c-form-v3.blank.json",
+    "blankFormD": "pilot/evaluation/v4/readjudication-d-form-v3.blank.json",
+    "executionSeal": "pilot/evaluation/v4/readjudication-execution-seal-v3.json",
+    "completedFormC": "pilot/evaluation/v4/readjudication-c-adjudication-v3.json",
+    "completedFormD": "pilot/evaluation/v4/readjudication-d-adjudication-v3.json"
+  },
+  "prohibitions": {
+    "blankFormsBeforeMethodologyAuditGoProhibited": true,
+    "executionBeforeMethodologyAuditGoProhibited": true,
+    "olderResultsVisibleToCOrDProhibited": true,
+    "CAndDCommunicationOrCrossFormAccessProhibited": true,
+    "providerOrNetworkCallsProhibited": true,
+    "legacySevenRunProhibited": true,
+    "sample100RunProhibited": true,
+    "gitPushProhibited": true,
+    "productionDeployProhibited": true,
+    "overwriteOrDeleteOriginalsProhibited": true
+  }
+}

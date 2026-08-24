@@ -1,0 +1,273 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-methodology-audit/v2",
+  "auditId": "meaning-link-v4-heldout-10-readjudication-methodology-audit-v2",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "roundId": "meaning-link-v4-blind-dual-10-v2",
+  "protocolId": "bilingual-meaning-link-v4-replacement-readjudication/v2",
+  "auditor": {
+    "pseudonym": "readjudication-methodology-auditor-rma-02",
+    "role": "independent-methodology-auditor",
+    "completedAt": "2026-08-24T07:30:10Z",
+    "decisionRule": "NO-GO if any P0 or P1 finding exists"
+  },
+  "decision": "NO-GO",
+  "methodologyAuditGo": false,
+  "blankFormsAllowed": false,
+  "executionAllowed": false,
+  "providerCallAllowed": false,
+  "heldoutGatePassed": false,
+  "legacySevenAllowed": false,
+  "sample100Allowed": false,
+  "pushAllowed": false,
+  "deployAllowed": false,
+  "auditTargets": [
+    {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+      "sha256": "18eab2059c832bc1bca7a093c287f4ffba73423a1660435cc12d431ec35649e0"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v2.md",
+      "sha256": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v2.json",
+      "sha256": "a84adcea7ce58da302e731483018766a04f850e52eebd492863824043692af45"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+      "sha256": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+    }
+  ],
+  "readAttestation": {
+    "auditInputsReadExactly": [
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+        "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+        "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+        "sha256": "18eab2059c832bc1bca7a093c287f4ffba73423a1660435cc12d431ec35649e0"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+      },
+      {
+        "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+        "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+        "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+        "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+        "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+        "sha256": "9eb1b0da7ef7fa7500723f0a6d9f7fc6abe0212a2f65a0220a1630fab4e057c0"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v2.md",
+        "sha256": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v2.json",
+        "sha256": "a84adcea7ce58da302e731483018766a04f850e52eebd492863824043692af45"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+        "sha256": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+      }
+    ],
+    "exactReadSetMatched": true,
+    "readAnyOtherProjectInput": false,
+    "readPrimaryAForm": false,
+    "readPrimaryBForm": false,
+    "readPrimaryDecisions": false,
+    "readDisagreementAuditSealOrCaseFieldValueDetails": false,
+    "readCompletedCOrDForm": false,
+    "readV2OrV3OutcomeReportFixtureAuditOrAiResult": false,
+    "readImplementationOrModelResult": false,
+    "workedIndependently": true,
+    "communicatedWithAdjudicatorsOrOtherAgentsDuringAudit": false,
+    "usedInternetProviderOrProjectAi": false,
+    "ranLegacySeven": false,
+    "ranSample100": false,
+    "pushedOrDeployed": false
+  },
+  "sealVerification": {
+    "result": "GO",
+    "allTwelveActualHashesRecorded": true,
+    "heldoutSealAllSealedFileHashesMatchActual": true,
+    "resolverProtocolSealAllSealedFileHashesMatchActual": true,
+    "readjudicationProtocolSealAllElevenSealedInputHashesMatchActual": true,
+    "v1AuditShaAndNoGoStateMatchV2Seal": true,
+    "protocolAuthorAttestedInputHashesMatchActual": true,
+    "schemaPacketShaMatchesActualEvidence": true,
+    "schemaInstructionsShaMatchesActualInstructions": true,
+    "readjudicationProtocolSealSelfHashRecordedByThisAudit": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+  },
+  "v1FindingClosure": [
+    {
+      "findingId": "RMA-P1-001",
+      "result": "GO",
+      "basis": "C/D receive only evidence, neutral instructions, the closed v2 schema, their own blank form, and a constrained neutral SHA manifest; author-facing history is excluded."
+    },
+    {
+      "findingId": "RMA-P1-002",
+      "result": "GO",
+      "basis": "Legacy A/B forms are excluded, v2 collects closed categorical values directly, mismatch is derived only from those values, and no catch-all code exists."
+    },
+    {
+      "findingId": "RMA-P1-003",
+      "result": "GO",
+      "basis": "The entire ordered ten-case C and D core arrays must be byte-identical; majority, tie-break, selection, and additional adjudicators are forbidden."
+    }
+  ],
+  "checks": [
+    {
+      "id": "V2-M-01",
+      "name": "actual-sha-and-seal-match",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-02",
+      "name": "v1-p1-001-002-003-closure",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-03",
+      "name": "neutral-c-d-information-boundary",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-04",
+      "name": "c-d-read-lists-expose-no-prior-outcome-or-disagreement-state",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-05",
+      "name": "closed-categorical-core-without-catch-all-or-free-text-input",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-06",
+      "name": "completed-form-semantic-and-usage-consistency-enforced-by-schema",
+      "result": "NO-GO",
+      "findingIds": ["RDMA2-P1-001"]
+    },
+    {
+      "id": "V2-M-07",
+      "name": "neutral-instructions-and-schema-no-drift",
+      "result": "NO-GO",
+      "findingIds": ["RDMA2-P1-001"]
+    },
+    {
+      "id": "V2-M-08",
+      "name": "completed-form-example-coverage-and-verdict-consistency",
+      "result": "GO",
+      "note": "For completed rows, ordered usable IDs are case-bound and pass/fail/insufficient impose the specified target-attestation and counterexample-nullness constraints."
+    },
+    {
+      "id": "V2-M-09",
+      "name": "ordered-ten-case-whole-core-c-equals-d",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-10",
+      "name": "majority-tie-break-selection-and-hybrid-prohibited",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-11",
+      "name": "deterministic-mismatch-derivation-and-canonicalization",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-12",
+      "name": "exact-gold-and-positive-four-negative-four-gate",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-13",
+      "name": "four-language-and-evidence-rules-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-14",
+      "name": "veto-only-rule-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-15",
+      "name": "no-posthoc-change-rerun-or-additional-adjudicator",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-16",
+      "name": "immutable-preservation-of-v1-v2-and-failure-artifacts",
+      "result": "GO"
+    },
+    {
+      "id": "V2-M-17",
+      "name": "zero-call-seven-one-hundred-push-deploy-gates-fail-closed",
+      "result": "GO"
+    }
+  ],
+  "findings": [
+    {
+      "id": "RDMA2-P1-001",
+      "severity": "P1",
+      "title": "The v2 schema accepts completed semantic and capitalization states forbidden by the neutral instructions",
+      "affectedArtifacts": [
+        "pilot/evaluation/v4/readjudication-instructions-v2.md",
+        "pilot/evaluation/v4/readjudication-schema-v2.json",
+        "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md"
+      ],
+      "evidence": [
+        "Neutral instructions define targetRelationToSource=exact as equal meaning scope and necessary conditions, while necessaryConditionsMatch=false means the necessary conditions do not match. The schema has no conditional that rejects exact together with a false semantic boolean.",
+        "The fixed Korean-capitalization rule permits source-only-preservable when actual English capitalization evidence exists and unknown when it does not; it expressly forbids inferring Korean target conflict. The completed usage schema nevertheless permits capitalization=conflict, as well as every other generic usage enum value.",
+        "The schema's completedAdjudication overlay only requires the semantic booleans and usage axes to be non-null. Its allOf consistency conditions cover example verdicts only, not these semantic or capitalization contradictions."
+      ],
+      "schemaAcceptedContradictionWitness": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": false,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "capitalization": "conflict"
+        },
+        "acceptanceBasis": "These values satisfy the completed enums and non-null types, and no schema conditional rejects either combination when embedded in an otherwise valid completed row."
+      },
+      "impact": "C and D can submit byte-identical, schema-valid but instruction-contradictory cores. The comparator would accept them as consensus, and gold derivation would count them as negatives rather than invalidating the round, potentially satisfying the minimum-negative gate with internally invalid cases.",
+      "requiredDisposition": "Keep blank-form creation and execution prohibited. Preserve v2 unchanged and create a new sealed version whose schema mechanically rejects exact with any false semantic match boolean and restricts capitalization to the values permitted by the fixed Korean rule. Re-audit the new exact SHA set before creating forms."
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 0,
+    "P3": 0
+  },
+  "conclusion": {
+    "result": "NO-GO",
+    "reason": "One P1 finding exists; the predeclared decision rule therefore requires NO-GO.",
+    "methodologyAuditGo": false,
+    "blankFormsAllowed": false,
+    "executionAllowed": false,
+    "providerCallAllowed": false,
+    "nextAllowedAction": "Create and independently audit a new immutable readjudication protocol, neutral instructions, schema, and seal version; do not create v2 blank forms or execute C/D."
+  }
+}

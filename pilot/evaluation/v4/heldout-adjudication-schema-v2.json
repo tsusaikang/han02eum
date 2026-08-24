@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://english-dictionary.local/schemas/meaning-link-v4-heldout-adjudication-v2.json",
+  "title": "meaning-link-v4-heldout-10-v2 blind adjudication form",
+  "description": "Schema for one independent E or F form. Only cases is normative core; top-level notes and attestations are outside the core.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packetId",
+    "evidenceSha256",
+    "adjudicatorId",
+    "independenceAttestation",
+    "cases"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "meaning-link-v4-heldout-adjudication-form/v2"
+    },
+    "packetId": {
+      "const": "meaning-link-v4-heldout-10-v2"
+    },
+    "evidenceSha256": {
+      "const": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+    },
+    "adjudicatorId": {
+      "enum": [
+        "E",
+        "F"
+      ]
+    },
+    "independenceAttestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "methodologyAuditGoObserved",
+        "blankFormsAuthorizedObserved",
+        "sealedReadListOnly",
+        "otherAdjudicationSeen",
+        "discussionOccurred",
+        "providerOrProjectAiUsed"
+      ],
+      "properties": {
+        "methodologyAuditGoObserved": {"const": true},
+        "blankFormsAuthorizedObserved": {"const": true},
+        "sealedReadListOnly": {"const": true},
+        "otherAdjudicationSeen": {"const": false},
+        "discussionOccurred": {"const": false},
+        "providerOrProjectAiUsed": {"const": false}
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-01"},
+                "sourceId": {"const": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2"},
+                "targetId": {"const": "krdict:73312:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-01-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-01-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-02"},
+                "sourceId": {"const": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7"},
+                "targetId": {"const": "krdict:57661:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "source-only-preservable"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-02-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-02-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-03"},
+                "sourceId": {"const": "enwiktionary:92039576:play:noun-1:noun-1-sense-7"},
+                "targetId": {"const": "krdict:88467:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-03-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-03-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-04"},
+                "sourceId": {"const": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5"},
+                "targetId": {"const": "krdict:91793:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-04-source-example-01", "v2-case-04-source-example-02"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-04-source-example-01", "v2-case-04-source-example-02"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-05"},
+                "sourceId": {"const": "enwiktionary:92048439:root:noun-2:noun-2-sense-2"},
+                "targetId": {"const": "krdict:17919:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "source-only-preservable"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "source-only-preservable"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-05-source-example-01", "v2-case-05-source-example-02"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-05-source-example-01", "v2-case-05-source-example-02"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-06"},
+                "sourceId": {"const": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1"},
+                "targetId": {"const": "krdict:56457:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-06-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-06-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-07"},
+                "sourceId": {"const": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1"},
+                "targetId": {"const": "krdict:83557:2"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "source-only-preservable"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-07-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-07-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-08"},
+                "sourceId": {"const": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8"},
+                "targetId": {"const": "krdict:29776:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-08-source-example-01", "v2-case-08-source-example-02"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-08-source-example-01", "v2-case-08-source-example-02"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-09"},
+                "sourceId": {"const": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5"},
+                "targetId": {"const": "krdict:38513:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "source-only-preservable"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-09-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-09-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/caseCore"},
+            {
+              "properties": {
+                "caseId": {"const": "v2-case-10"},
+                "sourceId": {"const": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4"},
+                "targetId": {"const": "krdict:14195:1"},
+                "usage": {
+                  "properties": {
+                    "register": {"const": "unknown"},
+                    "domain": {"const": "unknown"},
+                    "temporal": {"const": "unknown"},
+                    "regional": {"const": "unknown"},
+                    "capitalization": {"const": "unknown"}
+                  }
+                },
+                "example": {
+                  "properties": {
+                    "evaluatedSourceExampleIds": {"const": ["v2-case-10-source-example-01"]},
+                    "counterexampleSourceExampleId": {"enum": [null, "v2-case-10-source-example-01"]}
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "nonNormativeNotes": {
+      "description": "Optional free text outside the normative core. Presence and content are ignored by all gates.",
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 2000
+      }
+    }
+  },
+  "$defs": {
+    "usageValue": {
+      "enum": [
+        "match",
+        "source-only-preservable",
+        "target-only",
+        "conflict",
+        "not-applicable",
+        "unknown"
+      ]
+    },
+    "usageCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ],
+      "properties": {
+        "register": {"$ref": "#/$defs/usageValue"},
+        "domain": {"$ref": "#/$defs/usageValue"},
+        "temporal": {"$ref": "#/$defs/usageValue"},
+        "regional": {"$ref": "#/$defs/usageValue"},
+        "capitalization": {"$ref": "#/$defs/usageValue"}
+      }
+    },
+    "semanticCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetRelationToSource"
+      ],
+      "properties": {
+        "targetRelationToSource": {
+          "enum": [
+            "exact",
+            "broader",
+            "narrower",
+            "overlap",
+            "disjoint"
+          ]
+        }
+      }
+    },
+    "exampleCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "evaluatedSourceExampleIds",
+        "targetSenseAttested",
+        "counterexampleSourceExampleId"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "insufficient"
+          ]
+        },
+        "evaluatedSourceExampleIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "targetSenseAttested": {"type": "boolean"},
+        "counterexampleSourceExampleId": {
+          "type": ["string", "null"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"verdict": {"const": "pass"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "targetSenseAttested": {"const": true},
+              "counterexampleSourceExampleId": {"const": null}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"verdict": {"const": "fail"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "targetSenseAttested": {"const": true},
+              "counterexampleSourceExampleId": {"type": "string"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"verdict": {"const": "insufficient"}},
+            "required": ["verdict"]
+          },
+          "then": {
+            "properties": {
+              "targetSenseAttested": {"const": false},
+              "counterexampleSourceExampleId": {"const": null}
+            }
+          }
+        }
+      ]
+    },
+    "caseCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "sourceId",
+        "targetId",
+        "semantic",
+        "usage",
+        "example"
+      ],
+      "properties": {
+        "caseId": {"type": "string"},
+        "sourceId": {"type": "string"},
+        "targetId": {"type": "string"},
+        "semantic": {"$ref": "#/$defs/semanticCore"},
+        "usage": {"$ref": "#/$defs/usageCore"},
+        "example": {"$ref": "#/$defs/exampleCore"}
+      }
+    }
+  }
+}

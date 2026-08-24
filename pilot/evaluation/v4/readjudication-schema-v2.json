@@ -1,0 +1,535 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://han02eum.local/schemas/v4-heldout-independent-adjudication-v2.json",
+  "title": "V4 blind dual independent adjudication form",
+  "description": "Closed categorical adjudication form. nonNormativeNotes content and presence are excluded from every fingerprint and derived label.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "roundId",
+    "formId",
+    "packetId",
+    "packetSha256",
+    "instructionsSha256",
+    "executionSealSha256",
+    "adjudicatorSlot",
+    "adjudicatorPseudonym",
+    "status",
+    "adjudications",
+    "attestation"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "bilingual-heldout-independent-adjudication/v2" },
+    "roundId": { "const": "meaning-link-v4-blind-dual-10-v2" },
+    "formId": {
+      "enum": [
+        "meaning-link-v4-heldout-10-c-v2",
+        "meaning-link-v4-heldout-10-d-v2"
+      ]
+    },
+    "packetId": { "const": "meaning-link-v4-heldout-10-v1" },
+    "packetSha256": { "const": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6" },
+    "instructionsSha256": { "const": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c" },
+    "executionSealSha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "adjudicatorSlot": { "enum": ["independent-c", "independent-d"] },
+    "adjudicatorPseudonym": { "type": ["string", "null"], "minLength": 1 },
+    "status": { "enum": ["unstarted", "completed", "abstained"] },
+    "adjudications": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-01" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-02" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-03" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-04" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-05" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-06" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-07" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-08" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-09" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:1"] } } } } } } }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/adjudication" },
+            {
+              "properties": {
+                "caseId": { "const": "HV4-10" },
+                "normative": { "properties": { "exampleApplicability": { "properties": { "counterexampleSourceExampleId": { "enum": [null, "source-example:0", "source-example:1"] } } } } }
+              }
+            },
+            {
+              "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+              "then": { "properties": { "normative": { "properties": { "exampleApplicability": { "properties": { "evaluatedSourceExampleIds": { "const": ["source-example:0", "source-example:1"] } } } } } } }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "attestation": { "$ref": "#/$defs/attestation" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "adjudicatorSlot": { "const": "independent-c" } },
+        "required": ["adjudicatorSlot"]
+      },
+      "then": {
+        "properties": {
+          "formId": { "const": "meaning-link-v4-heldout-10-c-v2" },
+          "attestation": {
+            "properties": {
+              "filesRead": {
+                "const": [
+                  "pilot/evaluation/v4/heldout-evidence-v1.json",
+                  "pilot/evaluation/v4/readjudication-instructions-v2.md",
+                  "pilot/evaluation/v4/readjudication-schema-v2.json",
+                  "pilot/evaluation/v4/readjudication-c-form-v2.blank.json",
+                  "pilot/evaluation/v4/readjudication-execution-seal-v2.json"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "adjudicatorSlot": { "const": "independent-d" } },
+        "required": ["adjudicatorSlot"]
+      },
+      "then": {
+        "properties": {
+          "formId": { "const": "meaning-link-v4-heldout-10-d-v2" },
+          "attestation": {
+            "properties": {
+              "filesRead": {
+                "const": [
+                  "pilot/evaluation/v4/heldout-evidence-v1.json",
+                  "pilot/evaluation/v4/readjudication-instructions-v2.md",
+                  "pilot/evaluation/v4/readjudication-schema-v2.json",
+                  "pilot/evaluation/v4/readjudication-d-form-v2.blank.json",
+                  "pilot/evaluation/v4/readjudication-execution-seal-v2.json"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "completed" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "executionSealSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "adjudicatorPseudonym": { "type": "string", "minLength": 1 },
+          "adjudications": {
+            "contains": { "$ref": "#/$defs/completedAdjudication" },
+            "minContains": 10,
+            "maxContains": 10
+          },
+          "attestation": { "$ref": "#/$defs/completedAttestation" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "semanticRelation": {
+      "type": ["string", "null"],
+      "enum": [null, "exact", "target-narrower", "target-broader", "overlap", "disjoint", "insufficient"]
+    },
+    "usageValue": {
+      "type": ["string", "null"],
+      "enum": [null, "match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"]
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caseId", "status", "normative", "nonNormativeNotes"],
+      "properties": {
+        "caseId": { "type": "string", "pattern": "^HV4-(0[1-9]|10)$" },
+        "status": { "enum": ["unstarted", "completed", "abstained"] },
+        "normative": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["semantic", "usage", "exampleApplicability"],
+          "properties": {
+            "semantic": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "targetRelationToSource",
+                "referentTypeMatch",
+                "eventAndParticipantsMatch",
+                "necessaryConditionsMatch"
+              ],
+              "properties": {
+                "targetRelationToSource": { "$ref": "#/$defs/semanticRelation" },
+                "referentTypeMatch": { "type": ["boolean", "null"] },
+                "eventAndParticipantsMatch": { "type": ["boolean", "null"] },
+                "necessaryConditionsMatch": { "type": ["boolean", "null"] }
+              }
+            },
+            "usage": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["register", "domain", "temporal", "regional", "capitalization"],
+              "properties": {
+                "register": { "$ref": "#/$defs/usageValue" },
+                "domain": { "$ref": "#/$defs/usageValue" },
+                "temporal": { "$ref": "#/$defs/usageValue" },
+                "regional": { "$ref": "#/$defs/usageValue" },
+                "capitalization": { "$ref": "#/$defs/usageValue" }
+              }
+            },
+            "exampleApplicability": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "evaluatedSourceExampleIds",
+                "targetSenseAttested",
+                "counterexampleSourceExampleId"
+              ],
+              "properties": {
+                "verdict": { "type": ["string", "null"], "enum": [null, "pass", "fail", "insufficient"] },
+                "evaluatedSourceExampleIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "type": "string", "pattern": "^source-example:[0-9]+$" }
+                },
+                "targetSenseAttested": { "type": ["boolean", "null"] },
+                "counterexampleSourceExampleId": {
+                  "type": ["string", "null"],
+                  "pattern": "^source-example:[0-9]+$"
+                }
+              }
+            }
+          }
+        },
+        "nonNormativeNotes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["semanticNote", "usageNote", "exampleNote", "rationale"],
+          "properties": {
+            "semanticNote": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "usageNote": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "exampleNote": { "type": ["string", "null"], "minLength": 1, "maxLength": 500 },
+            "rationale": { "type": ["string", "null"], "minLength": 1, "maxLength": 800 }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": { "verdict": { "const": "pass" } },
+                    "required": ["verdict"]
+                  }
+                },
+                "required": ["exampleApplicability"]
+              }
+            },
+            "required": ["normative"]
+          },
+          "then": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": {
+                      "targetSenseAttested": { "const": true },
+                      "counterexampleSourceExampleId": { "const": null }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": { "verdict": { "const": "fail" } },
+                    "required": ["verdict"]
+                  }
+                },
+                "required": ["exampleApplicability"]
+              }
+            },
+            "required": ["normative"]
+          },
+          "then": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": {
+                      "counterexampleSourceExampleId": { "type": "string", "pattern": "^source-example:[0-9]+$" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": { "verdict": { "const": "insufficient" } },
+                    "required": ["verdict"]
+                  }
+                },
+                "required": ["exampleApplicability"]
+              }
+            },
+            "required": ["normative"]
+          },
+          "then": {
+            "properties": {
+              "normative": {
+                "properties": {
+                  "exampleApplicability": {
+                    "properties": {
+                      "targetSenseAttested": { "const": false },
+                      "counterexampleSourceExampleId": { "const": null }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completedAdjudication": {
+      "type": "object",
+      "properties": {
+        "status": { "const": "completed" },
+        "normative": {
+          "type": "object",
+          "properties": {
+            "semantic": {
+              "type": "object",
+              "properties": {
+                "targetRelationToSource": {
+                  "enum": ["exact", "target-narrower", "target-broader", "overlap", "disjoint", "insufficient"]
+                },
+                "referentTypeMatch": { "type": "boolean" },
+                "eventAndParticipantsMatch": { "type": "boolean" },
+                "necessaryConditionsMatch": { "type": "boolean" }
+              }
+            },
+            "usage": {
+              "type": "object",
+              "properties": {
+                "register": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "domain": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "temporal": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "regional": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] },
+                "capitalization": { "enum": ["match", "source-only-preservable", "target-only", "conflict", "unknown", "not-applicable"] }
+              }
+            },
+            "exampleApplicability": {
+              "type": "object",
+              "properties": {
+                "verdict": { "enum": ["pass", "fail", "insufficient"] },
+                "targetSenseAttested": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      },
+      "required": ["status", "normative"]
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workedIndependently",
+        "didNotReadOtherAdjudicatorForm",
+        "didNotCommunicateWithOtherAdjudicator",
+        "usedOnlyExactReadList",
+        "didNotUseExternalSourcesInternetProviderOrProjectAi",
+        "filesRead",
+        "completedAt"
+      ],
+      "properties": {
+        "workedIndependently": { "type": ["boolean", "null"] },
+        "didNotReadOtherAdjudicatorForm": { "type": ["boolean", "null"] },
+        "didNotCommunicateWithOtherAdjudicator": { "type": ["boolean", "null"] },
+        "usedOnlyExactReadList": { "type": ["boolean", "null"] },
+        "didNotUseExternalSourcesInternetProviderOrProjectAi": { "type": ["boolean", "null"] },
+        "filesRead": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "completedAttestation": {
+      "type": "object",
+      "properties": {
+        "workedIndependently": { "const": true },
+        "didNotReadOtherAdjudicatorForm": { "const": true },
+        "didNotCommunicateWithOtherAdjudicator": { "const": true },
+        "usedOnlyExactReadList": { "const": true },
+        "didNotUseExternalSourcesInternetProviderOrProjectAi": { "const": true },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "workedIndependently",
+        "didNotReadOtherAdjudicatorForm",
+        "didNotCommunicateWithOtherAdjudicator",
+        "usedOnlyExactReadList",
+        "didNotUseExternalSourcesInternetProviderOrProjectAi",
+        "filesRead",
+        "completedAt"
+      ]
+    }
+  }
+}

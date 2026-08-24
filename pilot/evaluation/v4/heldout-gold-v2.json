@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-gold/v2",
+  "goldId": "meaning-link-v4-heldout-10-v2-gold-v2",
+  "createdDate": "2026-08-24",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "inputBindings": {
+    "evidence": {
+      "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+    },
+    "consensus": {
+      "path": "pilot/evaluation/v4/heldout-consensus-v2.json",
+      "sha256": "9cf1741b5c93be72452464d4f39b9c1f30cd67ef76a5bf7791c73508f6c0b241",
+      "orderedNormativeCoreSha256": "c160a61001fbc07ba9cd28d08b73ddc444debbfb71944a0954fda50135a74de3"
+    }
+  },
+  "derivationContract": {
+    "semanticGoldPositiveRequires": [
+      "semantic.targetRelationToSource=exact",
+      "example.verdict=pass",
+      "full ordered usable source example coverage",
+      "example.targetSenseAttested=true",
+      "example.counterexampleSourceExampleId=null"
+    ],
+    "usageIncludedInSemanticGold": false,
+    "publicationEligibleRequiresSemanticPositive": true,
+    "publicationAllowedUsageValues": [
+      "match",
+      "source-only-preservable",
+      "not-applicable"
+    ],
+    "publicationVetoUsageValues": [
+      "unknown",
+      "conflict",
+      "target-only"
+    ],
+    "allFiveUsageAxesRequired": true,
+    "nonNormativeNotesExcluded": true,
+    "deterministicLayerVetoOnly": true
+  },
+  "languageRuleWitnesses": {
+    "grammaticalPluralNotLexicalCollective": [
+      "v2-case-03"
+    ],
+    "lexicalGroupReferentVersusEventOrState": [
+      "v2-case-04"
+    ],
+    "targetExamplesAreNonExclusive": [
+      "v2-case-08"
+    ],
+    "sourceOnlyUsagePreservation": [
+      "v2-case-02",
+      "v2-case-05",
+      "v2-case-07",
+      "v2-case-09"
+    ],
+    "koreanCapitalizationNotDirectlyApplicable": [
+      "v2-case-01",
+      "v2-case-02",
+      "v2-case-03",
+      "v2-case-04",
+      "v2-case-05",
+      "v2-case-06",
+      "v2-case-07",
+      "v2-case-08",
+      "v2-case-09",
+      "v2-case-10"
+    ]
+  },
+  "counts": {
+    "caseCount": 10,
+    "semanticPositive": 5,
+    "semanticNegative": 5,
+    "publicationEligible": 0,
+    "publicationIneligible": 10
+  },
+  "semanticPositiveIds": [
+    "v2-case-01",
+    "v2-case-03",
+    "v2-case-06",
+    "v2-case-08",
+    "v2-case-10"
+  ],
+  "semanticNegativeIds": [
+    "v2-case-02",
+    "v2-case-04",
+    "v2-case-05",
+    "v2-case-07",
+    "v2-case-09"
+  ],
+  "publicationEligibleIds": [],
+  "cases": [
+    {
+      "caseId": "v2-case-01",
+      "sourceId": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2",
+      "targetId": "krdict:73312:1",
+      "normativeFingerprintSha256": "5effec95caf093a3f03b5fd84e142c26a1a73d78f949c80d53661b34c5372bf9",
+      "semanticGold": "positive",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-02",
+      "sourceId": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7",
+      "targetId": "krdict:57661:1",
+      "normativeFingerprintSha256": "7b1194bf7136625ae6868f449cf0dfdfe3fbd927946af7b225991ce99a142931",
+      "semanticGold": "negative",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-03",
+      "sourceId": "enwiktionary:92039576:play:noun-1:noun-1-sense-7",
+      "targetId": "krdict:88467:1",
+      "normativeFingerprintSha256": "200db22034a2538ff492d45355ef370a1bc88648179b5ae14ec6f9f467e59046",
+      "semanticGold": "positive",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-04",
+      "sourceId": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5",
+      "targetId": "krdict:91793:1",
+      "normativeFingerprintSha256": "026e91655839c199134de5c94f0749b148747bdb82e3c628c6152181716e4afd",
+      "semanticGold": "negative",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-05",
+      "sourceId": "enwiktionary:92048439:root:noun-2:noun-2-sense-2",
+      "targetId": "krdict:17919:1",
+      "normativeFingerprintSha256": "7c55b1476bd1428acf70af0e6b56e187e7d1ab0a78ea4e4931007fd59b0433c3",
+      "semanticGold": "negative",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "domain",
+        "temporal",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-06",
+      "sourceId": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1",
+      "targetId": "krdict:56457:1",
+      "normativeFingerprintSha256": "85a7248e3ae55616e1f64be6ad540d6f9ca0fefe4271a10842987f8b366b44f4",
+      "semanticGold": "positive",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-07",
+      "sourceId": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1",
+      "targetId": "krdict:83557:2",
+      "normativeFingerprintSha256": "f72f9b64d6e2ebd00d4fb10a1ffffb80a0ae0c85b27f9c89af4ad7cea42c65da",
+      "semanticGold": "negative",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-08",
+      "sourceId": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8",
+      "targetId": "krdict:29776:1",
+      "normativeFingerprintSha256": "fd02e0eb1b0b04fb9a65198677c087a3425dc26b69a6fe1e29e9d1ed83ca59f1",
+      "semanticGold": "positive",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-09",
+      "sourceId": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5",
+      "targetId": "krdict:38513:1",
+      "normativeFingerprintSha256": "a967bbfda0081fd8382d6d915f9d972e0e82aebec63ca379eff7e84a4d46f404",
+      "semanticGold": "negative",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    },
+    {
+      "caseId": "v2-case-10",
+      "sourceId": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4",
+      "targetId": "krdict:14195:1",
+      "normativeFingerprintSha256": "d61607a4c6d86a59aa630de30d5866cab6c65c342e25d5579984c06cb3eefc5b",
+      "semanticGold": "positive",
+      "publicationEligible": false,
+      "expectedFinalApproval": false,
+      "publicationVetoAxes": [
+        "register",
+        "domain",
+        "temporal",
+        "regional",
+        "capitalization"
+      ]
+    }
+  ],
+  "admission": {
+    "minimumSemanticPositive": 4,
+    "minimumSemanticNegative": 4,
+    "actualSemanticPositive": 5,
+    "actualSemanticNegative": 5,
+    "quantityAdmissionPassed": true,
+    "exactConsensusRequired": true,
+    "exactConsensusPassed": true,
+    "admissionPassed": true
+  },
+  "currentGateState": {
+    "independentResultAuditGo": false,
+    "providerHeldoutExecutionAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "sample100RequiresSeparateUserApprovalAndV4BundleContract": true,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  }
+}

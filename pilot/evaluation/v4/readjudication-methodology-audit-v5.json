@@ -1,0 +1,411 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-methodology-audit/v5",
+  "auditId": "meaning-link-v4-heldout-10-readjudication-methodology-audit-v5",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "roundId": "meaning-link-v4-blind-dual-10-v5",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "protocolId": "bilingual-meaning-link-v4-replacement-readjudication/v5",
+  "auditor": {
+    "pseudonym": "readjudication-methodology-auditor-rma-05",
+    "role": "independent-methodology-auditor",
+    "completedAt": "2026-08-24T08:20:09Z",
+    "decisionRule": "NO-GO if any P0 or P1 finding exists"
+  },
+  "decision": "GO",
+  "methodologyAuditGo": true,
+  "blankFormsAllowed": true,
+  "executionAllowed": false,
+  "executionMayBeAuthorizedAfterNeutralExecutionSeal": true,
+  "providerCallAllowed": false,
+  "heldoutGatePassed": false,
+  "legacySevenAllowed": false,
+  "sample100Allowed": false,
+  "pushAllowed": false,
+  "deployAllowed": false,
+  "auditTargets": [
+    {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+      "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247"
+    },
+    {
+      "path": "pilot/evaluation/v4/preregistration-seal-v2.json",
+      "sha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867"
+    },
+    {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V5.md",
+      "sha256": "2e38a5866692fc9d278c0d05a1b2ad090a51f8f997c3e6625fa35690fd1a699e"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v5.md",
+      "sha256": "71d8fe886b3d1022bb2db0de47e4e5c46d86cd4f57dd43df99f1c4c863b31904"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v5.json",
+      "sha256": "8e6dd10217d7edbd04c72b5c0d3baeebfc30826913b1bec6a03a746fee39eb88"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-protocol-seal-v5.json",
+      "sha256": "8a9040c0e9570f7e6fa215889fa8c9dd8dcd26e8327e1dfd33ff54eac3e449e6"
+    }
+  ],
+  "readAttestation": {
+    "auditInputsReadExactly": [
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+        "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+        "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+        "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+        "sha256": "18eab2059c832bc1bca7a093c287f4ffba73423a1660435cc12d431ec35649e0"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V3.md",
+        "sha256": "6f5dd4528ffe3e4cd59f24862945c145c3dd2923960fc740b8d1016ed272da2f"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V4.md",
+        "sha256": "73d37a87eb1f491aa2355bd986abbb92a221bba007c37d4eb132d3205ccce53b"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V5.md",
+        "sha256": "2e38a5866692fc9d278c0d05a1b2ad090a51f8f997c3e6625fa35690fd1a699e"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+      },
+      {
+        "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+        "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+        "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+        "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+        "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+        "sha256": "9eb1b0da7ef7fa7500723f0a6d9f7fc6abe0212a2f65a0220a1630fab4e057c0"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v2.md",
+        "sha256": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v2.json",
+        "sha256": "a84adcea7ce58da302e731483018766a04f850e52eebd492863824043692af45"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+        "sha256": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-methodology-audit-v2.json",
+        "sha256": "f55818341728fb415e8d0479e18b7c651b9d02bce47fdf3a71207743e181d36e"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v3.md",
+        "sha256": "4a767abcb74d5907921f9f1e76a83b02afcaf6eb82d06bb5a0d02443984d9cf1"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v3.json",
+        "sha256": "e97350b56e00480cbed5ea985986eb592e4d05c692c32113aa65e7008c7fdbec"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v3.json",
+        "sha256": "96e379a37747172402d08748ba623b2835b4099b0b0d51aae825a5b2a4bcd111"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-methodology-audit-v3.json",
+        "sha256": "001cc79c5eed267f602467c552bb54644701eead03a7cfb961a4804f91a4c7fd"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v4.md",
+        "sha256": "5a3ca1457e6a1128279871ab4c8ad406192d004401a2dea72e28358557706531"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v4.json",
+        "sha256": "1feff51f851dbbd2939d317c3c97287def35e62e56433d3b896742e8e0b26ba4"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v4.json",
+        "sha256": "1afcaf93d6c58e5eb1c034709f1279dc641ab8d4005a1eb3e9de0c6793ed4b23"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-methodology-audit-v4.json",
+        "sha256": "bfc1c8767dcec714a3b61feccee28e8715aa253b278dcb4bdf3fd1509cf08cf8"
+      },
+      {
+        "path": "pilot/evaluation/v4/preregistration-seal-v2.json",
+        "sha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v5.md",
+        "sha256": "71d8fe886b3d1022bb2db0de47e4e5c46d86cd4f57dd43df99f1c4c863b31904"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v5.json",
+        "sha256": "8e6dd10217d7edbd04c72b5c0d3baeebfc30826913b1bec6a03a746fee39eb88"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v5.json",
+        "sha256": "8a9040c0e9570f7e6fa215889fa8c9dd8dcd26e8327e1dfd33ff54eac3e449e6"
+      }
+    ],
+    "exactReadSetMatched": true,
+    "readAnyOtherProjectInput": false,
+    "readPrimaryAForm": false,
+    "readPrimaryBForm": false,
+    "readPrimaryDecisions": false,
+    "readDisagreementAuditSealOrCaseFieldValueDetails": false,
+    "readCompletedCOrDForm": false,
+    "readOutcomeFixtureOrAiResult": false,
+    "readImplementationOrModelResult": false,
+    "workedIndependently": true,
+    "communicatedWithAdjudicatorsOrOtherAgentsDuringAudit": false,
+    "usedInternetProviderOrProjectAi": false,
+    "ranLegacySeven": false,
+    "ranSample100": false,
+    "pushedOrDeployed": false
+  },
+  "sealVerification": {
+    "result": "GO",
+    "allTwentyNineActualHashesRecorded": true,
+    "heldoutSealAllSealedFileHashesMatchActual": true,
+    "resolverAndReadjudicationSealsV1ThroughV4MatchActualInputs": true,
+    "basePreregistrationV2SealAllSevenHashesMatchActual": true,
+    "readjudicationProtocolSealV5AllTwentyEightSealedInputHashesMatchActual": true,
+    "baseV2IdentityHashesMatchV5Seal": true,
+    "v4AuditShaAndNoGoStateMatchV5Inputs": true,
+    "schemaPacketShaMatchesActualEvidence": true,
+    "schemaInstructionsShaMatchesActualInstructions": true,
+    "readjudicationProtocolSealV5SelfHashRecordedByThisAudit": "8a9040c0e9570f7e6fa215889fa8c9dd8dcd26e8327e1dfd33ff54eac3e449e6"
+  },
+  "priorFindingClosure": {
+    "v1FindingsMaintainedClosed": true,
+    "v2FindingMaintainedClosed": true,
+    "v3FindingMaintainedClosed": true,
+    "v4": {
+      "findingId": "RDMA4-P1-001",
+      "result": "GO",
+      "basis": "Base v2 separates semanticGold from publicationEligible before any v5 form or result exists, retains usage in the full fingerprint, and counts semantic-positive publication-ineligible cases as held-out positives."
+    }
+  },
+  "labelSeparationAudit": {
+    "semanticGoldInputs": [
+      "semantic.targetRelationToSource",
+      "semantic.referentTypeMatch",
+      "semantic.eventAndParticipantsMatch",
+      "semantic.necessaryConditionsMatch",
+      "example.verdict",
+      "example.evaluatedSourceExampleIds",
+      "example.targetSenseAttested",
+      "example.counterexampleSourceExampleId"
+    ],
+    "usageIncludedInSemanticGold": false,
+    "usageIncludedInFullFingerprint": true,
+    "publicationEligibleRequiresSemanticPositive": true,
+    "publicationAllowedUsageValues": ["match", "source-only-preservable", "not-applicable"],
+    "publicationVetoUsageValues": ["conflict", "target-only", "unknown"],
+    "unknownPromotedToMatch": false,
+    "sourceOnlyPreservablePromotedToMatch": false,
+    "semanticPositivePublicationIneligibleRemainsHeldoutPositive": true,
+    "semanticPositiveMeansAutomaticApproval": false,
+    "result": "GO"
+  },
+  "derivedFieldIntegrity": {
+    "adjudicatorInputs": [
+      "semantic relation and three booleans",
+      "five usage axes",
+      "example verdict, evaluated IDs, target attestation, and counterexample ID"
+    ],
+    "comparatorDerivedOnly": [
+      "semantic mismatch codes and presence",
+      "usage mismatch codes and presence",
+      "example mismatch codes and presence",
+      "semanticGold",
+      "publicationEligible",
+      "final approval expectation"
+    ],
+    "schemaContainsSemanticGoldProperty": false,
+    "schemaContainsPublicationEligibleProperty": false,
+    "schemaContainsMismatchInputProperty": false,
+    "additionalPropertiesClosedAtFormAndAdjudicationLevels": true,
+    "result": "GO"
+  },
+  "contractSatisfiability": {
+    "completedFormsStructurallySatisfiable": true,
+    "semanticPositiveWitness": "exact, all three booleans true, pass, full case-bound coverage, target attested true, counterexample null, capitalization unknown",
+    "semanticNegativeWitness": "non-exact with at least one false or a non-pass example, with capitalization unknown",
+    "semanticPositiveMayBePublicationIneligible": true,
+    "fourPositiveFourNegativeSimultaneouslySatisfiable": true,
+    "orderedTenCaseExactConsensusSatisfiable": true,
+    "publicationEligibleMinimum": null,
+    "admissionGoStructurallySatisfiable": true,
+    "result": "GO"
+  },
+  "futureSixtyAttemptAudit": {
+    "attemptCount": 60,
+    "fullFingerprintMustMatchConsensus": true,
+    "semanticGoldMustMatchConsensus": true,
+    "finalApprovalMustEqualConsensusPublicationEligibility": true,
+    "semanticNegativeApprovalEscapeAllowed": 0,
+    "publicationIneligibleSemanticPositiveFalseApprovalIsPositiveMiss": false,
+    "fullFingerprintMismatchAlwaysFails": true,
+    "allSixtyRequired": true,
+    "retryAllowed": false,
+    "averageMajorityBestOfOrSelectiveAcceptanceAllowed": false,
+    "result": "GO"
+  },
+  "checks": [
+    {
+      "id": "V5-M-01",
+      "name": "actual-sha-and-all-seals-match",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-02",
+      "name": "prior-p1-closures-maintained",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-03",
+      "name": "base-v2-authority-and-no-prior-result-reinterpretation",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-04",
+      "name": "semantic-gold-publication-eligibility-consistent-separation",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-05",
+      "name": "usage-preserved-in-full-fingerprint",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-06",
+      "name": "unknown-and-source-only-not-promoted-to-match",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-07",
+      "name": "unknown-remains-publication-veto",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-08",
+      "name": "semantic-positive-publication-ineligible-counts-as-heldout-positive",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-09",
+      "name": "semantic-positive-four-negative-four-satisfiable",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-10",
+      "name": "schema-semantic-iff-and-non-exact-false",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-11",
+      "name": "schema-all-ten-capitalization-unknown",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-12",
+      "name": "schema-example-coverage-and-verdict-consistency",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-13",
+      "name": "derived-fields-not-adjudicator-inputs",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-14",
+      "name": "neutral-c-d-boundary-and-read-lists",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-15",
+      "name": "ordered-ten-case-full-fingerprint-c-equals-d",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-16",
+      "name": "majority-tie-break-additional-resolver-selection-and-hybrid-prohibited",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-17",
+      "name": "future-sixty-full-fingerprint-semantic-gold-publication-eligibility-gate",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-18",
+      "name": "four-language-and-evidence-rules-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-19",
+      "name": "label-preserving-and-publication-veto-only-rules",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-20",
+      "name": "no-posthoc-change-rerun-or-additional-adjudicator",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-21",
+      "name": "immutable-preservation-of-prior-versions-and-failures",
+      "result": "GO"
+    },
+    {
+      "id": "V5-M-22",
+      "name": "zero-call-seven-one-hundred-push-deploy-and-publication-gates",
+      "result": "GO"
+    }
+  ],
+  "nonBlockingObservations": [
+    {
+      "id": "V5-OBS-001",
+      "observation": "Because capitalization is unknown in all ten cases, this packet has no publicationEligible=true expected case. The future gate still tests conservative publication vetoes, full usage fingerprints, and semantic positives, but it does not by itself measure true-publication approval recall.",
+      "contractImpact": "None. Base v2 explicitly sets no publicationEligible minimum and makes held-out semantic evaluation distinct from publication approval. Any later claim about approval-true recall requires a separately preregistered eligible-control evaluation."
+    }
+  ],
+  "findings": [],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "conclusion": {
+    "result": "GO",
+    "reason": "All required methodology checks pass and no P0 or P1 finding exists.",
+    "methodologyAuditGo": true,
+    "blankFormsAllowed": true,
+    "executionAllowed": false,
+    "executionBlocker": "C/D blank forms and the neutral execution seal do not yet exist or have not yet been independently SHA-verified.",
+    "providerCallAllowed": false,
+    "nextAllowedAction": "The custodian may create the v5 C/D blank forms and neutral execution seal. C/D execution remains prohibited until those artifacts are sealed and verified; provider, 7-row, 100-row, push, deploy, and publication actions remain prohibited."
+  }
+}

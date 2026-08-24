@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://han02eum.local/schemas/v4-heldout-adjudication-v1.json",
+  "title": "V4 blind held-out adjudication form",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "formId",
+    "packetId",
+    "packetSha256",
+    "adjudicatorSlot",
+    "adjudicatorPseudonym",
+    "status",
+    "adjudications",
+    "attestation"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "bilingual-heldout-adjudication/v1" },
+    "formId": { "type": "string", "minLength": 1 },
+    "packetId": { "const": "meaning-link-v4-heldout-10-v1" },
+    "packetSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "adjudicatorSlot": { "enum": ["primary-a", "primary-b"] },
+    "adjudicatorPseudonym": { "type": ["string", "null"], "minLength": 1 },
+    "status": { "enum": ["unstarted", "completed", "abstained"] },
+    "adjudications": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/adjudication" }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workedIndependently",
+        "didNotReadPriorResultsOrGold",
+        "didNotReadOtherPrimaryForm",
+        "didNotCommunicateWithOtherAdjudicator",
+        "usedOnlyAllowedFiles",
+        "completedAt"
+      ],
+      "properties": {
+        "workedIndependently": { "type": ["boolean", "null"] },
+        "didNotReadPriorResultsOrGold": { "type": ["boolean", "null"] },
+        "didNotReadOtherPrimaryForm": { "type": ["boolean", "null"] },
+        "didNotCommunicateWithOtherAdjudicator": { "type": ["boolean", "null"] },
+        "usedOnlyAllowedFiles": { "type": ["boolean", "null"] },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    }
+  },
+  "$defs": {
+    "nullableMismatch": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "usageValue": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "match",
+        "source-only-preservable",
+        "target-only",
+        "conflict",
+        "unknown",
+        "not-applicable"
+      ]
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "status",
+        "semantic",
+        "usage",
+        "exampleApplicability",
+        "rationale"
+      ],
+      "properties": {
+        "caseId": { "type": "string", "pattern": "^HV4-(0[1-9]|10)$" },
+        "status": { "enum": ["unstarted", "completed", "abstained"] },
+        "semantic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "targetRelationToSource",
+            "referentTypeMatch",
+            "eventAndParticipantsMatch",
+            "necessaryConditionsMatch",
+            "criticalMismatch"
+          ],
+          "properties": {
+            "targetRelationToSource": {
+              "type": ["string", "null"],
+              "enum": [null, "exact", "target-narrower", "target-broader", "overlap", "disjoint", "insufficient"]
+            },
+            "referentTypeMatch": { "type": ["boolean", "null"] },
+            "eventAndParticipantsMatch": { "type": ["boolean", "null"] },
+            "necessaryConditionsMatch": { "type": ["boolean", "null"] },
+            "criticalMismatch": { "$ref": "#/$defs/nullableMismatch" }
+          }
+        },
+        "usage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["register", "domain", "temporal", "regional", "capitalization", "criticalMismatch"],
+          "properties": {
+            "register": { "$ref": "#/$defs/usageValue" },
+            "domain": { "$ref": "#/$defs/usageValue" },
+            "temporal": { "$ref": "#/$defs/usageValue" },
+            "regional": { "$ref": "#/$defs/usageValue" },
+            "capitalization": { "$ref": "#/$defs/usageValue" },
+            "criticalMismatch": { "$ref": "#/$defs/nullableMismatch" }
+          }
+        },
+        "exampleApplicability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verdict",
+            "evaluatedSourceExampleIds",
+            "targetSenseAttested",
+            "counterexampleSourceExampleId",
+            "criticalMismatch"
+          ],
+          "properties": {
+            "verdict": { "type": ["string", "null"], "enum": [null, "pass", "fail", "insufficient"] },
+            "evaluatedSourceExampleIds": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^source-example:[0-9]+$" }
+            },
+            "targetSenseAttested": { "type": ["boolean", "null"] },
+            "counterexampleSourceExampleId": {
+              "type": ["string", "null"],
+              "pattern": "^source-example:[0-9]+$"
+            },
+            "criticalMismatch": { "$ref": "#/$defs/nullableMismatch" }
+          }
+        },
+        "rationale": { "type": ["string", "null"], "minLength": 1, "maxLength": 800 }
+      }
+    }
+  }
+}

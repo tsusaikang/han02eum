@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "bilingual-heldout-adjudication-disagreement-audit/v1",
+  "auditId": "meaning-link-v4-heldout-10-v1-primary-disagreement-v1",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "contractVersion": "bilingual-meaning-link-v4-preregistration/v1",
+  "inputIntegrity": {
+    "preregistration": {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+    },
+    "evidence": {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+    },
+    "schema": {
+      "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+    },
+    "initialSeal": {
+      "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+      "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+    },
+    "primaryA": {
+      "path": "pilot/evaluation/v4/adjudication-primary-a-v1.json",
+      "sha256": "0f52017b53e2caebb4ca22431604091bed17c49e8cfc285aaaf60b3fa388d13c"
+    },
+    "primaryB": {
+      "path": "pilot/evaluation/v4/adjudication-primary-b-v1.json",
+      "sha256": "02c9ed1478847e3e6eb673efa5928527958e9b1bce5b66db45dda2b625a1cdbc"
+    }
+  },
+  "validation": {
+    "schemaContractValid": true,
+    "packetShaMatchesBothForms": true,
+    "orderedCaseIdsExact": true,
+    "orderedCaseIdsUnique": true,
+    "expectedCaseCount": 10,
+    "primaryACompleted": true,
+    "primaryBCompleted": true,
+    "primaryAAttestationComplete": true,
+    "primaryBAttestationComplete": true,
+    "adjudicatorSlotsDistinct": true,
+    "adjudicatorPseudonymsDistinct": true,
+    "allUsableSourceExampleIdsCovered": true,
+    "rejectedSourceExampleIdsExcluded": true
+  },
+  "normativeFingerprint": {
+    "included": [
+      "semantic.targetRelationToSource",
+      "semantic.referentTypeMatch",
+      "semantic.eventAndParticipantsMatch",
+      "semantic.necessaryConditionsMatch",
+      "semantic.criticalMismatch",
+      "usage.register",
+      "usage.domain",
+      "usage.temporal",
+      "usage.regional",
+      "usage.capitalization",
+      "usage.criticalMismatch",
+      "exampleApplicability.verdict",
+      "exampleApplicability.evaluatedSourceExampleIds",
+      "exampleApplicability.targetSenseAttested",
+      "exampleApplicability.counterexampleSourceExampleId",
+      "exampleApplicability.criticalMismatch"
+    ],
+    "excluded": [
+      "rationale"
+    ],
+    "comparison": "exact-json-value-by-ordered-case-id"
+  },
+  "comparisonResult": {
+    "fullFingerprintConsensus": false,
+    "agreementCaseCount": 5,
+    "agreementCaseIds": [
+      "HV4-02",
+      "HV4-04",
+      "HV4-06",
+      "HV4-08",
+      "HV4-10"
+    ],
+    "disagreementCaseCount": 5,
+    "disagreementCaseIds": [
+      "HV4-01",
+      "HV4-03",
+      "HV4-05",
+      "HV4-07",
+      "HV4-09"
+    ],
+    "disagreements": [
+      {
+        "caseId": "HV4-01",
+        "fields": [
+          {
+            "path": "exampleApplicability.criticalMismatch",
+            "primaryA": "The silt-and-fines example requires particles and cannot naturally use the target sense meaning an imposed monetary charge.",
+            "primaryB": "The silt-and-fines example refers to particles and cannot instantiate the target's imposed-money sense."
+          },
+          {
+            "path": "semantic.criticalMismatch",
+            "primaryA": "The source denotes fine particulate matter, whereas the target denotes money imposed as a tax or penalty.",
+            "primaryB": "The source denotes fine particles, whereas the target denotes money imposed as a tax or penalty."
+          }
+        ]
+      },
+      {
+        "caseId": "HV4-03",
+        "fields": [
+          {
+            "path": "exampleApplicability.criticalMismatch",
+            "primaryA": "Opening a show with an entertainer is not opening a shop or beginning store operations.",
+            "primaryB": "Opening a show with an impersonator is not opening a shop or starting its business operations."
+          },
+          {
+            "path": "semantic.criticalMismatch",
+            "primaryA": "The target requires opening or beginning operation of a shop or store, while the source is the general event of starting or beginning.",
+            "primaryB": "The target requires opening a shop or beginning business operations, while the source permits starting an event or performance generally."
+          }
+        ]
+      },
+      {
+        "caseId": "HV4-05",
+        "fields": [
+          {
+            "path": "exampleApplicability.criticalMismatch",
+            "primaryA": "The iron interest and cotton interest are stakeholder groups, not states of attraction or hobbies.",
+            "primaryB": "The iron interest and cotton interest denote organized stakeholder groups, not a person's state of feeling attracted."
+          },
+          {
+            "path": "semantic.criticalMismatch",
+            "primaryA": "The source denotes a collective of interested persons or companies, while the target denotes a state of attraction or a hobby-like interest.",
+            "primaryB": "The source is a collective referent consisting of interested persons or companies, while the target is a mental state of attraction or interest."
+          }
+        ]
+      },
+      {
+        "caseId": "HV4-07",
+        "fields": [
+          {
+            "path": "exampleApplicability.criticalMismatch",
+            "primaryA": "Puget Sound, Owen Sound, and Long Island Sound are geographic features, not pronunciations of letters.",
+            "primaryB": "Puget Sound, Owen Sound, and Long Island Sound are geographic names and cannot instantiate a letter-pronunciation sense."
+          },
+          {
+            "path": "semantic.criticalMismatch",
+            "primaryA": "The source denotes a geographic inlet or strait, whereas the target denotes the pronounced sound of a written character.",
+            "primaryB": "The source denotes a geographic inlet or strait, whereas the target denotes the pronunciation or sound of a written letter."
+          },
+          {
+            "path": "usage.criticalMismatch",
+            "primaryA": null,
+            "primaryB": "The explicit source geography domain conflicts with the target definition's letter-sound domain."
+          },
+          {
+            "path": "usage.domain",
+            "primaryA": "source-only-preservable",
+            "primaryB": "conflict"
+          }
+        ]
+      },
+      {
+        "caseId": "HV4-09",
+        "fields": [
+          {
+            "path": "exampleApplicability.criticalMismatch",
+            "primaryA": "The usable example explicitly includes animal subjects, which cannot be denoted by the person-only target 피험자.",
+            "primaryB": "The usable source evidence explicitly includes animal subjects, which cannot satisfy the target definition's person-only condition."
+          },
+          {
+            "path": "semantic.criticalMismatch",
+            "primaryA": "The target is limited to a person in a test or experiment, while the source also includes animal and inanimate subjects and broader examination, treatment, or analysis.",
+            "primaryB": "The target is restricted to a person in a test or experiment, while the source also includes animals, inanimate objects, and broader examination, treatment, or analysis."
+          }
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "NO-GO",
+    "reason": "primary_normative_fingerprint_disagreement",
+    "consensusCreated": false,
+    "derivedGoldCreated": false,
+    "quantityGateEvaluated": false,
+    "implementationCreated": false,
+    "syntheticTestsCreated": false,
+    "stageSealCreated": false,
+    "providerCallAllowed": false,
+    "heldoutExecutionAllowed": false,
+    "legacySevenAllowed": false,
+    "sample100Allowed": false,
+    "gitPushAllowed": false,
+    "productionDeployAllowed": false
+  },
+  "observedActions": {
+    "providerCalls": 0,
+    "networkCalls": 0,
+    "aiCalls": 0,
+    "legacySevenRuns": 0,
+    "sample100Runs": 0,
+    "gitPushes": 0,
+    "productionDeploys": 0
+  },
+  "requiredNextStep": "Preserve both primary forms and this audit. Do not discuss, normalize, or repair their answers. A separately preregistered resolver procedure blind to both primary outputs is required before any consensus, gold, implementation admission, or provider call."
+}

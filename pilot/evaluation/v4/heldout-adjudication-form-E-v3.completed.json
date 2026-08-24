@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-adjudication-form/v3",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "evidenceSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+  "formId": "meaning-link-v4-heldout-10-v2-E-v3",
+  "adjudicatorSlot": "E",
+  "outputIdentity": {
+    "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+    "mediaType": "application/json",
+    "writeMode": "create-new-preserve-blank"
+  },
+  "executionSealBindingCompleted": true,
+  "executionSealSha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572",
+  "readListAttestation": {
+    "exactReadListOnly": true,
+    "fileCount": 5,
+    "otherAdjudicationSeen": false,
+    "discussionOccurred": false,
+    "providerOrProjectAiUsed": false,
+    "files": [
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+        "sha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+        "sha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json",
+        "sha256": "28326ae33014f7447befcbdd705f61dcab5cfd1788f81faaf7733cbba4058860"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+        "sha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "caseId": "v2-case-01",
+      "sourceId": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2",
+      "targetId": "krdict:73312:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-01-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-02",
+      "sourceId": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7",
+      "targetId": "krdict:57661:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-02-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-02-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-03",
+      "sourceId": "enwiktionary:92039576:play:noun-1:noun-1-sense-7",
+      "targetId": "krdict:88467:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-03-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-04",
+      "sourceId": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5",
+      "targetId": "krdict:91793:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-04-source-example-01",
+          "v2-case-04-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-04-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-05",
+      "sourceId": "enwiktionary:92048439:root:noun-2:noun-2-sense-2",
+      "targetId": "krdict:17919:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "source-only-preservable",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "source-only-preservable",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-05-source-example-01",
+          "v2-case-05-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-05-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-06",
+      "sourceId": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1",
+      "targetId": "krdict:56457:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-06-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-07",
+      "sourceId": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1",
+      "targetId": "krdict:83557:2",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "source-only-preservable",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-07-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-07-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-08",
+      "sourceId": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8",
+      "targetId": "krdict:29776:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-08-source-example-01",
+          "v2-case-08-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-09",
+      "sourceId": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5",
+      "targetId": "krdict:38513:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-09-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-09-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-10",
+      "sourceId": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4",
+      "targetId": "krdict:14195:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-10-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    }
+  ],
+  "nonNormativeNotes": []
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-execution-seal/v5",
+  "manifestId": "meaning-link-v4-heldout-10-readjudication-execution-v5",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "caseCount": 10,
+  "sealedFiles": [
+    {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v5.md",
+      "sha256": "71d8fe886b3d1022bb2db0de47e4e5c46d86cd4f57dd43df99f1c4c863b31904"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v5.json",
+      "sha256": "8e6dd10217d7edbd04c72b5c0d3baeebfc30826913b1bec6a03a746fee39eb88"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-c-form-v5.blank.json",
+      "sha256": "9fd2dcbf359d55256cec64ac87dfbdd21e9360acc041e8d262acc6806ec44bfe"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-d-form-v5.blank.json",
+      "sha256": "d5cc943fdee3a62a21185423c5bed9ad16b6d88c6fb0807d05741f585a50c4c7"
+    }
+  ]
+}

@@ -1,0 +1,595 @@
+{
+  "schemaVersion": "bilingual-heldout-evidence/v1",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "caseCount": 10,
+  "blindContract": {
+    "evidenceOnly": true,
+    "omittedFields": [
+      "prior model outputs",
+      "prior gold labels",
+      "anticipated labels",
+      "case roles",
+      "expected verdicts",
+      "retrieval scores",
+      "candidate ranks"
+    ]
+  },
+  "snapshotProvenance": {
+    "candidateInput": {
+      "path": ".local/pilot/mapping-candidates.jsonl",
+      "sha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c"
+    },
+    "candidateManifest": {
+      "path": ".local/pilot/mapping-candidates.jsonl.manifest.json",
+      "sha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029"
+    },
+    "sourceSnapshot": {
+      "path": ".local/pilot/wiktionary-senses.jsonl",
+      "sha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc"
+    },
+    "targetSnapshot": {
+      "path": ".local/pilot/krdict-en-senses.jsonl",
+      "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+      "snapshotDate": "2026-08-19"
+    }
+  },
+  "cases": [
+    {
+      "caseId": "HV4-01",
+      "source": {
+        "id": "enwiktionary:91956641:fine:noun-1:noun-1-sense-2",
+        "word": "fine",
+        "partOfSpeech": "noun",
+        "definition": "(usually in the plural) Something that is fine; fine particles.",
+        "usageMetadata": {
+          "rawGlossQualifier": "usually in the plural",
+          "senseLabels": []
+        },
+        "examples": {
+          "usable": [
+            {
+              "id": "source-example:0",
+              "text": "They filtered silt and fines out of the soil."
+            }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "no-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/fine",
+          "revisionId": 91956641,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:59387:1",
+        "entryId": "59387",
+        "senseId": "1",
+        "headword": "부과금",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "액수를 매겨서 세금이나 벌금 등으로 물리는 돈.",
+        "englishLemma": "tax; fine",
+        "englishDefinition": "Imposed tax or fine.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "부과금 제도." },
+            { "id": "target-example:1", "text": "부과금의 액수." },
+            { "id": "target-example:2", "text": "부과금을 내다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=59387&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-02",
+      "source": {
+        "id": "enwiktionary:92119566:sound:noun-1:noun-1-sense-2",
+        "word": "sound",
+        "partOfSpeech": "noun",
+        "definition": "A vibration capable of causing such sensations.",
+        "usageMetadata": {
+          "rawGlossQualifier": null,
+          "senseLabels": ["vibration capable of causing this"]
+        },
+        "examples": {
+          "usable": [
+            {
+              "id": "source-example:0",
+              "text": "In trumpets for assisting the hearing, all reverbation of the trumpet must be avoided. It must be made thick, of the least elastic materials, and covered with cloth externally. For all reverbation lasts for a short time, and produces new sounds which mix with those which are coming in."
+            },
+            {
+              "id": "source-example:1",
+              "text": "It was April 22, 1831, and a young man was walking down Whitehall in the direction of Parliament Street.. He halted opposite the Privy Gardens, and, with his face turned skywards, listened until the sound of the Tower guns smote again on the ear and dispelled his doubts."
+            }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/sound",
+          "revisionId": 92119566,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:600675:2",
+        "entryId": "600675",
+        "senseId": "2",
+        "headword": "음",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "물체의 진동에 의해 나는 소리.",
+        "englishLemma": "sound",
+        "englishDefinition": "Sound produced by the vibration of an object.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "이 기계는 사람이 내는 음을 인식해서 분석한다." },
+            { "id": "target-example:1", "text": "이 공간은 아이들이 다양한 물체가 내는 음을 체험할 수 있도록 만들어졌다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=600675&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-03",
+      "source": {
+        "id": "enwiktionary:92016116:open:verb-1:verb-1-sense-4",
+        "word": "open",
+        "partOfSpeech": "verb",
+        "definition": "To start or begin.",
+        "usageMetadata": {
+          "rawGlossQualifier": null,
+          "senseLabels": ["to start (a campaign)"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "The show was opened by a terrible Elvis impersonator." },
+            { "id": "source-example:1", "text": "Our band opened, and they came on second." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/open",
+          "revisionId": 92016116,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:18567:1",
+        "entryId": "18567",
+        "senseId": "1",
+        "headword": "개점하다",
+        "partOfSpeech": "verb",
+        "partOfSpeechKo": "동사",
+        "definitionKo": "새로 상점을 내고 처음으로 영업이 시작되다. 또는 영업을 시작하다.",
+        "englishLemma": "open",
+        "englishDefinition": "To open a shop or store and start a business for the first time; or to begin its operation.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "2호점을 개점하다." },
+            { "id": "target-example:1", "text": "매장을 개점하다." },
+            { "id": "target-example:2", "text": "백화점을 개점하다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=18567&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-04",
+      "source": {
+        "id": "enwiktionary:91988267:bill:noun-1:noun-1-sense-5",
+        "word": "bill",
+        "partOfSpeech": "noun",
+        "definition": "(US, Canada) A piece of paper money; a banknote.",
+        "usageMetadata": {
+          "rawGlossQualifier": "US, Canada",
+          "senseLabels": ["piece of paper money — see banknote"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "He gave the change for a three dollar bill. Upon examination, the bill proved to be counterfeit." },
+            { "id": "source-example:1", "text": "So I wropped 'em up in a five dollar bill and tied 'em up and sent 'em, and they ain't back yet.”" }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/bill",
+          "revisionId": 91988267,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:28946:1",
+        "entryId": "28946",
+        "senseId": "1",
+        "headword": "지폐",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "종이로 만든 돈.",
+        "englishLemma": "bill",
+        "englishDefinition": "Money made of paper.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "오만 원짜리 지폐." },
+            { "id": "target-example:1", "text": "지폐 한 장." },
+            { "id": "target-example:2", "text": "지폐가 있다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=28946&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-05",
+      "source": {
+        "id": "enwiktionary:92080669:interest:noun-1:noun-1-sense-10",
+        "word": "interest",
+        "partOfSpeech": "noun",
+        "definition": "(often in the plural) The persons and companies interested in any particular business or measure, taken collectively.",
+        "usageMetadata": {
+          "rawGlossQualifier": "often in the plural",
+          "senseLabels": ["persons interested in any particular business or measure"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "the iron interest; the cotton interest" },
+            { "id": "source-example:1", "text": "The ‘Railway Interest’ in Parliament constituted a very powerful lobby at this time [mid to late nineteenth century]. It was pledged to put the railway case forward in all matters involving that industry that came before Parliament. This body of MPs was composed of men who were nearly all railway directors or major shareholders. Their influence waned in the early twentieth century but earlier they formed a phalanx of robust opposition to just about every proposal for government regulation of matters pertaining to railways." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/interest",
+          "revisionId": 92080669,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:72149:3",
+        "entryId": "72149",
+        "senseId": "3",
+        "headword": "취미",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "흥미를 느끼어 마음이 끌리는 상태.",
+        "englishLemma": "interest",
+        "englishDefinition": "The state of feeling interested and being attracted.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "취미가 있다." },
+            { "id": "target-example:1", "text": "취미를 누리다." },
+            { "id": "target-example:2", "text": "취미를 느끼다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=72149&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-06",
+      "source": {
+        "id": "enwiktionary:92039576:play:noun-1:noun-1-sense-5",
+        "word": "play",
+        "partOfSpeech": "noun",
+        "definition": "(uncountable) An individual's performance in a sport or game.",
+        "usageMetadata": {
+          "rawGlossQualifier": "uncountable",
+          "senseLabels": ["individual's performance in a sport"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "His play has improved a lot this season." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/play",
+          "revisionId": 92039576,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:84518:1",
+        "entryId": "84518",
+        "senseId": "1",
+        "headword": "플레이",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "운동 경기에서, 선수들이 펼치는 경기 내용이나 기술적인 재주.",
+        "englishLemma": "play",
+        "englishDefinition": "In a sport game, the content of the game or the technical skills of an athlete.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "두드러진 플레이." },
+            { "id": "target-example:1", "text": "뛰어난 플레이." },
+            { "id": "target-example:2", "text": "플레이를 선보이다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=84518&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-07",
+      "source": {
+        "id": "enwiktionary:92119566:sound:noun-2:noun-2-sense-1",
+        "word": "sound",
+        "partOfSpeech": "noun",
+        "definition": "(geography) A long narrow inlet, or a strait between the mainland and an island; also, a strait connecting two seas, or connecting a sea or lake with the ocean.",
+        "usageMetadata": {
+          "rawGlossQualifier": "geography",
+          "senseLabels": ["long narrow inlet"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "Puget Sound; Owen Sound; Long Island Sound" },
+            { "id": "source-example:1", "text": "The Sound of Denmarke, where ships pay toll." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/sound",
+          "revisionId": 92119566,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:600675:1",
+        "entryId": "600675",
+        "senseId": "1",
+        "headword": "음",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "글자의 소리.",
+        "englishLemma": "sound",
+        "englishDefinition": "The sound of a letter",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "한자의 음." },
+            { "id": "target-example:1", "text": "한자에 음을 달다." },
+            { "id": "target-example:2", "text": "지수는 동생에게 한자를 읽는 음을 알려주었다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=600675&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-08",
+      "source": {
+        "id": "enwiktionary:91924215:cell:noun-1:noun-1-sense-12",
+        "word": "cell",
+        "partOfSpeech": "noun",
+        "definition": "(biology) The basic unit of a living organism, consisting of a quantity of protoplasm surrounded by a cell membrane, which is able to synthesize proteins and replicate itself.",
+        "usageMetadata": {
+          "rawGlossQualifier": "biology",
+          "senseLabels": []
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "An American company has applied to experiment in Britain on Parkinson's disease sufferers by injecting their brains with cells from pigs." },
+            { "id": "source-example:1", "text": "In multicellular organisms, groups of cells form tissues and tissues come together to form organs." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "no-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/cell",
+          "revisionId": 91924215,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:74889:1",
+        "entryId": "74889",
+        "senseId": "1",
+        "headword": "세포",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "생물체를 이루는 기본 단위.",
+        "englishLemma": "cell",
+        "englishDefinition": "The fundamental unit that forms an organism.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "피부 세포." },
+            { "id": "target-example:1", "text": "세포 성장." },
+            { "id": "target-example:2", "text": "세포 연구." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=74889&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-09",
+      "source": {
+        "id": "enwiktionary:92093586:subject:noun-1:noun-1-sense-8",
+        "word": "subject",
+        "partOfSpeech": "noun",
+        "definition": "A human, animal, or an inanimate object that is being examined, treated, analysed, etc; especially, one being studied in a scientific experiment, such as a clinical trial.",
+        "usageMetadata": {
+          "rawGlossQualifier": null,
+          "senseLabels": ["human, animal or an inanimate object that is being examined"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:1", "text": "human subject research; animal subjects" }
+          ],
+          "rejected": [
+            { "id": "source-example:0", "text": "Hyponym: participant", "reason": "relation-metadata" }
+          ]
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/subject",
+          "revisionId": 92093586,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:85551:1",
+        "entryId": "85551",
+        "senseId": "1",
+        "headword": "피험자",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "시험이나 실험 등의 대상이 되는 사람.",
+        "englishLemma": "subject",
+        "englishDefinition": "A person who is the subject of a test or experiment, etc.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "피험자 그룹." },
+            { "id": "target-example:1", "text": "피험자가 되다." },
+            { "id": "target-example:2", "text": "피험자를 구하다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=85551&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    },
+    {
+      "caseId": "HV4-10",
+      "source": {
+        "id": "enwiktionary:92119566:sound:verb-2:verb-2-sense-2",
+        "word": "sound",
+        "partOfSpeech": "verb",
+        "definition": "To ascertain, or to try to ascertain, the thoughts, motives, and purposes of (a person); to examine; to try; to test; to probe.",
+        "usageMetadata": {
+          "rawGlossQualifier": null,
+          "senseLabels": ["to probe", "to test"]
+        },
+        "examples": {
+          "usable": [
+            { "id": "source-example:0", "text": "When I sounded him, he appeared to favor the proposed deal." },
+            { "id": "source-example:1", "text": "Tell me moreouer, haſt thou ſounded him,/If he appeale the Duke on ancient malice,/Or worthily as a good ſubiect ſhould/On ſome knowne ground of treacherie in him." }
+          ],
+          "rejected": []
+        },
+        "coverageStatus": "missing-in-translation-box",
+        "provenance": {
+          "name": "English Wiktionary",
+          "url": "https://en.wiktionary.org/wiki/sound",
+          "revisionId": 92119566,
+          "license": "CC BY-SA 4.0"
+        }
+      },
+      "target": {
+        "id": "krdict:90943:1",
+        "entryId": "90943",
+        "senseId": "1",
+        "headword": "뜨다",
+        "partOfSpeech": "verb",
+        "partOfSpeechKo": "동사",
+        "definitionKo": "상대편의 속마음을 알아보려고 가만히 어떤 말이나 행동을 하다.",
+        "englishLemma": "guess; sound; fathom",
+        "englishDefinition": "To say or do something to find out what the other person has in mind.",
+        "usageMetadata": {
+          "separateUsageFieldsPresent": false,
+          "rawDefinitionQualifierKo": null,
+          "rawEnglishDefinitionQualifier": null
+        },
+        "examples": {
+          "usable": [
+            { "id": "target-example:0", "text": "사람을 뜨다." },
+            { "id": "target-example:1", "text": "속을 뜨다." },
+            { "id": "target-example:2", "text": "속마음을 뜨다." }
+          ]
+        },
+        "provenance": {
+          "name": "한국어기초사전",
+          "url": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=90943&nation=eng&nationCode=6",
+          "license": "CC BY-SA 2.0 KR"
+        }
+      }
+    }
+  ]
+}

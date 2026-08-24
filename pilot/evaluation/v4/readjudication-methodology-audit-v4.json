@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-methodology-audit/v4",
+  "auditId": "meaning-link-v4-heldout-10-readjudication-methodology-audit-v4",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "roundId": "meaning-link-v4-blind-dual-10-v4",
+  "protocolId": "bilingual-meaning-link-v4-replacement-readjudication/v4",
+  "auditor": {
+    "pseudonym": "readjudication-methodology-auditor-rma-04",
+    "role": "independent-methodology-auditor",
+    "completedAt": "2026-08-24T07:58:07Z",
+    "decisionRule": "NO-GO if any P0 or P1 finding exists"
+  },
+  "decision": "NO-GO",
+  "methodologyAuditGo": false,
+  "blankFormsAllowed": false,
+  "executionAllowed": false,
+  "providerCallAllowed": false,
+  "heldoutGatePassed": false,
+  "legacySevenAllowed": false,
+  "sample100Allowed": false,
+  "pushAllowed": false,
+  "deployAllowed": false,
+  "auditTargets": [
+    {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V4.md",
+      "sha256": "73d37a87eb1f491aa2355bd986abbb92a221bba007c37d4eb132d3205ccce53b"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-instructions-v4.md",
+      "sha256": "5a3ca1457e6a1128279871ab4c8ad406192d004401a2dea72e28358557706531"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-schema-v4.json",
+      "sha256": "1feff51f851dbbd2939d317c3c97287def35e62e56433d3b896742e8e0b26ba4"
+    },
+    {
+      "path": "pilot/evaluation/v4/readjudication-protocol-seal-v4.json",
+      "sha256": "1afcaf93d6c58e5eb1c034709f1279dc641ab8d4005a1eb3e9de0c6793ed4b23"
+    }
+  ],
+  "readAttestation": {
+    "auditInputsReadExactly": [
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+        "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+        "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V2.md",
+        "sha256": "18eab2059c832bc1bca7a093c287f4ffba73423a1660435cc12d431ec35649e0"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V3.md",
+        "sha256": "6f5dd4528ffe3e4cd59f24862945c145c3dd2923960fc740b8d1016ed272da2f"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V4.md",
+        "sha256": "73d37a87eb1f491aa2355bd986abbb92a221bba007c37d4eb132d3205ccce53b"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+      },
+      {
+        "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+        "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+        "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+        "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+        "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-methodology-audit-v1.json",
+        "sha256": "9eb1b0da7ef7fa7500723f0a6d9f7fc6abe0212a2f65a0220a1630fab4e057c0"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v2.md",
+        "sha256": "c288d099616d48f8ed9f5d3c3ee29d38fae9e7bc2b6d2bac95dc078e70a9284c"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v2.json",
+        "sha256": "a84adcea7ce58da302e731483018766a04f850e52eebd492863824043692af45"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v2.json",
+        "sha256": "96f2a94dfc43c91d5dbe3fecc62672029618908140f70dd43c063ab7c2abd33f"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-methodology-audit-v2.json",
+        "sha256": "f55818341728fb415e8d0479e18b7c651b9d02bce47fdf3a71207743e181d36e"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v3.md",
+        "sha256": "4a767abcb74d5907921f9f1e76a83b02afcaf6eb82d06bb5a0d02443984d9cf1"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v3.json",
+        "sha256": "e97350b56e00480cbed5ea985986eb592e4d05c692c32113aa65e7008c7fdbec"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v3.json",
+        "sha256": "96e379a37747172402d08748ba623b2835b4099b0b0d51aae825a5b2a4bcd111"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-methodology-audit-v3.json",
+        "sha256": "001cc79c5eed267f602467c552bb54644701eead03a7cfb961a4804f91a4c7fd"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-instructions-v4.md",
+        "sha256": "5a3ca1457e6a1128279871ab4c8ad406192d004401a2dea72e28358557706531"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-schema-v4.json",
+        "sha256": "1feff51f851dbbd2939d317c3c97287def35e62e56433d3b896742e8e0b26ba4"
+      },
+      {
+        "path": "pilot/evaluation/v4/readjudication-protocol-seal-v4.json",
+        "sha256": "1afcaf93d6c58e5eb1c034709f1279dc641ab8d4005a1eb3e9de0c6793ed4b23"
+      }
+    ],
+    "exactReadSetMatched": true,
+    "readAnyOtherProjectInput": false,
+    "readPrimaryAForm": false,
+    "readPrimaryBForm": false,
+    "readPrimaryDecisions": false,
+    "readDisagreementAuditSealOrCaseFieldValueDetails": false,
+    "readCompletedCOrDForm": false,
+    "readOutcomeFixtureOrAiResult": false,
+    "readImplementationOrModelResult": false,
+    "workedIndependently": true,
+    "communicatedWithAdjudicatorsOrOtherAgentsDuringAudit": false,
+    "usedInternetProviderOrProjectAi": false,
+    "ranLegacySeven": false,
+    "ranSample100": false,
+    "pushedOrDeployed": false
+  },
+  "sealVerification": {
+    "result": "GO",
+    "allTwentyTwoActualHashesRecorded": true,
+    "heldoutSealAllSealedFileHashesMatchActual": true,
+    "resolverProtocolSealAllSealedFileHashesMatchActual": true,
+    "readjudicationProtocolSealsV2AndV3MatchTheirActualInputs": true,
+    "readjudicationProtocolSealV4AllTwentyOneSealedInputHashesMatchActual": true,
+    "v3AuditShaAndNoGoStateMatchV4Seal": true,
+    "schemaPacketShaMatchesActualEvidence": true,
+    "schemaInstructionsShaMatchesActualInstructions": true,
+    "readjudicationProtocolSealV4SelfHashRecordedByThisAudit": "1afcaf93d6c58e5eb1c034709f1279dc641ab8d4005a1eb3e9de0c6793ed4b23"
+  },
+  "priorFindingClosure": {
+    "v1FindingsMaintainedClosed": true,
+    "v2FindingMaintainedClosed": true,
+    "v3": {
+      "findingId": "RDMA3-P1-001",
+      "result": "GO",
+      "basis": "All ten source senses lack a sense-level capitalization qualifier or label; examples containing sentence-initial, quoted, or proper-name capitals are excluded, and schema v4 fixes all ten capitalization values to unknown."
+    }
+  },
+  "staticSchemaChecks": [
+    {
+      "id": "semantic-exact-iff-all-three-true",
+      "result": "GO",
+      "basis": "The disjoint completedSemantic.oneOf branches require exact/all-true or non-exact/at-least-one-false."
+    },
+    {
+      "id": "non-exact-requires-false",
+      "result": "GO",
+      "basis": "The non-exact branch enumerates only non-exact relations and its anyOf requires an explicit false boolean."
+    },
+    {
+      "id": "all-ten-capitalization-unknown",
+      "result": "GO",
+      "basis": "completedUsage has capitalization const unknown and all ten prefixItems reference capitalizationUnknownConstraint."
+    },
+    {
+      "id": "all-non-unknown-capitalization-values-rejected",
+      "result": "GO",
+      "basis": "The global completed capitalization const rejects source-only-preservable, conflict, target-only, match, and not-applicable for every completed case."
+    },
+    {
+      "id": "case-example-coverage-and-verdict-consistency",
+      "result": "GO",
+      "basis": "The case-bound usable-ID constraints and pass/fail/insufficient if/then conditions from v3 are preserved."
+    }
+  ],
+  "contractSatisfiability": {
+    "completedFormsStructurallySatisfiable": true,
+    "orderedTenCaseExactConsensusStructurallySatisfiable": true,
+    "capitalizationValueForEveryCompletedCase": "unknown",
+    "unknownGeneratesUsageMismatchCode": "USAGE_CAPITALIZATION_UNKNOWN",
+    "positiveAllowedUsageValues": ["match", "source-only-preservable", "not-applicable"],
+    "unknownAllowedForPositive": false,
+    "maximumPossiblePositiveCount": 0,
+    "minimumRequiredPositiveCount": 4,
+    "minimumRequiredNegativeCount": 4,
+    "admissionGoSatisfiable": false,
+    "proof": [
+      "For every case i, schema validation implies usage.capitalization[i] = unknown.",
+      "For every positive case i, the sealed gold rule requires every usage axis, including capitalization, to be one of match, source-only-preservable, or not-applicable and requires usage mismatch to be empty.",
+      "Unknown is outside that set and deterministically emits USAGE_CAPITALIZATION_UNKNOWN, so no case can be positive.",
+      "Therefore positiveCount is always 0, which is less than the required minimum of 4, so readjudicationAdmissionGo is unreachable for every possible pair of valid C/D forms."
+    ]
+  },
+  "checks": [
+    {
+      "id": "V4-M-01",
+      "name": "actual-sha-and-seal-match",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-02",
+      "name": "v1-v2-p1-closures-maintained",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-03",
+      "name": "v3-p1-capitalization-evidence-closure",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-04",
+      "name": "semantic-schema-iff-and-non-exact-false",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-05",
+      "name": "example-schema-coverage-and-verdict-consistency",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-06",
+      "name": "all-ten-capitalization-unknown-derived-and-enforced",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-07",
+      "name": "neutral-c-d-boundary-and-read-lists",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-08",
+      "name": "closed-core-without-catch-all-or-free-text-input",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-09",
+      "name": "ordered-ten-case-whole-core-c-equals-d",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-10",
+      "name": "majority-tie-break-selection-and-hybrid-prohibited",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-11",
+      "name": "gold-rule-faithfully-preserves-original-unknown-veto",
+      "result": "GO",
+      "note": "The formula is faithfully preserved, but its interaction with the packet-bound schema makes the admission contract unsatisfiable, as recorded in RDMA4-P1-001."
+    },
+    {
+      "id": "V4-M-12",
+      "name": "positive-four-negative-four-admission-satisfiable",
+      "result": "NO-GO",
+      "findingIds": ["RDMA4-P1-001"]
+    },
+    {
+      "id": "V4-M-13",
+      "name": "heldout-equivalence-gold-separated-from-publication-approval-and-usage-completeness",
+      "result": "NO-GO",
+      "findingIds": ["RDMA4-P1-001"]
+    },
+    {
+      "id": "V4-M-14",
+      "name": "whole-contract-satisfiable-before-execution",
+      "result": "NO-GO",
+      "findingIds": ["RDMA4-P1-001"]
+    },
+    {
+      "id": "V4-M-15",
+      "name": "four-language-and-evidence-rules-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-16",
+      "name": "veto-only-rule-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-17",
+      "name": "no-posthoc-change-rerun-or-additional-adjudicator",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-18",
+      "name": "immutable-preservation-of-prior-versions-and-failures",
+      "result": "GO"
+    },
+    {
+      "id": "V4-M-19",
+      "name": "zero-call-seven-one-hundred-push-deploy-gates-fail-closed",
+      "result": "GO"
+    }
+  ],
+  "findings": [
+    {
+      "id": "RDMA4-P1-001",
+      "severity": "P1",
+      "title": "All-ten capitalization unknown makes the positive quota and admission structurally unreachable",
+      "affectedArtifacts": [
+        "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+        "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V4.md",
+        "pilot/evaluation/v4/readjudication-instructions-v4.md",
+        "pilot/evaluation/v4/readjudication-schema-v4.json",
+        "pilot/evaluation/v4/readjudication-protocol-seal-v4.json"
+      ],
+      "evidence": [
+        "The v4 schema correctly forces usage.capitalization=unknown in every completed case.",
+        "The original and v4 gold rules permit a positive only when every usage axis is match, source-only-preservable, or not-applicable and the usage mismatch is empty.",
+        "Unknown is excluded from that set and deterministically creates USAGE_CAPITALIZATION_UNKNOWN, so the maximum possible positive count is 0 while admission requires at least 4 positives."
+      ],
+      "impact": "No schema-valid C/D adjudication pair can ever reach admission GO, even with perfect ten-case unanimity and ideal semantic and example judgments. Running C/D would consume a blind packet for a foreknown zero-positive result. The design also conflates held-out semantic/example equivalence gold with publication-time usage-metadata completeness: missing capitalization metadata vetoes the evaluation label itself rather than remaining a separate approval or completeness dimension.",
+      "requiredDisposition": "Keep v4 blank forms and execution prohibited. Preserve v4 unchanged and preregister a new independently audited contract that separates equivalence gold from publication approval or usage-completeness vetoes, or otherwise uses a fresh packet and criteria whose positive and negative quotas are demonstrably satisfiable without post-result relaxation."
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 0,
+    "P3": 0
+  },
+  "conclusion": {
+    "result": "NO-GO",
+    "reason": "One P1 finding exists and the admission contract is structurally unsatisfiable; the predeclared decision rule therefore requires NO-GO.",
+    "methodologyAuditGo": false,
+    "blankFormsAllowed": false,
+    "executionAllowed": false,
+    "providerCallAllowed": false,
+    "nextAllowedAction": "Create and independently audit a new immutable contract with a satisfiable separation between held-out equivalence gold and usage-completeness or publication approval; do not create v4 blank forms or execute C/D."
+  }
+}

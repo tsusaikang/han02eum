@@ -1,0 +1,316 @@
+{
+  "schemaVersion": "bilingual-heldout-adjudication/v1",
+  "formId": "meaning-link-v4-heldout-10-v1-primary-a-v1",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "packetSha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+  "adjudicatorSlot": "primary-a",
+  "adjudicatorPseudonym": "independent-primary-a",
+  "status": "completed",
+  "adjudications": [
+    {
+      "caseId": "HV4-01",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "disjoint",
+        "referentTypeMatch": false,
+        "eventAndParticipantsMatch": false,
+        "necessaryConditionsMatch": false,
+        "criticalMismatch": "The source denotes fine particulate matter, whereas the target denotes money imposed as a tax or penalty."
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "source-example:0"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "source-example:0",
+        "criticalMismatch": "The silt-and-fines example requires particles and cannot naturally use the target sense meaning an imposed monetary charge."
+      },
+      "rationale": "The usually-plural qualifier is grammatical evidence and does not turn fine particles into a monetary fine or another lexical group sense. The target examples do attest the levy sense, but that sense is disjoint from the source and fails the sole usable source example. English casing evidence is preserved source-side rather than compared directly with Hangul."
+    },
+    {
+      "caseId": "HV4-02",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "exact",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": true,
+        "necessaryConditionsMatch": true,
+        "criticalMismatch": null
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null,
+        "criticalMismatch": null
+      },
+      "rationale": "Both senses denote audible sound grounded in physical vibration. The reverberation-created sounds and the sound of guns are natural instances, and the target examples independently attest sounds produced by people or objects. No conflicting register, domain, temporal, or regional restriction is evidenced; source orthography remains preservable metadata."
+    },
+    {
+      "caseId": "HV4-03",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "target-narrower",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": false,
+        "necessaryConditionsMatch": false,
+        "criticalMismatch": "The target requires opening or beginning operation of a shop or store, while the source is the general event of starting or beginning."
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "source-example:0",
+        "criticalMismatch": "Opening a show with an entertainer is not opening a shop or beginning store operations."
+      },
+      "rationale": "Retail opening is one possible kind of beginning, so the target is narrower rather than exact. Both supplied source examples concern performance order, providing concrete counterevidence; the nonexclusive nature of the list does not erase that mismatch. The store-bearing target examples do attest the target sense."
+    },
+    {
+      "caseId": "HV4-04",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "exact",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": true,
+        "necessaryConditionsMatch": true,
+        "criticalMismatch": null
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "source-only-preservable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null,
+        "criticalMismatch": null
+      },
+      "rationale": "A bill in this sense and 지폐 both denote paper money or a banknote. Both dollar-bill examples accept the target sense, and the target examples attest paper currency. The US/Canada restriction belongs to the English lexical use and can be preserved source-side despite absent target usage metadata; it does not change semantic exactness."
+    },
+    {
+      "caseId": "HV4-05",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "disjoint",
+        "referentTypeMatch": false,
+        "eventAndParticipantsMatch": false,
+        "necessaryConditionsMatch": false,
+        "criticalMismatch": "The source denotes a collective of interested persons or companies, while the target denotes a state of attraction or a hobby-like interest."
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "source-example:0",
+        "criticalMismatch": "The iron interest and cotton interest are stakeholder groups, not states of attraction or hobbies."
+      },
+      "rationale": "Unlike a merely grammatical plural, the source definition explicitly makes persons and companies taken collectively its referent. The target's mental-state or hobby meaning is therefore disjoint. Both source examples instantiate stakeholder groups, while the target examples attest the separate target sense. Mixed English casing remains source-side information, not a Hangul conflict."
+    },
+    {
+      "caseId": "HV4-06",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "exact",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": true,
+        "necessaryConditionsMatch": true,
+        "criticalMismatch": null
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "source-example:0"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null,
+        "criticalMismatch": null
+      },
+      "rationale": "Both senses denote a player's displayed performance or technical execution in a sport or game. The season-improvement example naturally refers to that performance, and the target examples attest conspicuous or excellent play. English uncountability is grammatical source metadata and does not create a semantic mismatch."
+    },
+    {
+      "caseId": "HV4-07",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "disjoint",
+        "referentTypeMatch": false,
+        "eventAndParticipantsMatch": false,
+        "necessaryConditionsMatch": false,
+        "criticalMismatch": "The source denotes a geographic inlet or strait, whereas the target denotes the pronounced sound of a written character."
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "source-only-preservable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "source-example:0",
+        "criticalMismatch": "Puget Sound, Owen Sound, and Long Island Sound are geographic features, not pronunciations of letters."
+      },
+      "rationale": "The geographic and character-pronunciation referents are disjoint, and both usable source examples are concrete geographic counterexamples. The target examples do attest the character-reading sense. The explicit geography qualifier and capitalized English place-name usage are preserved source-side; Korean script does not create a capitalization conflict, and neither usage fact can upgrade the semantic relation."
+    },
+    {
+      "caseId": "HV4-08",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "exact",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": true,
+        "necessaryConditionsMatch": true,
+        "criticalMismatch": null
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "source-only-preservable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null,
+        "criticalMismatch": null
+      },
+      "rationale": "Both definitions identify the biological cell as the fundamental unit of an organism; the source simply supplies more structural detail. Pig cells and groups of cells remain instances of individual biological cells, because grammatical plural does not create a separate group sense. The target examples attest biological cells. The explicit biology qualifier is preservable source metadata rather than an inferred target match."
+    },
+    {
+      "caseId": "HV4-09",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "target-narrower",
+        "referentTypeMatch": false,
+        "eventAndParticipantsMatch": false,
+        "necessaryConditionsMatch": false,
+        "criticalMismatch": "The target is limited to a person in a test or experiment, while the source also includes animal and inanimate subjects and broader examination, treatment, or analysis."
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "source-example:1",
+        "criticalMismatch": "The usable example explicitly includes animal subjects, which cannot be denoted by the person-only target 피험자."
+      },
+      "rationale": "The person-only target is a strict subset of the source's human, animal, and inanimate referents. The sole usable source example was evaluated in full: its human phrase can fit, but its animal-subject phrase is a concrete counterexample, so the verdict is fail. The rejected relation-metadata item is correctly excluded. Target examples attest the person sense."
+    },
+    {
+      "caseId": "HV4-10",
+      "status": "completed",
+      "semantic": {
+        "targetRelationToSource": "exact",
+        "referentTypeMatch": true,
+        "eventAndParticipantsMatch": true,
+        "necessaryConditionsMatch": true,
+        "criticalMismatch": null
+      },
+      "usage": {
+        "register": "not-applicable",
+        "domain": "not-applicable",
+        "temporal": "not-applicable",
+        "regional": "not-applicable",
+        "capitalization": "source-only-preservable",
+        "criticalMismatch": null
+      },
+      "exampleApplicability": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "source-example:0",
+          "source-example:1"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null,
+        "criticalMismatch": null
+      },
+      "rationale": "Both senses describe probing a person through words or conduct to learn that person's thoughts, motives, or intentions. Each source example uses sounded in that way, and the target collocations attest probing a person or inner mind. No contradictory usage restriction is evidenced, and English casing is retained only as source-side information."
+    }
+  ],
+  "attestation": {
+    "workedIndependently": true,
+    "didNotReadPriorResultsOrGold": true,
+    "didNotReadOtherPrimaryForm": true,
+    "didNotCommunicateWithOtherAdjudicator": true,
+    "usedOnlyAllowedFiles": true,
+    "completedAt": "2026-08-24T06:47:23Z"
+  }
+}

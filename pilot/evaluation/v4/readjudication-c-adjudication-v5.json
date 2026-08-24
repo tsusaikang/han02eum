@@ -1,0 +1,339 @@
+{
+  "schemaVersion": "bilingual-heldout-independent-adjudication/v5",
+  "roundId": "meaning-link-v4-blind-dual-10-v5",
+  "formId": "meaning-link-v4-heldout-10-c-v5",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "packetSha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+  "instructionsSha256": "71d8fe886b3d1022bb2db0de47e4e5c46d86cd4f57dd43df99f1c4c863b31904",
+  "executionSealSha256": "9e028bf3333ea70bd0496f7387aa71280558fd7f3f8f7f61f4117e93c84ed251",
+  "adjudicatorSlot": "independent-c",
+  "adjudicatorPseudonym": "blind-adjudicator-c-v5",
+  "status": "completed",
+  "adjudications": [
+    {
+      "caseId": "HV4-01",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "disjoint",
+          "referentTypeMatch": false,
+          "eventAndParticipantsMatch": false,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "fail",
+          "evaluatedSourceExampleIds": ["source-example:0"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": "source-example:0"
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-02",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": true
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "pass",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": null
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-03",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "target-narrower",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "fail",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": "source-example:0"
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-04",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": true
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "source-only-preservable",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "pass",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": null
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-05",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "disjoint",
+          "referentTypeMatch": false,
+          "eventAndParticipantsMatch": false,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "fail",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": "source-example:0"
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-06",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": true
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "pass",
+          "evaluatedSourceExampleIds": ["source-example:0"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": null
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-07",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "disjoint",
+          "referentTypeMatch": false,
+          "eventAndParticipantsMatch": false,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "source-only-preservable",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "fail",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": "source-example:0"
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-08",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": true
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "source-only-preservable",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "pass",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": null
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-09",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "target-narrower",
+          "referentTypeMatch": false,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": false
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "fail",
+          "evaluatedSourceExampleIds": ["source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": "source-example:1"
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    },
+    {
+      "caseId": "HV4-10",
+      "status": "completed",
+      "normative": {
+        "semantic": {
+          "targetRelationToSource": "exact",
+          "referentTypeMatch": true,
+          "eventAndParticipantsMatch": true,
+          "necessaryConditionsMatch": true
+        },
+        "usage": {
+          "register": "unknown",
+          "domain": "unknown",
+          "temporal": "unknown",
+          "regional": "unknown",
+          "capitalization": "unknown"
+        },
+        "exampleApplicability": {
+          "verdict": "pass",
+          "evaluatedSourceExampleIds": ["source-example:0", "source-example:1"],
+          "targetSenseAttested": true,
+          "counterexampleSourceExampleId": null
+        }
+      },
+      "nonNormativeNotes": {
+        "semanticNote": null,
+        "usageNote": null,
+        "exampleNote": null,
+        "rationale": null
+      }
+    }
+  ],
+  "attestation": {
+    "workedIndependently": true,
+    "didNotReadOtherAdjudicatorForm": true,
+    "didNotCommunicateWithOtherAdjudicator": true,
+    "usedOnlyExactReadList": true,
+    "didNotUseExternalSourcesInternetProviderOrProjectAi": true,
+    "filesRead": [
+      "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "pilot/evaluation/v4/readjudication-instructions-v5.md",
+      "pilot/evaluation/v4/readjudication-schema-v5.json",
+      "pilot/evaluation/v4/readjudication-c-form-v5.blank.json",
+      "pilot/evaluation/v4/readjudication-execution-seal-v5.json"
+    ],
+    "completedAt": "2026-08-24T08:33:04Z"
+  }
+}

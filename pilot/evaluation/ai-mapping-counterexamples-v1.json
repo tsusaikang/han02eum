@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "ai-mapping-counterexamples/v1",
+  "evaluationSetId": "pilot-counterexamples-7-v1",
+  "sourceEvaluationSetId": "pilot-100-v1",
+  "candidateInputSha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c",
+  "expectedCount": 7,
+  "expectedCaseCount": 7,
+  "knownNegativeCount": 5,
+  "orderedSourceIdsSha256": "94c3d4179190dafb150ef33447adbd72418756c9aa19468f139f92e60dbfa137",
+  "cases": [
+    {
+      "caseId": "royal-noun-positive",
+      "role": "positive-control",
+      "sourceId": "enwiktionary:92048420:royal:noun-1:noun-1-sense-1",
+      "candidateId": "krdict:68298:1",
+      "candidateHeadword": "왕족",
+      "expected": {
+        "requiredSemanticRelation": "exact",
+        "forbiddenSemanticRelations": [],
+        "mustNotApprove": false,
+        "preserveSourceUsage": [
+          "register",
+          "capitalization"
+        ],
+        "exampleExpectation": "evaluate-all-usable"
+      }
+    },
+    {
+      "caseId": "royal-nautical-negative-control",
+      "role": "negative-control",
+      "sourceId": "enwiktionary:92048420:royal:adjective-1:adjective-1-sense-3",
+      "candidateId": null,
+      "candidateHeadword": null,
+      "expected": {
+        "requiredSemanticRelation": null,
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [
+          "domain"
+        ],
+        "exampleExpectation": "evaluate-all-usable"
+      }
+    },
+    {
+      "caseId": "line-prompt-request-known-negative",
+      "role": "known-negative",
+      "sourceId": "enwiktionary:92030843:line:interjection-1:interjection-1-sense-1",
+      "candidateId": "krdict:26031:2",
+      "candidateHeadword": "그렇지",
+      "expected": {
+        "requiredSemanticRelation": null,
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [
+          "domain"
+        ],
+        "exampleExpectation": "insufficient-without-usable-source-example"
+      }
+    },
+    {
+      "caseId": "fast-fixed-in-place-known-negative",
+      "role": "known-negative",
+      "sourceId": "enwiktionary:92093809:fast:adjective-1:adjective-1-sense-1",
+      "candidateId": "krdict:27146:1",
+      "candidateHeadword": "고정불변하다",
+      "expected": {
+        "requiredSemanticRelation": null,
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [
+          "temporal"
+        ],
+        "exampleExpectation": "evaluate-all-usable"
+      }
+    },
+    {
+      "caseId": "screen-wire-mesh-known-negative",
+      "role": "known-negative",
+      "sourceId": "enwiktionary:92049670:screen:noun-1:noun-1-sense-2",
+      "candidateId": "krdict:57876:1",
+      "candidateHeadword": "방충망",
+      "expected": {
+        "requiredSemanticRelation": "target-narrower",
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [],
+        "exampleExpectation": "evaluate-all-usable"
+      }
+    },
+    {
+      "caseId": "play-sport-or-game-known-negative",
+      "role": "known-negative",
+      "sourceId": "enwiktionary:92039576:play:verb-1:verb-1-sense-3",
+      "candidateId": "krdict:32357:1",
+      "candidateHeadword": "경기하다",
+      "expected": {
+        "requiredSemanticRelation": "target-narrower",
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [],
+        "exampleExpectation": "insufficient-without-usable-source-example"
+      }
+    },
+    {
+      "caseId": "light-set-fire-known-negative",
+      "role": "known-negative",
+      "sourceId": "enwiktionary:91976733:light:verb-1:verb-1-sense-2",
+      "candidateId": "krdict:58174:2",
+      "candidateHeadword": "밝히다",
+      "expected": {
+        "requiredSemanticRelation": "target-broader",
+        "forbiddenSemanticRelations": [
+          "exact"
+        ],
+        "mustNotApprove": true,
+        "preserveSourceUsage": [],
+        "exampleExpectation": "evaluate-all-usable"
+      }
+    }
+  ]
+}

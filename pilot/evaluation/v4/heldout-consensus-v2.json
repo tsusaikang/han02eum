@@ -1,0 +1,339 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-consensus/v2",
+  "consensusId": "meaning-link-v4-heldout-10-v2-consensus-v2",
+  "createdDate": "2026-08-24",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "inputBindings": {
+    "evidence": {
+      "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+    },
+    "methodologyAudit": {
+      "path": "pilot/evaluation/v4/heldout-packet-methodology-audit-v3.json",
+      "sha256": "70c19640f97f60ede0c44b630fd4d2c46d4e19db245125a5e7115e89fa3924d8",
+      "verdict": "GO"
+    },
+    "blankConformance": {
+      "path": "pilot/evaluation/v4/heldout-blank-conformance-v3.json",
+      "sha256": "a9553481a4111b72bdb5fa894962aeee7ff627f3ca03f6a0c3471395d2556128",
+      "verdict": "PASS"
+    },
+    "executionSeal": {
+      "path": "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+      "sha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572"
+    },
+    "completedE": {
+      "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+      "sha256": "916cf75e1fc9d7c0db267373fa3f191767ab33ba3d3c9f4066c3af492dbc799a"
+    },
+    "completedF": {
+      "path": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.completed.json",
+      "sha256": "f6e388665329e64b85552f111f09358376b57541b42e0985bebc4b1800b9aa78"
+    }
+  },
+  "validation": {
+    "crossFileAdmissionPassed": true,
+    "assertionCount": 498,
+    "schemaAndSlotIdentityPassed": true,
+    "exactReadListsAndAttestationsPassed": true,
+    "orderedTenCaseIdentityPassed": true,
+    "fiftyUsageConstsPassed": true,
+    "fullUsableExampleCoveragePassed": true,
+    "exampleVerdictConsistencyPassed": true,
+    "executionSealBindingPassed": true,
+    "nonNormativeNotesExcluded": true
+  },
+  "orderedCoreSerialization": {
+    "encoding": "UTF-8",
+    "container": "compact JSON array",
+    "caseOrder": "evidence.caseOrder",
+    "caseKeyOrder": [
+      "caseId",
+      "sourceId",
+      "targetId",
+      "semantic",
+      "usage",
+      "example"
+    ],
+    "semanticKeyOrder": [
+      "targetRelationToSource"
+    ],
+    "usageKeyOrder": [
+      "register",
+      "domain",
+      "temporal",
+      "regional",
+      "capitalization"
+    ],
+    "exampleKeyOrder": [
+      "verdict",
+      "evaluatedSourceExampleIds",
+      "targetSenseAttested",
+      "counterexampleSourceExampleId"
+    ],
+    "trailingNewline": false
+  },
+  "comparison": {
+    "requiredAdjudicators": [
+      "E",
+      "F"
+    ],
+    "directBytesEqual": true,
+    "orderedNormativeCoreSha256": "c160a61001fbc07ba9cd28d08b73ddc444debbfb71944a0954fda50135a74de3",
+    "orderedNormativeCoreByteLength": 4672,
+    "differenceCount": 0
+  },
+  "orderedNormativeCore": [
+    {
+      "caseId": "v2-case-01",
+      "sourceId": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2",
+      "targetId": "krdict:73312:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-01-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-02",
+      "sourceId": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7",
+      "targetId": "krdict:57661:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-02-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-02-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-03",
+      "sourceId": "enwiktionary:92039576:play:noun-1:noun-1-sense-7",
+      "targetId": "krdict:88467:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-03-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-04",
+      "sourceId": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5",
+      "targetId": "krdict:91793:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-04-source-example-01",
+          "v2-case-04-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-04-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-05",
+      "sourceId": "enwiktionary:92048439:root:noun-2:noun-2-sense-2",
+      "targetId": "krdict:17919:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "source-only-preservable",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "source-only-preservable",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-05-source-example-01",
+          "v2-case-05-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-05-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-06",
+      "sourceId": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1",
+      "targetId": "krdict:56457:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-06-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-07",
+      "sourceId": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1",
+      "targetId": "krdict:83557:2",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "source-only-preservable",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-07-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-07-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-08",
+      "sourceId": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8",
+      "targetId": "krdict:29776:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-08-source-example-01",
+          "v2-case-08-source-example-02"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-09",
+      "sourceId": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5",
+      "targetId": "krdict:38513:1",
+      "semantic": {
+        "targetRelationToSource": "disjoint"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "fail",
+        "evaluatedSourceExampleIds": [
+          "v2-case-09-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": "v2-case-09-source-example-01"
+      }
+    },
+    {
+      "caseId": "v2-case-10",
+      "sourceId": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4",
+      "targetId": "krdict:14195:1",
+      "semantic": {
+        "targetRelationToSource": "exact"
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": "pass",
+        "evaluatedSourceExampleIds": [
+          "v2-case-10-source-example-01"
+        ],
+        "targetSenseAttested": true,
+        "counterexampleSourceExampleId": null
+      }
+    }
+  ],
+  "decision": {
+    "value": "EXACT-CONSENSUS",
+    "consensusPassed": true,
+    "wholeRoundRejected": false,
+    "majorityTieBreakResolverOrRevisionUsed": false
+  },
+  "currentGateState": {
+    "quantityAdmissionDerived": false,
+    "independentResultAuditGo": false,
+    "providerHeldoutExecutionAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  }
+}

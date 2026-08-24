@@ -1,0 +1,707 @@
+{
+  "schemaVersion": "meaning-link-heldout-evidence/v2",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "sealedDate": "2026-08-24",
+  "caseCount": 10,
+  "caseOrder": [
+    "v2-case-01",
+    "v2-case-02",
+    "v2-case-03",
+    "v2-case-04",
+    "v2-case-05",
+    "v2-case-06",
+    "v2-case-07",
+    "v2-case-08",
+    "v2-case-09",
+    "v2-case-10"
+  ],
+  "blindContract": {
+    "anticipatedRolePresent": false,
+    "anticipatedLabelPresent": false,
+    "semanticRelationPresent": false,
+    "exampleVerdictPresent": false,
+    "goldPresent": false,
+    "publicationDecisionPresent": false,
+    "candidateScoresPresent": false,
+    "adjudicatorMustUseOnlySealedReadList": true
+  },
+  "snapshotProvenance": {
+    "candidateSnapshot": {
+      "path": ".local/pilot/mapping-candidates.jsonl",
+      "sha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c",
+      "schemaVersion": "mapping-candidates/v1",
+      "candidateSetCount": 1002
+    },
+    "candidateManifest": {
+      "path": ".local/pilot/mapping-candidates.jsonl.manifest.json",
+      "sha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029"
+    },
+    "sourceSnapshot": {
+      "path": ".local/pilot/wiktionary-senses.jsonl",
+      "sha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+      "schemaVersion": "wiktionary-ko-coverage/v1",
+      "recordCount": 1005
+    },
+    "targetSnapshot": {
+      "path": ".local/pilot/krdict-en-senses.jsonl",
+      "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+      "recordCount": 71058
+    }
+  },
+  "exampleEvidenceContract": {
+    "sourceRawEntriesPreserved": true,
+    "usableSourceExamplesArePreregistered": true,
+    "allUsableSourceExamplesMustBeEvaluated": true,
+    "sourceEntriesThatAreLexicographicCrossReferencesAreNotUsageExamples": true,
+    "minimumTargetExampleCountPerCase": 1,
+    "targetExamplesAreNonExclusive": true
+  },
+  "usageEvidenceContract": {
+    "axisOrder": [
+      "register",
+      "domain",
+      "temporal",
+      "regional",
+      "capitalization"
+    ],
+    "derivationRuleId": "explicit-evidence-to-usage-const/v2",
+    "sourceExplicitTargetMetadataAbsent": "source-only-preservable",
+    "sourceAbsentTargetMetadataAbsent": "unknown",
+    "definitionDifferenceMustNotBeDuplicatedAsUsageConflict": true,
+    "exampleCapitalizationIsNotSenseLevelEvidence": true,
+    "koreanTargetNeverCreatesEnglishCapitalizationConflict": true,
+    "targetMetadataPolicy": "Only an explicit sense-level usage field in the sealed target snapshot counts. Headword, definition, examples, and adjudicator knowledge do not create target usage metadata."
+  },
+  "capitalizationQualifierEligibilityScan": {
+    "scopePath": ".local/pilot/wiktionary-senses.jsonl",
+    "scopeSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+    "searchedFields": [
+      "englishGloss",
+      "sourceSenseLabels"
+    ],
+    "caseInsensitivePattern": "capitali[sz]|uppercase|lowercase",
+    "matchingSourceSenseCount": 1,
+    "matchingSourceIdsLfSha256": "60f663e01e40ce500a3dfe78f4fc4a4a30368a7ae6ef75fe9d7061379222ee8d",
+    "matchingSourceSenseCountAfterRequiredExclusions": 0,
+    "eligibleMatchingSourceIdsLfSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fallbackRequirementApplied": true,
+    "fallbackCaseIdsWithOtherExplicitSourceUsageEvidence": [
+      "v2-case-05",
+      "v2-case-02",
+      "v2-case-07",
+      "v2-case-09"
+    ]
+  },
+  "cases": [
+    {
+      "caseId": "v2-case-01",
+      "pairId": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2::krdict:73312:1",
+      "source": {
+        "id": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2",
+        "headword": "bank",
+        "partOfSpeech": "verb",
+        "definitionEn": "(transitive) To put into a bank (financial institution).",
+        "sourceSenseLabels": [
+          "to put into bank"
+        ],
+        "nonUsageQualifiers": [
+          "transitive"
+        ],
+        "rawExampleEntries": [
+          {
+            "originIndex": 0,
+            "sourceExampleId": "v2-case-01-source-example-01",
+            "text": "I’m going to bank the money.",
+            "usable": true,
+            "unusableReasonCode": null
+          }
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-01-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/bank",
+          "revisionId": 91980224,
+          "license": {
+            "name": "CC BY-SA 4.0",
+            "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      },
+      "target": {
+        "id": "krdict:73312:1",
+        "headword": "입금하다",
+        "partOfSpeech": "verb",
+        "partOfSpeechKo": "동사",
+        "definitionKo": "은행과 같은 금융 기관의 계좌에 돈을 넣다.",
+        "englishLemma": "deposit",
+        "definitionEn": "To put money into an account of a financial institution like a bank.",
+        "examples": [
+          {
+            "targetExampleId": "v2-case-01-target-example-01",
+            "text": "입금한 돈."
+          },
+          {
+            "targetExampleId": "v2-case-01-target-example-02",
+            "text": "거액을 입금하다."
+          },
+          {
+            "targetExampleId": "v2-case-01-target-example-03",
+            "text": "수표를 입금하다."
+          }
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=73312&nation=eng&nationCode=6",
+          "license": {
+            "name": "CC BY-SA 2.0 KR",
+            "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+          }
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-02",
+      "pairId": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7::krdict:57661:1",
+      "source": {
+        "id": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7",
+        "headword": "ring",
+        "partOfSpeech": "noun",
+        "definitionEn": "(chemistry) A group of atoms linked by bonds to form a closed chain in a molecule.",
+        "sourceSenseLabels": [
+          "chemistry: group of atoms linked by bonds to form a closed chain"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {
+            "originIndex": 0,
+            "sourceExampleId": "v2-case-02-source-example-01",
+            "text": "a benzene ring",
+            "usable": true,
+            "unusableReasonCode": null
+          }
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-02-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/ring",
+          "revisionId": 92048374,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:57661:1",
+        "headword": "반지",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "손가락에 끼는 동그란 장신구.",
+        "englishLemma": "ring",
+        "definitionEn": "A round accessory for wearing on one's finger.",
+        "examples": [
+          {"targetExampleId": "v2-case-02-target-example-01", "text": "결혼 반지."},
+          {"targetExampleId": "v2-case-02-target-example-02", "text": "약혼 반지."},
+          {"targetExampleId": "v2-case-02-target-example-03", "text": "커플 반지."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=57661&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "explicit", "sourceExplicitValues": ["chemistry"], "sourceEvidencePointers": ["source.definitionEn:(chemistry)", "source.sourceSenseLabels[0]"], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "source-only-preservable"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-03",
+      "pairId": "enwiktionary:92039576:play:noun-1:noun-1-sense-7::krdict:88467:1",
+      "source": {
+        "id": "enwiktionary:92039576:play:noun-1:noun-1-sense-7",
+        "headword": "play",
+        "partOfSpeech": "noun",
+        "definitionEn": "(countable) A literary composition, intended to be represented by actors impersonating the characters and speaking the dialogue.",
+        "sourceSenseLabels": [
+          "literary composition intended to be represented"
+        ],
+        "nonUsageQualifiers": [
+          "countable"
+        ],
+        "rawExampleEntries": [
+          {
+            "originIndex": 0,
+            "sourceExampleId": null,
+            "text": "Hyponyms: screenplay, teleplay, telescript",
+            "usable": false,
+            "unusableReasonCode": "lexicographic-cross-reference-not-usage-example"
+          },
+          {
+            "originIndex": 1,
+            "sourceExampleId": "v2-case-03-source-example-01",
+            "text": "This book contains all of Shakespeare's plays.",
+            "usable": true,
+            "unusableReasonCode": null
+          }
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-03-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/play",
+          "revisionId": 92039576,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:88467:1",
+        "headword": "희곡",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "연극의 대본.",
+        "englishLemma": "play",
+        "definitionEn": "The script of a drama.",
+        "examples": [
+          {"targetExampleId": "v2-case-03-target-example-01", "text": "재미있는 희곡."},
+          {"targetExampleId": "v2-case-03-target-example-02", "text": "희곡 작가."},
+          {"targetExampleId": "v2-case-03-target-example-03", "text": "희곡 작품."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=88467&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-04",
+      "pairId": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5::krdict:91793:1",
+      "source": {
+        "id": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5",
+        "headword": "watch",
+        "partOfSpeech": "noun",
+        "definitionEn": "A person or group of people who guard.",
+        "sourceSenseLabels": [
+          "person or group of people who guard"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-04-source-example-01", "text": "The watch stopped the travelers at the city gates.", "usable": true, "unusableReasonCode": null},
+          {"originIndex": 1, "sourceExampleId": "v2-case-04-source-example-02", "text": "Pilate said unto them, Ye have a watch; go your way, make it as sure as ye can.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-04-source-example-01",
+          "v2-case-04-source-example-02"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/watch",
+          "revisionId": 92065761,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:91793:1",
+        "headword": "주시",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "어떤 대상을 집중하여 봄.",
+        "englishLemma": "watch",
+        "definitionEn": "The act of looking at someone or something intently.",
+        "examples": [
+          {"targetExampleId": "v2-case-04-target-example-01", "text": "사람들의 주시."},
+          {"targetExampleId": "v2-case-04-target-example-02", "text": "주시의 대상."},
+          {"targetExampleId": "v2-case-04-target-example-03", "text": "주시가 되다."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=91793&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-05",
+      "pairId": "enwiktionary:92048439:root:noun-2:noun-2-sense-2::krdict:17919:1",
+      "source": {
+        "id": "enwiktionary:92048439:root:noun-2:noun-2-sense-2",
+        "headword": "root",
+        "partOfSpeech": "noun",
+        "definitionEn": "(Australia, New Zealand, vulgar, slang) An act of sexual intercourse.",
+        "sourceSenseLabels": [
+          "coarse slang: act of sexual intercourse"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-05-source-example-01", "text": "Fancy a root?", "usable": true, "unusableReasonCode": null},
+          {"originIndex": 1, "sourceExampleId": "v2-case-05-source-example-02", "text": "Ken was in the good mood he'd been in for weeks. Nothing like a regular root to turn him into the jolly green giant.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-05-source-example-01",
+          "v2-case-05-source-example-02"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/root",
+          "revisionId": 92048439,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:17919:1",
+        "headword": "나무뿌리",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "나무의 뿌리.",
+        "englishLemma": "root",
+        "definitionEn": "The root of a tree.",
+        "examples": [
+          {"targetExampleId": "v2-case-05-target-example-01", "text": "나무뿌리가 다치다."},
+          {"targetExampleId": "v2-case-05-target-example-02", "text": "나무뿌리가 뽑히다."},
+          {"targetExampleId": "v2-case-05-target-example-03", "text": "나무뿌리가 상하다."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=17919&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "explicit", "sourceExplicitValues": ["vulgar", "slang"], "sourceEvidencePointers": ["source.definitionEn:(vulgar, slang)", "source.sourceSenseLabels[0]"], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "source-only-preservable"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "explicit", "sourceExplicitValues": ["Australia", "New Zealand"], "sourceEvidencePointers": ["source.definitionEn:(Australia, New Zealand)"], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "source-only-preservable"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-06",
+      "pairId": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1::krdict:56457:1",
+      "source": {
+        "id": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1",
+        "headword": "minute",
+        "partOfSpeech": "adjective",
+        "definitionEn": "Very small.",
+        "sourceSenseLabels": [
+          "very small"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-06-source-example-01", "text": "They found only minute quantities of chemical residue on his clothing.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-06-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/minute",
+          "revisionId": 91663519,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:56457:1",
+        "headword": "미소하다",
+        "partOfSpeech": "adjective",
+        "partOfSpeechKo": "형용사",
+        "definitionKo": "아주 작다.",
+        "englishLemma": "very little; microscopic; extremely small",
+        "definitionEn": "Very small.",
+        "examples": [
+          {"targetExampleId": "v2-case-06-target-example-01", "text": "변화가 미소하다."},
+          {"targetExampleId": "v2-case-06-target-example-02", "text": "차이가 미소하다."},
+          {"targetExampleId": "v2-case-06-target-example-03", "text": "크기가 미소하다."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=56457&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-07",
+      "pairId": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1::krdict:83557:2",
+      "source": {
+        "id": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1",
+        "headword": "bark",
+        "partOfSpeech": "noun",
+        "definitionEn": "(obsolete) A small sailing vessel, e.g. a pinnace or a fishing smack; a rowing boat or barge.",
+        "sourceSenseLabels": [
+          "small sailing vessel"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-07-source-example-01", "text": "Nothing then remained for them but to commit their bark to the wind and waves.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-07-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/bark",
+          "revisionId": 92081549,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:83557:2",
+        "headword": "표피",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "식물의 가장 바깥쪽을 덮고 있는 부분.",
+        "englishLemma": "bark",
+        "definitionEn": "The part covering the outermost part of a plant.",
+        "examples": [
+          {"targetExampleId": "v2-case-07-target-example-01", "text": "나무의 표피."},
+          {"targetExampleId": "v2-case-07-target-example-02", "text": "표피 내부."},
+          {"targetExampleId": "v2-case-07-target-example-03", "text": "표피 섬유."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=83557&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "explicit", "sourceExplicitValues": ["obsolete"], "sourceEvidencePointers": ["source.definitionEn:(obsolete)"], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "source-only-preservable"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-08",
+      "pairId": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8::krdict:29776:1",
+      "source": {
+        "id": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8",
+        "headword": "wave",
+        "partOfSpeech": "verb",
+        "definitionEn": "(transitive) To cause to move back and forth repeatedly.",
+        "sourceSenseLabels": [
+          "to cause to move back and forth repeatedly — see also agitate,‎ brandish"
+        ],
+        "nonUsageQualifiers": [
+          "transitive"
+        ],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-08-source-example-01", "text": "The starter waved the flag to begin the race.", "usable": true, "unusableReasonCode": null},
+          {"originIndex": 1, "sourceExampleId": "v2-case-08-source-example-02", "text": "His father has waved bills in front of face and said to him — see what you've cost me.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-08-source-example-01",
+          "v2-case-08-source-example-02"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/wave",
+          "revisionId": 92065773,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:29776:1",
+        "headword": "흔들다",
+        "partOfSpeech": "verb",
+        "partOfSpeechKo": "동사",
+        "definitionKo": "무엇을 좌우, 앞뒤로 자꾸 움직이게 하다.",
+        "englishLemma": "wave; sway; flap; wag; shake",
+        "definitionEn": "To make something move from side to side and back and forth, repeatedly.",
+        "examples": [
+          {"targetExampleId": "v2-case-08-target-example-01", "text": "고개를 흔들다."},
+          {"targetExampleId": "v2-case-08-target-example-02", "text": "꼬리를 흔들다."},
+          {"targetExampleId": "v2-case-08-target-example-03", "text": "머리를 흔들다."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=29776&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-09",
+      "pairId": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5::krdict:38513:1",
+      "source": {
+        "id": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5",
+        "headword": "flat",
+        "partOfSpeech": "adjective",
+        "definitionEn": "(music) Of a note or voice, lower in pitch than it should be.",
+        "sourceSenseLabels": [
+          "lower in pitch than it should be"
+        ],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-09-source-example-01", "text": "Your A string is flat.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-09-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/flat",
+          "revisionId": 92128505,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:38513:1",
+        "headword": "납작하다",
+        "partOfSpeech": "adjective",
+        "partOfSpeechKo": "형용사",
+        "definitionKo": "사물의 모양이 판판하고 넓게 퍼져 있다.",
+        "englishLemma": "flat",
+        "definitionEn": "An object looking flat and spread.",
+        "examples": [
+          {"targetExampleId": "v2-case-09-target-example-01", "text": "납작한 모양."},
+          {"targetExampleId": "v2-case-09-target-example-02", "text": "납작한 코."},
+          {"targetExampleId": "v2-case-09-target-example-03", "text": "납작하게 누르다."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=38513&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "explicit", "sourceExplicitValues": ["music"], "sourceEvidencePointers": ["source.definitionEn:(music)"], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "source-only-preservable"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    },
+    {
+      "caseId": "v2-case-10",
+      "pairId": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4::krdict:14195:1",
+      "source": {
+        "id": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4",
+        "headword": "cell",
+        "partOfSpeech": "noun",
+        "definitionEn": "A room in a prison or jail for one or more inmates.",
+        "sourceSenseLabels": [],
+        "nonUsageQualifiers": [],
+        "rawExampleEntries": [
+          {"originIndex": 0, "sourceExampleId": "v2-case-10-source-example-01", "text": "The combatants spent the night in separate cells.", "usable": true, "unusableReasonCode": null}
+        ],
+        "usableSourceExampleIds": [
+          "v2-case-10-source-example-01"
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/wiktionary-senses.jsonl",
+          "snapshotSha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc",
+          "sourceName": "English Wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/cell",
+          "revisionId": 91924215,
+          "license": {"name": "CC BY-SA 4.0", "url": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        }
+      },
+      "target": {
+        "id": "krdict:14195:1",
+        "headword": "감방",
+        "partOfSpeech": "noun",
+        "partOfSpeechKo": "명사",
+        "definitionKo": "교도소에서 죄수를 가두어 두는 방.",
+        "englishLemma": "prison; prison cell",
+        "definitionEn": "A room used to detain individuals in a prison.",
+        "examples": [
+          {"targetExampleId": "v2-case-10-target-example-01", "text": "교도소 감방."},
+          {"targetExampleId": "v2-case-10-target-example-02", "text": "어두운 감방."},
+          {"targetExampleId": "v2-case-10-target-example-03", "text": "감방 생활."}
+        ],
+        "provenance": {
+          "snapshotPath": ".local/pilot/krdict-en-senses.jsonl",
+          "snapshotSha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef",
+          "sourceName": "한국어기초사전",
+          "sourceUrl": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=14195&nation=eng&nationCode=6",
+          "license": {"name": "CC BY-SA 2.0 KR", "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"}
+        }
+      },
+      "usageAxes": {
+        "register": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "domain": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "temporal": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "regional": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"},
+        "capitalization": {"sourceEvidenceStatus": "absent", "sourceExplicitValues": [], "sourceEvidencePointers": [], "targetMetadataStatus": "absent", "targetExplicitValues": [], "deterministicValue": "unknown"}
+      }
+    }
+  ]
+}

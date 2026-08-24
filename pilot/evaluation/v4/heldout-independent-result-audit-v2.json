@@ -1,0 +1,695 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-independent-result-audit/v2",
+  "auditId": "meaning-link-v4-heldout-10-v2-independent-result-audit-v2",
+  "auditedDate": "2026-08-24",
+  "auditorRole": "independent-code-method-result-auditor",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "verdict": "NO-GO",
+  "independentResultAuditGo": false,
+  "decisionRule": "Any P0 or P1 finding requires NO-GO.",
+  "decisionReason": "The sealed files, E/F adjudication, consensus, and gold are internally consistent, but the future held-out gate accepts caller-supplied gold as its expected truth without re-deriving or binding it to the sealed consensus and evidence. A synthetic mutation changed a sealed semantic-negative case to expected positive and publication-eligible; all 60 attempts then passed with six true approvals for that negative core and zero reported negative approval escapes. This P1 violates tamper-fail-closed, label immutability, and zero-negative-escape requirements.",
+  "auditTarget": {
+    "resultSealPath": "pilot/evaluation/v4/heldout-result-seal-v2.json",
+    "resultSealRawSha256": "f969517804babf5f107ea7aec3c0b763a841dc73cc005e3ea19c363f257ff3c2",
+    "resultSealSelfProjection": {
+      "algorithm": "SHA-256",
+      "projection": "RFC-8259-compatible canonical JSON with lexicographically sorted object keys and sealSelfIntegrity omitted",
+      "expectedSha256": "b9ccba80b4103d309313bc835e051f2f0f7edc819d7902d27106b4ca7c9bebb4",
+      "actualSha256": "b9ccba80b4103d309313bc835e051f2f0f7edc819d7902d27106b4ca7c9bebb4",
+      "match": true
+    },
+    "sealedFileCount": 23,
+    "sealedPathUniqueCount": 23,
+    "allActualRawSha256Match": true,
+    "sealedFiles": [
+      {
+        "role": "base-preregistration",
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+        "expectedSha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247",
+        "actualSha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247",
+        "match": true
+      },
+      {
+        "role": "base-preregistration-seal",
+        "path": "pilot/evaluation/v4/preregistration-seal-v2.json",
+        "expectedSha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867",
+        "actualSha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867",
+        "match": true
+      },
+      {
+        "role": "packet-preregistration",
+        "path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V2_PREREGISTRATION.md",
+        "expectedSha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d",
+        "actualSha256": "4071a1054ce75d5e341b2effd21fda194f96eeef9710bbb15004c00e76f50b6d",
+        "match": true
+      },
+      {
+        "role": "packet-seal",
+        "path": "pilot/evaluation/v4/heldout-packet-seal-v2.json",
+        "expectedSha256": "543cacc834b3d4239a8c6b2b208e3b5c0ed15a8afe0df1efb18246a76a11ca1d",
+        "actualSha256": "543cacc834b3d4239a8c6b2b208e3b5c0ed15a8afe0df1efb18246a76a11ca1d",
+        "match": true
+      },
+      {
+        "role": "blind-evidence",
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "expectedSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "actualSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "match": true
+      },
+      {
+        "role": "protocol-preregistration",
+        "path": "docs/AI_MAPPING_V4_HELDOUT_PACKET_V3_PREREGISTRATION.md",
+        "expectedSha256": "376960bd0a558b66af4b9ae92ee80f922f23349ec06d879762561e33228b90be",
+        "actualSha256": "376960bd0a558b66af4b9ae92ee80f922f23349ec06d879762561e33228b90be",
+        "match": true
+      },
+      {
+        "role": "adjudication-instructions",
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+        "expectedSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "actualSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "match": true
+      },
+      {
+        "role": "adjudication-schema",
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+        "expectedSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "actualSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "match": true
+      },
+      {
+        "role": "protocol-seal",
+        "path": "pilot/evaluation/v4/heldout-packet-protocol-seal-v3.json",
+        "expectedSha256": "04180df753761cc4478ed6bb56188f3012debc922f5d5dcfa602c67761b51b00",
+        "actualSha256": "04180df753761cc4478ed6bb56188f3012debc922f5d5dcfa602c67761b51b00",
+        "match": true
+      },
+      {
+        "role": "historical-methodology-audit",
+        "path": "pilot/evaluation/v4/heldout-packet-methodology-audit-v2.json",
+        "expectedSha256": "47645141ea18cbe85758c7fef2a0085208913a8b409b58d6bf243dbff7dfeb45",
+        "actualSha256": "47645141ea18cbe85758c7fef2a0085208913a8b409b58d6bf243dbff7dfeb45",
+        "match": true
+      },
+      {
+        "role": "admitting-methodology-audit",
+        "path": "pilot/evaluation/v4/heldout-packet-methodology-audit-v3.json",
+        "expectedSha256": "70c19640f97f60ede0c44b630fd4d2c46d4e19db245125a5e7115e89fa3924d8",
+        "actualSha256": "70c19640f97f60ede0c44b630fd4d2c46d4e19db245125a5e7115e89fa3924d8",
+        "match": true
+      },
+      {
+        "role": "blank-conformance",
+        "path": "pilot/evaluation/v4/heldout-blank-conformance-v3.json",
+        "expectedSha256": "a9553481a4111b72bdb5fa894962aeee7ff627f3ca03f6a0c3471395d2556128",
+        "actualSha256": "a9553481a4111b72bdb5fa894962aeee7ff627f3ca03f6a0c3471395d2556128",
+        "match": true
+      },
+      {
+        "role": "execution-seal",
+        "path": "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+        "expectedSha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572",
+        "actualSha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572",
+        "match": true
+      },
+      {
+        "role": "blank-form-E",
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json",
+        "expectedSha256": "28326ae33014f7447befcbdd705f61dcab5cfd1788f81faaf7733cbba4058860",
+        "actualSha256": "28326ae33014f7447befcbdd705f61dcab5cfd1788f81faaf7733cbba4058860",
+        "match": true
+      },
+      {
+        "role": "blank-form-F",
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.blank.json",
+        "expectedSha256": "188a71634af12dac8a2472c962994286e72e50c05a487842c7a8faa82f09bcae",
+        "actualSha256": "188a71634af12dac8a2472c962994286e72e50c05a487842c7a8faa82f09bcae",
+        "match": true
+      },
+      {
+        "role": "completed-form-E",
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+        "expectedSha256": "916cf75e1fc9d7c0db267373fa3f191767ab33ba3d3c9f4066c3af492dbc799a",
+        "actualSha256": "916cf75e1fc9d7c0db267373fa3f191767ab33ba3d3c9f4066c3af492dbc799a",
+        "match": true
+      },
+      {
+        "role": "completed-form-F",
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.completed.json",
+        "expectedSha256": "f6e388665329e64b85552f111f09358376b57541b42e0985bebc4b1800b9aa78",
+        "actualSha256": "f6e388665329e64b85552f111f09358376b57541b42e0985bebc4b1800b9aa78",
+        "match": true
+      },
+      {
+        "role": "derived-consensus",
+        "path": "pilot/evaluation/v4/heldout-consensus-v2.json",
+        "expectedSha256": "9cf1741b5c93be72452464d4f39b9c1f30cd67ef76a5bf7791c73508f6c0b241",
+        "actualSha256": "9cf1741b5c93be72452464d4f39b9c1f30cd67ef76a5bf7791c73508f6c0b241",
+        "match": true
+      },
+      {
+        "role": "derived-gold",
+        "path": "pilot/evaluation/v4/heldout-gold-v2.json",
+        "expectedSha256": "16eb2c60026269c782216af128e5e72d8b056c271138deaa16e7fa43c34f0e07",
+        "actualSha256": "16eb2c60026269c782216af128e5e72d8b056c271138deaa16e7fa43c34f0e07",
+        "match": true
+      },
+      {
+        "role": "admission-and-comparator-module",
+        "path": "scripts/lib/v4/heldout-admission-v2.mjs",
+        "expectedSha256": "ff08354ab53ee9b598ba0d841146aae44e4b8371ef5ff3d8fc99ee9b8ee7219b",
+        "actualSha256": "ff08354ab53ee9b598ba0d841146aae44e4b8371ef5ff3d8fc99ee9b8ee7219b",
+        "match": true
+      },
+      {
+        "role": "veto-only-policy-module",
+        "path": "scripts/lib/v4/meaning-policy-v2.mjs",
+        "expectedSha256": "549fa31b1b0f73638319074345c5a111697c6073c1858833b26f45bbf26c1463",
+        "actualSha256": "549fa31b1b0f73638319074345c5a111697c6073c1858833b26f45bbf26c1463",
+        "match": true
+      },
+      {
+        "role": "heldout-and-downstream-gate-module",
+        "path": "scripts/lib/v4/heldout-gate-v2.mjs",
+        "expectedSha256": "463a8e3f07760b360159f1af778ebc6d7316be6b9f26e2c433aef29bb0bbbe78",
+        "actualSha256": "463a8e3f07760b360159f1af778ebc6d7316be6b9f26e2c433aef29bb0bbbe78",
+        "match": true
+      },
+      {
+        "role": "synthetic-test",
+        "path": "test/heldout-v4-v2.test.mjs",
+        "expectedSha256": "476b8b1e59fbf07c6dcd6cc430c7ac6caec8770888466fb7cdc10274b7deb1ba",
+        "actualSha256": "476b8b1e59fbf07c6dcd6cc430c7ac6caec8770888466fb7cdc10274b7deb1ba",
+        "match": true
+      }
+    ]
+  },
+  "exactReadAttestation": {
+    "resultSealReadFirst": true,
+    "resultSealReadBeforeAnyOtherProjectInput": true,
+    "sealedPathCount": 23,
+    "sealedPathContentReadCount": 23,
+    "exactSealedPathListMatched": true,
+    "sealedPathsReadOnly": true,
+    "supplementalPreservedV3HashOnlyScopeExplicitlyAuthorized": true,
+    "supplementalPreservedV3HashOnlyCount": 7,
+    "supplementalPreservedV3ContentInspected": false,
+    "additionalProjectInputFilesRead": false,
+    "projectStateRead": false,
+    "priorPacketV1OrAdjudicatorABCDResultsRead": false,
+    "createdOutputReadBackForJsonParseAndShaOnly": true,
+    "networkUsed": false,
+    "providerCallsMade": 0,
+    "projectAiCallsMade": 0,
+    "legacySevenExecuted": false,
+    "sampleOneHundredExecuted": false,
+    "gitPushPerformed": false,
+    "deploymentPerformed": false,
+    "codeModified": false,
+    "existingProjectFilesModified": false,
+    "contentReadFiles": [
+      "pilot/evaluation/v4/heldout-result-seal-v2.json",
+      "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+      "pilot/evaluation/v4/preregistration-seal-v2.json",
+      "docs/AI_MAPPING_V4_HELDOUT_PACKET_V2_PREREGISTRATION.md",
+      "pilot/evaluation/v4/heldout-packet-seal-v2.json",
+      "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "docs/AI_MAPPING_V4_HELDOUT_PACKET_V3_PREREGISTRATION.md",
+      "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+      "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+      "pilot/evaluation/v4/heldout-packet-protocol-seal-v3.json",
+      "pilot/evaluation/v4/heldout-packet-methodology-audit-v2.json",
+      "pilot/evaluation/v4/heldout-packet-methodology-audit-v3.json",
+      "pilot/evaluation/v4/heldout-blank-conformance-v3.json",
+      "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-F-v3.blank.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-F-v3.completed.json",
+      "pilot/evaluation/v4/heldout-consensus-v2.json",
+      "pilot/evaluation/v4/heldout-gold-v2.json",
+      "scripts/lib/v4/heldout-admission-v2.mjs",
+      "scripts/lib/v4/meaning-policy-v2.mjs",
+      "scripts/lib/v4/heldout-gate-v2.mjs",
+      "test/heldout-v4-v2.test.mjs"
+    ],
+    "supplementalHashOnlyFiles": [
+      "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+      "pilot/evaluation/ai-mapping-sample-100-v1.json",
+      ".local/pilot/ai-decisions-v3-counterexamples.jsonl",
+      ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json",
+      ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json.complete.json",
+      ".local/pilot/ai-contract-smoke-v3-attempt1.json",
+      ".local/pilot/ai-contract-smoke-v3-attempt2.json"
+    ]
+  },
+  "preservedV3SevenShaChecks": {
+    "scope": "explicitly authorized raw-SHA-only preservation check",
+    "count": 7,
+    "allMatch": true,
+    "files": [
+      {
+        "path": "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+        "expectedSha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360",
+        "actualSha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/ai-mapping-sample-100-v1.json",
+        "expectedSha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b",
+        "actualSha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl",
+        "expectedSha256": "ca59e2a548bd815814367a72aef796228e7dc330324d820274945a455c9ec3e0",
+        "actualSha256": "ca59e2a548bd815814367a72aef796228e7dc330324d820274945a455c9ec3e0",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json",
+        "expectedSha256": "d7b95098ed022ed3c7bcf0be9553688a85d7557d4b20dbbc133f9148b1c7c6d1",
+        "actualSha256": "d7b95098ed022ed3c7bcf0be9553688a85d7557d4b20dbbc133f9148b1c7c6d1",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json.complete.json",
+        "expectedSha256": "5e84866b2179d828039889eb40fd72c9d82ee131a9efb8423ef120d68b8c48ee",
+        "actualSha256": "5e84866b2179d828039889eb40fd72c9d82ee131a9efb8423ef120d68b8c48ee",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/ai-contract-smoke-v3-attempt1.json",
+        "expectedSha256": "1eebc26f94b060dff1128d1aa67bb4c340c3fde15e21e4a8f533702ffb2a4282",
+        "actualSha256": "1eebc26f94b060dff1128d1aa67bb4c340c3fde15e21e4a8f533702ffb2a4282",
+        "match": true
+      },
+      {
+        "path": ".local/pilot/ai-contract-smoke-v3-attempt2.json",
+        "expectedSha256": "371ed18920438c8e2eb9454287bebb1a1e194efe4624408babdc5cec7e94b761",
+        "actualSha256": "371ed18920438c8e2eb9454287bebb1a1e194efe4624408babdc5cec7e94b761",
+        "match": true
+      }
+    ]
+  },
+  "sealAndMethodChecks": {
+    "packetSeal": {
+      "rawSha256": "543cacc834b3d4239a8c6b2b208e3b5c0ed15a8afe0df1efb18246a76a11ca1d",
+      "expectedProjectionSha256": "47688dd3f5d15adf4a1aa7ae5fd5712950de2a16930194afc906a4f381818074",
+      "actualProjectionSha256": "47688dd3f5d15adf4a1aa7ae5fd5712950de2a16930194afc906a4f381818074",
+      "match": true
+    },
+    "protocolSeal": {
+      "rawSha256": "04180df753761cc4478ed6bb56188f3012debc922f5d5dcfa602c67761b51b00",
+      "expectedProjectionSha256": "47415239d171777ea40fa6c24e49f0a15ec8fa61e1c8b38f496a5a30d85da8d4",
+      "actualProjectionSha256": "47415239d171777ea40fa6c24e49f0a15ec8fa61e1c8b38f496a5a30d85da8d4",
+      "match": true
+    },
+    "admittingMethodologyAudit": {
+      "path": "pilot/evaluation/v4/heldout-packet-methodology-audit-v3.json",
+      "rawSha256": "70c19640f97f60ede0c44b630fd4d2c46d4e19db245125a5e7115e89fa3924d8",
+      "verdict": "GO",
+      "methodAuditGo": true,
+      "findingCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1
+      },
+      "p0P1Clean": true
+    },
+    "blankConformance": {
+      "rawSha256": "a9553481a4111b72bdb5fa894962aeee7ff627f3ca03f6a0c3471395d2556128",
+      "overallVerdict": "PASS",
+      "p2ClosureStatus": "CLOSED-PASS",
+      "eBlankRawByteLength": 7181,
+      "fBlankRawByteLength": 7181,
+      "pass": true
+    }
+  },
+  "executionSealChecks": {
+    "path": "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+    "rawSha256": "6ba74ea9b3cdf97bb2a384a0d578d126d239509dd2e0bf87139ff50380ad7572",
+    "topLevelArray": true,
+    "entryCount": 5,
+    "entryKeyOrderPathThenSha256": true,
+    "compactJson": true,
+    "trailingNewline": false,
+    "selfShaEmbedded": false,
+    "allEntriesMatchActualRawBytes": true,
+    "entries": [
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+        "sealedSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "actualSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-instructions-v3.md",
+        "sealedSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "actualSha256": "19732c603b9967e6bf8a8109a9d4a21391618aaeafc26748e60a43f90a61e189",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-schema-v3.json",
+        "sealedSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "actualSha256": "f413ded822847b29d5a85417f7d9254a49c32e0b93a8668b3c7eb08e19026e88",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.blank.json",
+        "sealedSha256": "28326ae33014f7447befcbdd705f61dcab5cfd1788f81faaf7733cbba4058860",
+        "actualSha256": "28326ae33014f7447befcbdd705f61dcab5cfd1788f81faaf7733cbba4058860",
+        "match": true
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-adjudication-form-F-v3.blank.json",
+        "sealedSha256": "188a71634af12dac8a2472c962994286e72e50c05a487842c7a8faa82f09bcae",
+        "actualSha256": "188a71634af12dac8a2472c962994286e72e50c05a487842c7a8faa82f09bcae",
+        "match": true
+      }
+    ]
+  },
+  "adjudicationValidation": {
+    "crossFileAdmissionPassed": true,
+    "crossFileAssertionCount": 498,
+    "completedFormSchemaAndClosedShapePassed": true,
+    "slotFormOutputIdentityPassed": true,
+    "executionSealBindingPassed": true,
+    "exactFivePathReadListAndAttestationPassed": true,
+    "readListFlags": {
+      "E": {
+        "exactReadListOnly": true,
+        "fileCount": 5,
+        "otherAdjudicationSeen": false,
+        "discussionOccurred": false,
+        "providerOrProjectAiUsed": false
+      },
+      "F": {
+        "exactReadListOnly": true,
+        "fileCount": 5,
+        "otherAdjudicationSeen": false,
+        "discussionOccurred": false,
+        "providerOrProjectAiUsed": false
+      }
+    },
+    "orderedTenCaseIdentityPassed": true,
+    "fiftyUsageConstantsPassed": true,
+    "fullOrderedUsableExampleCoveragePassed": true,
+    "fullCoverageCaseCount": 10,
+    "exampleVerdictAttestationCounterexampleConsistencyPassed": true,
+    "unknownConflictAndExampleInvalidityFailClosedInAdmissionAndPolicy": true,
+    "eNonNormativeNoteCount": 0,
+    "fNonNormativeNoteCount": 1,
+    "notesExcludedFromNormativeCore": true
+  },
+  "orderedCoreIndependentRecalculation": {
+    "reconstruction": "For each completed form, create cases in evidence order with protocol case, semantic, usage, and example key order; JSON.stringify to compact UTF-8 array; no trailing newline.",
+    "eByteLength": 4672,
+    "fByteLength": 4672,
+    "eSha256": "c160a61001fbc07ba9cd28d08b73ddc444debbfb71944a0954fda50135a74de3",
+    "fSha256": "c160a61001fbc07ba9cd28d08b73ddc444debbfb71944a0954fda50135a74de3",
+    "directBytesEqual": true,
+    "consensusOrderedCoreDirectlyEqual": true,
+    "trailingNewline": false
+  },
+  "consensusAndGoldIndependentDerivation": {
+    "consensusInputPaths": [
+      "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "pilot/evaluation/v4/heldout-packet-methodology-audit-v3.json",
+      "pilot/evaluation/v4/heldout-blank-conformance-v3.json",
+      "pilot/evaluation/v4/heldout-execution-seal-v3.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+      "pilot/evaluation/v4/heldout-adjudication-form-F-v3.completed.json"
+    ],
+    "priorPacketV1OrAdjudicatorABCDInputPresent": false,
+    "nonNormativeNotesInputToConsensusOrGold": false,
+    "goldCasesMechanicallyEqualIndependentDerivation": true,
+    "semanticPositiveCount": 5,
+    "semanticPositiveIds": [
+      "v2-case-01",
+      "v2-case-03",
+      "v2-case-06",
+      "v2-case-08",
+      "v2-case-10"
+    ],
+    "semanticNegativeCount": 5,
+    "semanticNegativeIds": [
+      "v2-case-02",
+      "v2-case-04",
+      "v2-case-05",
+      "v2-case-07",
+      "v2-case-09"
+    ],
+    "publicationEligibleCount": 0,
+    "publicationEligibleIds": [],
+    "quantityAdmissionPassed": true
+  },
+  "languageRuleChecks": {
+    "grammaticalPluralNotLexicalCollective": {
+      "caseId": "v2-case-03",
+      "sourceDefinitionIsSingularLiteraryComposition": true,
+      "sourceExampleUsesGrammaticalPlural": true,
+      "consensusRelation": "exact",
+      "exampleVerdict": "pass",
+      "semanticGold": "positive",
+      "passed": true
+    },
+    "lexicalGroupReferentVersusEventOrState": {
+      "caseId": "v2-case-04",
+      "sourceDefinitionPersonOrGroup": true,
+      "targetDefinitionActOfLooking": true,
+      "consensusRelation": "disjoint",
+      "exampleVerdict": "fail",
+      "semanticGold": "negative",
+      "passed": true
+    },
+    "targetExamplesNonExclusive": {
+      "caseId": "v2-case-08",
+      "sourceExamplesMentionFlagAndBills": true,
+      "targetExamplesMentionNeither": true,
+      "targetDefinitionAttestsSameMovementSense": true,
+      "consensusRelation": "exact",
+      "exampleVerdict": "pass",
+      "semanticGold": "positive",
+      "passed": true
+    },
+    "koreanCapitalization": {
+      "capitalizationUnknownCount": 10,
+      "capitalizationConflictCount": 0,
+      "exampleCapitalizationUsedAsQualifier": false,
+      "passed": true
+    },
+    "explicitSourceOnlyUsage": {
+      "registerCaseIds": [
+        "v2-case-05"
+      ],
+      "domainCaseIds": [
+        "v2-case-02",
+        "v2-case-09"
+      ],
+      "temporalCaseIds": [
+        "v2-case-07"
+      ],
+      "regionalCaseIds": [
+        "v2-case-05"
+      ],
+      "allFiveExplicitValuesPreservedAsSourceOnlyPreservable": true,
+      "semanticNonExactPromotedToExact": false,
+      "passed": true
+    }
+  },
+  "codeReview": {
+    "modules": [
+      {
+        "path": "scripts/lib/v4/heldout-admission-v2.mjs",
+        "sha256": "ff08354ab53ee9b598ba0d841146aae44e4b8371ef5ff3d8fc99ee9b8ee7219b",
+        "review": {
+          "exactMaterialSetRequired": true,
+          "rawShaTamperRejected": true,
+          "packetAndProtocolProjectionChecked": true,
+          "methodologyGoAndP0P1ZeroChecked": true,
+          "executionSealAndReadListBindingChecked": true,
+          "slotFormOutputIdentityChecked": true,
+          "closedCaseShapeAndEnumsChecked": true,
+          "usageConstsAndExampleCoverageChecked": true,
+          "directOrderedCoreBytesCompared": true
+        }
+      },
+      {
+        "path": "scripts/lib/v4/meaning-policy-v2.mjs",
+        "sha256": "549fa31b1b0f73638319074345c5a111697c6073c1858833b26f45bbf26c1463",
+        "review": {
+          "falseUpstreamApprovalCannotBecomeTrue": true,
+          "observedLabelsAndFieldsNeverRewritten": true,
+          "correctedFieldsAlwaysEmpty": true,
+          "unknownConflictAndTargetOnlyVeto": true,
+          "exampleFailAndInsufficientVeto": true,
+          "schemaProvenanceCoverageAndErrorVeto": true,
+          "sourceOnlyUsageCannotPromoteSemanticExactness": true
+        }
+      },
+      {
+        "path": "scripts/lib/v4/heldout-gate-v2.mjs",
+        "sha256": "463a8e3f07760b360159f1af778ebc6d7316be6b9f26e2c433aef29bb0bbbe78",
+        "review": {
+          "registeredPlanCaseCount": 10,
+          "registeredPlanModelCount": 2,
+          "registeredPlanRepetitionsPerModelPerCase": 3,
+          "registeredPlanAttemptCount": 60,
+          "registeredAttemptIdsUnique": true,
+          "registeredModelsSeedsRolesAndTemperatureFixed": true,
+          "retryIndexZeroRequired": true,
+          "observedAttemptCountAndIdSetChecked": true,
+          "fullFingerprintSemanticGoldPublicationAndFinalApprovalCompared": true,
+          "attemptErrorSchemaProvenanceCoverageFlagsChecked": true,
+          "negativeEscapeAndSemanticPositiveMissCounted": true,
+          "independentResultAuditFalseKeepsProviderAuthorizationFalse": true,
+          "independentResultAuditFalseKeepsLegacyAndSampleAuthorizationFalse": true,
+          "expectedCoreAndGoldBoundToSealedResultOrReDerived": false,
+          "tamperedExpectedGoldRejected": false,
+          "reviewPassed": false
+        }
+      }
+    ],
+    "externalCapabilityAbsence": {
+      "networkOrProviderCallImplementationPresent": false,
+      "providerRunnerPresent": false,
+      "secretOrEnvironmentReadPresent": false,
+      "filesystemReadOrWriteInModulesPresent": false,
+      "pathOverridePresent": false,
+      "externalMutationPresent": false
+    }
+  },
+  "testExecution": {
+    "command": "node --test test/heldout-v4-v2.test.mjs",
+    "exitCode": 0,
+    "topLevelTestCount": 18,
+    "subtestCount": 14,
+    "testCountIncludingSubtests": 32,
+    "passCount": 32,
+    "failCount": 0,
+    "cancelledCount": 0,
+    "skippedCount": 0,
+    "todoCount": 0,
+    "reportedDurationMs": 89.82475,
+    "sealedTestSuitePassed": true,
+    "missingHighRiskCoverage": [
+      "caller-supplied expected gold label/publication mutation",
+      "caller-supplied ordered core/result-seal binding",
+      "unexpected attempt reporting-count accuracy"
+    ]
+  },
+  "supplementalSyntheticChecks": {
+    "vetoOnly": {
+      "upstreamFalseApproval": false,
+      "unknownApproval": false,
+      "conflictApproval": false,
+      "exampleFailApproval": false,
+      "exampleInsufficientApproval": false,
+      "allCorrectedFieldsEmpty": true,
+      "passed": true
+    },
+    "expectedGoldTamperReproduction": {
+      "description": "Kept sealed consensus core v2-case-02 as disjoint/fail, changed only the in-memory gold entry from semantic negative/publication false to semantic positive/publication true, generated the evaluator's own 60-attempt plan, and supplied exact completed attempts from that plan.",
+      "gatePassed": true,
+      "mutatedNegativeCaseTrueApprovalAttemptCount": 6,
+      "reportedNegativeApprovalEscapeCount": 0,
+      "reportedSemanticGoldMismatchCount": 0,
+      "reportedFinalApprovalMismatchCount": 0,
+      "failureCount": 0,
+      "expectedFailClosed": true,
+      "actualFailClosed": false
+    },
+    "unexpectedAttemptMetricReproduction": {
+      "description": "Replaced one expected attemptId with one unique unexpected attemptId while retaining 60 observed attempts.",
+      "gatePassed": false,
+      "failures": [
+        "ATTEMPT_MISSING",
+        "ATTEMPT_UNEXPECTED"
+      ],
+      "reportedFullFingerprintMatchCount": 60,
+      "reportedSemanticGoldMatchCount": 60,
+      "actualExpectedAttemptsEvaluated": 59,
+      "reportingAccurate": false
+    }
+  },
+  "findings": [
+    {
+      "id": "P1-001",
+      "priority": "P1",
+      "title": "The provider gate trusts caller-supplied gold and can normalize a negative approval escape into the expected baseline.",
+      "evidence": [
+        "buildHeldoutAttemptPlan accepts orderedCore and gold objects from its caller, computes the expected fingerprint from the supplied core, and copies semanticGold and publicationEligible from the supplied gold entry.",
+        "It does not bind those objects to heldout-consensus-v2.json, heldout-gold-v2.json, heldout-result-seal-v2.json, or a successful admission/result-audit proof, and it does not independently re-derive semanticGold or publicationEligible.",
+        "evaluateProviderHeldoutGate rebuilds its expected plan from the same caller-supplied objects, so coordinated or accidental expected-input mutation becomes the comparison baseline rather than a failure.",
+        "A synthetic check left v2-case-02's sealed disjoint/fail normative core unchanged but changed its in-memory gold from negative/publication false to positive/publication true. The generated 60 attempts passed, all six v2-case-02 attempts had finalApproval=true, and negativeApprovalEscapeCount remained zero."
+      ],
+      "impact": "A future runner can obtain a passing held-out gate after a false-to-true semantic-label and approval mutation for a sealed semantic-negative case. Full normative fingerprints can still match while the zero-negative-escape and veto-only result contracts are defeated.",
+      "requiredRemediation": [
+        "Derive semanticGold and publicationEligible inside the gate from an exact admitted ordered core plus sealed evidence, or require and validate exact consensus/gold/result-seal SHA bindings before building the expected plan.",
+        "Reject any supplied gold case whose identity, normative fingerprint, semanticGold, publicationEligible, expected final approval, or veto axes differ from independent derivation.",
+        "Bind provider authorization and gate evaluation to the exact successful admission and independent result-audit artifact rather than accepting only caller booleans and mutable objects.",
+        "Add regression tests that mutate expected gold and ordered core independently and require fail-closed behavior before resealing the changed code and test artifacts."
+      ],
+      "blocksGo": true
+    },
+    {
+      "id": "P2-001",
+      "priority": "P2",
+      "title": "Mismatch summary counts can report 60 matches when one expected attempt is missing and one unexpected attempt is skipped.",
+      "evidence": [
+        "evaluateProviderHeldoutGate skips unexpected attempt IDs when checking fingerprints and labels.",
+        "Its match counts are calculated as observedAttempts.length minus mismatch count, so skipped unexpected attempts are counted as matches.",
+        "A 60-item set with one missing expected ID and one unique unexpected ID correctly failed but reported fullFingerprintMatchCount=60 and semanticGoldMatchCount=60 although only 59 expected attempts were evaluated."
+      ],
+      "impact": "The gate remains fail-closed because ATTEMPT_MISSING and ATTEMPT_UNEXPECTED are recorded, but downstream summaries can overstate exact-match coverage and confuse audit review.",
+      "recommendedRemediation": [
+        "Count matches only for expected IDs that were actually evaluated and passed the corresponding comparison.",
+        "Add an unexpected-attempt regression test that asserts both the failure and accurate match denominators."
+      ],
+      "blocksGo": false
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 1,
+    "P3": 0
+  },
+  "authorizationState": {
+    "admissionDataIntegrityPassed": true,
+    "quantityAdmissionPassed": true,
+    "independentResultAuditGo": false,
+    "providerCallsAuthorized": false,
+    "providerHeldoutExecutionAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "sample100RequiresSeparateUserApprovalAndV4BundleContract": true,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "noCallAttestation": {
+    "providerCalls": 0,
+    "projectAiCalls": 0,
+    "networkCalls": 0,
+    "externalRunnerInvocations": 0,
+    "secretsRead": false,
+    "legacySevenRuns": 0,
+    "sample100Runs": 0,
+    "gitPushes": 0,
+    "productionDeployments": 0,
+    "externalDataWrites": 0
+  },
+  "requiredNextState": {
+    "independentResultAuditGo": false,
+    "providerCallsAllowed": false,
+    "legacySevenAllowed": false,
+    "sampleOneHundredAllowed": false,
+    "gitPushAllowed": false,
+    "productionDeployAllowed": false,
+    "nextAction": "Remediate P1-001, add the missing regression coverage, reseal every changed code/test/result artifact, and obtain a new independent result audit before any provider, legacy-seven, or sample-100 execution."
+  }
+}

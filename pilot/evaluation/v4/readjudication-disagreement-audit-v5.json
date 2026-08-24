@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "bilingual-heldout-readjudication-disagreement-audit/v5",
+  "auditId": "meaning-link-v4-heldout-10-readjudication-disagreement-audit-v5",
+  "createdAt": "2026-08-24T08:44:06Z",
+  "roundId": "meaning-link-v4-blind-dual-10-v5",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "protocolId": "bilingual-meaning-link-v4-replacement-readjudication/v5",
+  "comparisonContract": {
+    "unit": "ordered-ten-case-normative-core-array",
+    "canonicalization": "RFC-8785-JCS-UTF8",
+    "fingerprint": "SHA-256",
+    "nonNormativeNotesExcluded": true,
+    "derivedLabelsExcludedAndNotComputed": true,
+    "majorityTieBreakAdditionalResolverDiscussionCorrectionOrSelectionAllowed": false
+  },
+  "inputIntegrity": {
+    "result": "PASS",
+    "baseV2": {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION_V2.md",
+      "sha256": "958fc4b938674bfd224a94978468e8e0ec4ccfc0f6c49ef72ffffb2cc823e247",
+      "sealPath": "pilot/evaluation/v4/preregistration-seal-v2.json",
+      "sealSha256": "275dab2605a91ae0e04adf1ac99315cf0ab307d6b613b8fbeda3cb2b7c418867"
+    },
+    "protocolV5": {
+      "path": "docs/AI_MAPPING_V4_READJUDICATION_PREREGISTRATION_V5.md",
+      "sha256": "2e38a5866692fc9d278c0d05a1b2ad090a51f8f997c3e6625fa35690fd1a699e",
+      "instructionsPath": "pilot/evaluation/v4/readjudication-instructions-v5.md",
+      "instructionsSha256": "71d8fe886b3d1022bb2db0de47e4e5c46d86cd4f57dd43df99f1c4c863b31904",
+      "schemaPath": "pilot/evaluation/v4/readjudication-schema-v5.json",
+      "schemaSha256": "8e6dd10217d7edbd04c72b5c0d3baeebfc30826913b1bec6a03a746fee39eb88",
+      "protocolSealPath": "pilot/evaluation/v4/readjudication-protocol-seal-v5.json",
+      "protocolSealSha256": "8a9040c0e9570f7e6fa215889fa8c9dd8dcd26e8327e1dfd33ff54eac3e449e6",
+      "executionSealPath": "pilot/evaluation/v4/readjudication-execution-seal-v5.json",
+      "executionSealSha256": "9e028bf3333ea70bd0496f7387aa71280558fd7f3f8f7f61f4117e93c84ed251",
+      "methodologyAuditPath": "pilot/evaluation/v4/readjudication-methodology-audit-v5.json",
+      "methodologyAuditSha256": "420faad36b1ac7702d3c302381b70b7c91e2192f1bcd1a3093a67193cc11b317",
+      "methodologyAuditDecision": "GO"
+    },
+    "evidence": {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6",
+      "caseCount": 10
+    },
+    "completedForms": {
+      "independentC": {
+        "path": "pilot/evaluation/v4/readjudication-c-adjudication-v5.json",
+        "sha256": "88d567fbc059d31c6014620336a71a4cbf48096d5cc668ba59322f07e844ed6b"
+      },
+      "independentD": {
+        "path": "pilot/evaluation/v4/readjudication-d-adjudication-v5.json",
+        "sha256": "6176c191c51637e91453e6d88d4410ec495165aaea6e75ff71c748e7a5424f19"
+      }
+    }
+  },
+  "mechanicalValidation": {
+    "result": "PASS",
+    "schemaAndClosedShapeValid": true,
+    "packetInstructionsSchemaAndExecutionSealHashesMatch": true,
+    "formsCompletedAndAttested": true,
+    "adjudicatorPseudonymsDistinct": true,
+    "exactFiveFileReadListsMatch": true,
+    "orderedCaseIdsUniqueAndComplete": true,
+    "usableSourceExampleCoverageExactAndInEvidenceOrder": true,
+    "rejectedSourceExamplesExcluded": true,
+    "semanticExactIffThreeBooleansTrue": true,
+    "nonExactHasAtLeastOneFalse": true,
+    "allCapitalizationValuesUnknown": true,
+    "exampleVerdictAttestationAndCounterexampleConsistencyValid": true
+  },
+  "orderedCaseIds": [
+    "HV4-01",
+    "HV4-02",
+    "HV4-03",
+    "HV4-04",
+    "HV4-05",
+    "HV4-06",
+    "HV4-07",
+    "HV4-08",
+    "HV4-09",
+    "HV4-10"
+  ],
+  "orderedNormativeCore": {
+    "independentC": {
+      "sha256": "cbefd71f21430a51e0c1fd22c3c1b600d0afd32a5991fa2b5601a078271625ca",
+      "canonicalByteLength": 4733
+    },
+    "independentD": {
+      "sha256": "fc6ec452e2e01f8f90e819a8c8bafa607e62499d47326cf407ff168425b69736",
+      "canonicalByteLength": 4720
+    },
+    "byteForByteEqual": false,
+    "differenceCount": 3
+  },
+  "rawFreeDifferences": [
+    {
+      "caseId": "HV4-03",
+      "field": "normative.semantic.eventAndParticipantsMatch",
+      "independentCValue": true,
+      "independentDValue": false
+    },
+    {
+      "caseId": "HV4-07",
+      "field": "normative.usage.domain",
+      "independentCValue": "source-only-preservable",
+      "independentDValue": "conflict"
+    },
+    {
+      "caseId": "HV4-09",
+      "field": "normative.semantic.eventAndParticipantsMatch",
+      "independentCValue": true,
+      "independentDValue": false
+    }
+  ],
+  "decision": {
+    "value": "NO-GO",
+    "reasonCode": "ORDERED_NORMATIVE_CORE_MISMATCH",
+    "fullTenCaseConsensus": false,
+    "roundClosedWithoutCorrectionDiscussionOrSelection": true,
+    "consensusArtifactCreated": false,
+    "derivedGoldCreated": false,
+    "admissionArtifactCreated": false,
+    "implementationCodeCreated": false
+  },
+  "gates": {
+    "fullNormativeCoreConsensus": false,
+    "consensusArtifactAllowed": false,
+    "derivedGoldAllowed": false,
+    "readjudicationAdmissionGo": false,
+    "independentResultAuditGo": false,
+    "providerCallsAuthorized": false,
+    "heldoutSixtyAttemptExecutionAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "postRunOverlapGatePassed": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "observedActions": {
+    "providerOrNetworkCalls": 0,
+    "heldoutModelAttempts": 0,
+    "legacySevenRuns": 0,
+    "sample100Runs": 0,
+    "gitPushes": 0,
+    "productionDeployments": 0,
+    "discussionCorrectionSelectionOrAdditionalAdjudication": 0
+  },
+  "disposition": {
+    "preserveBothCompletedFormsAndThisAudit": true,
+    "doNotCreateConsensusGoldAdmissionOrImplementation": true,
+    "doNotCorrectSelectMergeDiscussOrAddAdjudicator": true,
+    "doNotCallProviderOrRunHeldoutLegacySevenOrSample100": true,
+    "doNotPushOrDeploy": true
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-result-seal/v3",
+  "sealId": "meaning-link-v4-heldout-10-v2-result-v3-seal",
+  "sealedDate": "2026-08-24",
+  "baseContractId": "bilingual-meaning-link-v4-preregistration/v2",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "remediationOf": {
+    "auditPath": "pilot/evaluation/v4/heldout-independent-result-audit-v2.json",
+    "auditSha256": "cd6c8ca07ee66bdec5105be8b5a56f93b76d6a7200bfc0dbc91905f26ae34fce",
+    "auditVerdict": "NO-GO",
+    "findingIds": [
+      "P1-001",
+      "P2-001"
+    ],
+    "predecessorResultSealPath": "pilot/evaluation/v4/heldout-result-seal-v2.json",
+    "predecessorResultSealSha256": "f969517804babf5f107ea7aec3c0b763a841dc73cc005e3ea19c363f257ff3c2",
+    "predecessorAndAuditRemainImmutable": true,
+    "supersededScope": "future-heldout-plan-and-result-gate-implementation-only"
+  },
+  "sealedFiles": [
+    {
+      "role": "sealed-evidence",
+      "path": "pilot/evaluation/v4/heldout-evidence-v2.json",
+      "sha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f"
+    },
+    {
+      "role": "sealed-consensus",
+      "path": "pilot/evaluation/v4/heldout-consensus-v2.json",
+      "sha256": "9cf1741b5c93be72452464d4f39b9c1f30cd67ef76a5bf7791c73508f6c0b241"
+    },
+    {
+      "role": "sealed-derived-gold-reference",
+      "path": "pilot/evaluation/v4/heldout-gold-v2.json",
+      "sha256": "16eb2c60026269c782216af128e5e72d8b056c271138deaa16e7fa43c34f0e07"
+    },
+    {
+      "role": "predecessor-result-seal",
+      "path": "pilot/evaluation/v4/heldout-result-seal-v2.json",
+      "sha256": "f969517804babf5f107ea7aec3c0b763a841dc73cc005e3ea19c363f257ff3c2"
+    },
+    {
+      "role": "independent-no-go-audit",
+      "path": "pilot/evaluation/v4/heldout-independent-result-audit-v2.json",
+      "sha256": "cd6c8ca07ee66bdec5105be8b5a56f93b76d6a7200bfc0dbc91905f26ae34fce"
+    },
+    {
+      "role": "unchanged-admission-dependency",
+      "path": "scripts/lib/v4/heldout-admission-v2.mjs",
+      "sha256": "ff08354ab53ee9b598ba0d841146aae44e4b8371ef5ff3d8fc99ee9b8ee7219b"
+    },
+    {
+      "role": "unchanged-veto-only-policy-dependency",
+      "path": "scripts/lib/v4/meaning-policy-v2.mjs",
+      "sha256": "549fa31b1b0f73638319074345c5a111697c6073c1858833b26f45bbf26c1463"
+    },
+    {
+      "role": "sealed-expectation-validator-and-gold-rederiver",
+      "path": "scripts/lib/v4/heldout-sealed-contract-v3.mjs",
+      "sha256": "3858130e0a9f05647c5c3453958e0b45260ba9c137ea13580ace2fc8e34ab516"
+    },
+    {
+      "role": "remediated-heldout-gate",
+      "path": "scripts/lib/v4/heldout-gate-v3.mjs",
+      "sha256": "71349a48dbdfce7562ed6b732309dd2ede2978cd876fafedcef6deca3ae79ee8"
+    },
+    {
+      "role": "unchanged-official-v2-test",
+      "path": "test/heldout-v4-v2.test.mjs",
+      "sha256": "476b8b1e59fbf07c6dcd6cc430c7ac6caec8770888466fb7cdc10274b7deb1ba"
+    },
+    {
+      "role": "v3-remediation-test",
+      "path": "test/heldout-v4-v3.test.mjs",
+      "sha256": "89738aa3f527c6756de3fbfdfb271641211142648bb0da9ad22afc18a79fa2fd"
+    }
+  ],
+  "sealedExpectationContract": {
+    "callerSuppliedOrderedCoreAccepted": false,
+    "callerSuppliedGoldAccepted": false,
+    "exactInputKeySet": [
+      "evidenceRaw",
+      "consensusRaw",
+      "goldRaw",
+      "resultSealRaw"
+    ],
+    "rawSha256": {
+      "evidence": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+      "consensus": "9cf1741b5c93be72452464d4f39b9c1f30cd67ef76a5bf7791c73508f6c0b241",
+      "gold": "16eb2c60026269c782216af128e5e72d8b056c271138deaa16e7fa43c34f0e07",
+      "resultSeal": "f969517804babf5f107ea7aec3c0b763a841dc73cc005e3ea19c363f257ff3c2"
+    },
+    "canonicalSha256": {
+      "evidence": "ffebc1c6f5aa897908de2e1372b6ffabaf223a142d16d5d0242caa08446a4cd0",
+      "consensus": "8db39d5448e15b63ad2c7af9fd4f0e58736f103dca360f68ad37ef409c3dfdec",
+      "gold": "340446ecbcf2c8f02493e910f2868279edbf7e40b453f38e802e959997db6cee",
+      "resultSealProjection": "b9ccba80b4103d309313bc835e051f2f0f7edc819d7902d27106b4ca7c9bebb4",
+      "orderedNormativeCore": "c160a61001fbc07ba9cd28d08b73ddc444debbfb71944a0954fda50135a74de3"
+    },
+    "orderedNormativeCoreByteLength": 4672,
+    "goldDerivedInsideGateFromSealedConsensusAndEvidence": true,
+    "sealedGoldUsedOnlyAsExactDerivedReference": true,
+    "semanticPositiveCount": 5,
+    "semanticNegativeCount": 5,
+    "publicationEligibleCount": 0,
+    "semanticNegativeFinalApprovalMustBeFalse": true,
+    "vetoOnlyPolicyChanged": false,
+    "fourLanguageRulesChanged": false
+  },
+  "remediationValidation": {
+    "testCommand": "node --test test/heldout-v4-v2.test.mjs test/heldout-v4-v3.test.mjs",
+    "officialV2TestCountIncludingSubtests": 32,
+    "newV3TestCount": 13,
+    "totalTestCountIncludingSubtests": 45,
+    "passCount": 45,
+    "failCount": 0,
+    "sealedAdmissionAssertionCount": 37,
+    "callerGoldOrCoreGateInputRejected": true,
+    "mutatedGoldRawCanonicalAndDerivationRejected": true,
+    "semanticNegativeTrueApprovalEscapeRejectedCount": 6,
+    "publicationEligibleForgeryRejected": true,
+    "caseReorderRejected": true,
+    "caseIdentityTamperRejected": true,
+    "normativeCoreTamperRejected": true,
+    "resultSealShaTamperRejected": true,
+    "unexpectedAttemptEvaluatedMatchCountCorrectedTo59": true,
+    "providerOrNetworkCapabilityAdded": false,
+    "runnerAdded": false,
+    "pathModelTokenOrEnvironmentOverrideAdded": false
+  },
+  "currentGateState": {
+    "independentResultAuditV3ArtifactPresent": false,
+    "independentResultAuditV3Go": false,
+    "providerHeldoutExecutionAuthorized": false,
+    "providerHeldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "v4BundleContractSealed": false,
+    "sample100UserApproval": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "preservedV3SevenShaChecks": {
+    "allMatch": true,
+    "files": [
+      {
+        "path": "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+        "sha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360"
+      },
+      {
+        "path": "pilot/evaluation/ai-mapping-sample-100-v1.json",
+        "sha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b"
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl",
+        "sha256": "ca59e2a548bd815814367a72aef796228e7dc330324d820274945a455c9ec3e0"
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json",
+        "sha256": "d7b95098ed022ed3c7bcf0be9553688a85d7557d4b20dbbc133f9148b1c7c6d1"
+      },
+      {
+        "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json.complete.json",
+        "sha256": "5e84866b2179d828039889eb40fd72c9d82ee131a9efb8423ef120d68b8c48ee"
+      },
+      {
+        "path": ".local/pilot/ai-contract-smoke-v3-attempt1.json",
+        "sha256": "1eebc26f94b060dff1128d1aa67bb4c340c3fde15e21e4a8f533702ffb2a4282"
+      },
+      {
+        "path": ".local/pilot/ai-contract-smoke-v3-attempt2.json",
+        "sha256": "371ed18920438c8e2eb9454287bebb1a1e194efe4624408babdc5cec7e94b761"
+      }
+    ]
+  },
+  "observedActions": {
+    "providerCalls": 0,
+    "projectAiCalls": 0,
+    "networkCalls": 0,
+    "legacySevenRuns": 0,
+    "sample100Runs": 0,
+    "gitPushes": 0,
+    "productionDeployments": 0
+  },
+  "sealSelfIntegrity": {
+    "algorithm": "SHA-256",
+    "projection": "RFC-8259-compatible canonical JSON with lexicographically sorted object keys and sealSelfIntegrity omitted",
+    "projectionSha256": "453a4c4065e68fbdf5fb99a79f2dbb95913330ba0aac11aee9580dc033dd9ed8"
+  }
+}

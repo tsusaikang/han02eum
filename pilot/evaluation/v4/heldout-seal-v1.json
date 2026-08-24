@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "bilingual-heldout-seal/v1",
+  "sealId": "meaning-link-v4-heldout-10-v1-seal",
+  "sealedDate": "2026-08-24",
+  "contractState": {
+    "finalGoldPresent": false,
+    "adjudicationComplete": false,
+    "independentAuditGo": false,
+    "providerCallsAuthorized": false,
+    "heldoutGatePassed": false,
+    "legacySevenAuthorized": false,
+    "sample100Authorized": false,
+    "gitPushAuthorized": false,
+    "productionDeployAuthorized": false
+  },
+  "sealedFiles": [
+    {
+      "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+      "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+    },
+    {
+      "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+      "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+    },
+    {
+      "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+      "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+    }
+  ],
+  "evidenceIdentity": {
+    "packetId": "meaning-link-v4-heldout-10-v1",
+    "caseCount": 10,
+    "orderedCaseIdsSerialization": "utf8-lines-with-final-newline",
+    "orderedCaseIdsSha256": "99abc071c49088c4534a56aeb50a3600cabcb6b798ba04cf346e0bc03e1ea27d",
+    "orderedSourceIdsSerialization": "utf8-lines-with-final-newline",
+    "orderedSourceIdsSha256": "84f9776fd7996298b14cb85d740b58fb5e126c94f282be2ab1b8b47d8893feee",
+    "orderedSourceCandidatePairsSerialization": "source-id-tab-target-id-utf8-lines-with-final-newline",
+    "orderedSourceCandidatePairsSha256": "bcc09f3b47ed53cdef11cb7c07fae78cf712a7d40730cfb91ea83fd28384cb79"
+  },
+  "sourceSnapshots": [
+    {
+      "path": ".local/pilot/mapping-candidates.jsonl",
+      "sha256": "9aeb8c8a3e08dfea50a1b4dcfa500fac051c2533916dbf2217d281a14e74f90c"
+    },
+    {
+      "path": ".local/pilot/mapping-candidates.jsonl.manifest.json",
+      "sha256": "88c37f714621db6ce78bc1e914c61780762d07c4d19b83191bf908bd8f912029"
+    },
+    {
+      "path": ".local/pilot/wiktionary-senses.jsonl",
+      "sha256": "3882d7bd7d8b9a0baa9c30c18ccad8e3be9a0ff0b7c6413ae840a91827447dbc"
+    },
+    {
+      "path": ".local/pilot/krdict-en-senses.jsonl",
+      "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef"
+    }
+  ],
+  "preservedV3Evidence": [
+    {
+      "path": "pilot/evaluation/ai-mapping-counterexamples-v1.json",
+      "sha256": "b2e9cd43776013b93e6e597bfb9e07b66fab308853b6be9618241d2f97a44360"
+    },
+    {
+      "path": "pilot/evaluation/ai-mapping-sample-100-v1.json",
+      "sha256": "97229dcbbc23583e42fddef953178e1720dc37b4d27e74a887a5243c8c157c9b"
+    },
+    {
+      "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl",
+      "sha256": "ca59e2a548bd815814367a72aef796228e7dc330324d820274945a455c9ec3e0"
+    },
+    {
+      "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json",
+      "sha256": "d7b95098ed022ed3c7bcf0be9553688a85d7557d4b20dbbc133f9148b1c7c6d1"
+    },
+    {
+      "path": ".local/pilot/ai-decisions-v3-counterexamples.jsonl.manifest.json.complete.json",
+      "sha256": "5e84866b2179d828039889eb40fd72c9d82ee131a9efb8423ef120d68b8c48ee"
+    },
+    {
+      "path": ".local/pilot/ai-contract-smoke-v3-attempt1.json",
+      "sha256": "1eebc26f94b060dff1128d1aa67bb4c340c3fde15e21e4a8f533702ffb2a4282"
+    },
+    {
+      "path": ".local/pilot/ai-contract-smoke-v3-attempt2.json",
+      "sha256": "371ed18920438c8e2eb9454287bebb1a1e194efe4624408babdc5cec7e94b761"
+    }
+  ]
+}

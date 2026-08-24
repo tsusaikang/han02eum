@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "meaning-link-v4-heldout-adjudication-form/v3",
+  "protocolId": "meaning-link-v4-heldout-10-v2-protocol-v3",
+  "packetId": "meaning-link-v4-heldout-10-v2",
+  "evidenceSha256": "a6b27e32c6c5ff28a1959eae37665c1ef6b23cc7e28402b4e411bb7cf36bd83f",
+  "formId": "meaning-link-v4-heldout-10-v2-E-v3",
+  "adjudicatorSlot": "E",
+  "outputIdentity": {
+    "path": "pilot/evaluation/v4/heldout-adjudication-form-E-v3.completed.json",
+    "mediaType": "application/json",
+    "writeMode": "create-new-preserve-blank"
+  },
+  "executionSealBindingCompleted": false,
+  "executionSealSha256": null,
+  "readListAttestation": null,
+  "cases": [
+    {
+      "caseId": "v2-case-01",
+      "sourceId": "enwiktionary:91980224:bank:verb-1:verb-1-sense-2",
+      "targetId": "krdict:73312:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-01-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-02",
+      "sourceId": "enwiktionary:92048374:ring:noun-1:noun-1-sense-7",
+      "targetId": "krdict:57661:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-02-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-03",
+      "sourceId": "enwiktionary:92039576:play:noun-1:noun-1-sense-7",
+      "targetId": "krdict:88467:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-03-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-04",
+      "sourceId": "enwiktionary:92065761:watch:noun-1:noun-1-sense-5",
+      "targetId": "krdict:91793:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-04-source-example-01",
+          "v2-case-04-source-example-02"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-05",
+      "sourceId": "enwiktionary:92048439:root:noun-2:noun-2-sense-2",
+      "targetId": "krdict:17919:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "source-only-preservable",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "source-only-preservable",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-05-source-example-01",
+          "v2-case-05-source-example-02"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-06",
+      "sourceId": "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1",
+      "targetId": "krdict:56457:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-06-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-07",
+      "sourceId": "enwiktionary:92081549:bark:noun-3:noun-3-sense-1",
+      "targetId": "krdict:83557:2",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "source-only-preservable",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-07-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-08",
+      "sourceId": "enwiktionary:92065773:wave:verb-1:verb-1-sense-8",
+      "targetId": "krdict:29776:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-08-source-example-01",
+          "v2-case-08-source-example-02"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-09",
+      "sourceId": "enwiktionary:92128505:flat:adjective-1:adjective-1-sense-5",
+      "targetId": "krdict:38513:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "source-only-preservable",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-09-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    },
+    {
+      "caseId": "v2-case-10",
+      "sourceId": "enwiktionary:91924215:cell:noun-1:noun-1-sense-4",
+      "targetId": "krdict:14195:1",
+      "semantic": {
+        "targetRelationToSource": null
+      },
+      "usage": {
+        "register": "unknown",
+        "domain": "unknown",
+        "temporal": "unknown",
+        "regional": "unknown",
+        "capitalization": "unknown"
+      },
+      "example": {
+        "verdict": null,
+        "evaluatedSourceExampleIds": [
+          "v2-case-10-source-example-01"
+        ],
+        "targetSenseAttested": null,
+        "counterexampleSourceExampleId": null
+      }
+    }
+  ],
+  "nonNormativeNotes": null
+}

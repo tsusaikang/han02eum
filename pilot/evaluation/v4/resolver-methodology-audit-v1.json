@@ -1,0 +1,234 @@
+{
+  "schemaVersion": "bilingual-heldout-resolver-methodology-audit/v1",
+  "auditId": "meaning-link-v4-heldout-10-resolver-methodology-audit-v1",
+  "packetId": "meaning-link-v4-heldout-10-v1",
+  "protocolId": "bilingual-meaning-link-v4-resolver-preregistration/v1",
+  "auditor": {
+    "pseudonym": "resolver-methodology-auditor-rma-01",
+    "role": "independent-methodology-auditor",
+    "completedAt": "2026-08-24T07:09:32Z",
+    "decisionRule": "NO-GO if any P0 or P1 finding exists"
+  },
+  "decision": "NO-GO",
+  "resolverCExecutionAllowed": false,
+  "providerCallAllowed": false,
+  "heldoutGatePassed": false,
+  "legacySevenAllowed": false,
+  "sample100Allowed": false,
+  "pushAllowed": false,
+  "deployAllowed": false,
+  "auditTargets": [
+    {
+      "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+      "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+    },
+    {
+      "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+      "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+    },
+    {
+      "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+      "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+    }
+  ],
+  "readAttestation": {
+    "readExactlyTheseFiles": [
+      {
+        "path": "docs/AI_MAPPING_V4_PREREGISTRATION.md",
+        "sha256": "8a9ce1ee45f72a7cbe40fb71878208a3dfb5f65d383630658a5bddc54a06e80b"
+      },
+      {
+        "path": "docs/AI_MAPPING_V4_RESOLVER_PREREGISTRATION.md",
+        "sha256": "60bac437e754534b1b3d8227f77fa6b230c65c7a74fbf209580f6cc569fb519e"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-evidence-v1.json",
+        "sha256": "83c0720e7609e9b0105b77e3195ff99676380fa401d9db75c8f797cf7a36cfd6"
+      },
+      {
+        "path": "pilot/evaluation/v4/adjudication-schema-v1.json",
+        "sha256": "bf154d163a0ea0056dbfbea4419e6224f17aea0366065df67a7354d51f4e443c"
+      },
+      {
+        "path": "pilot/evaluation/v4/heldout-seal-v1.json",
+        "sha256": "58168bd7400106b5b92d71dc28913a3654c52be07094d644243de1773c6be485"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-adjudication-schema-v1.json",
+        "sha256": "257b1ac89e8ca0d2e11e44eb1f160201d155d0deb6ca1d6c5559b9678e0a895a"
+      },
+      {
+        "path": "pilot/evaluation/v4/resolver-protocol-seal-v1.json",
+        "sha256": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+      }
+    ],
+    "exactReadSetMatched": true,
+    "readAnyOtherProjectFile": false,
+    "readPrimaryAForm": false,
+    "readPrimaryBForm": false,
+    "readPrimaryDecisions": false,
+    "readDisagreementAuditOrCaseFieldValueDetails": false,
+    "readV2OrV3ReportsFixturesAuditsOrAiResults": false,
+    "readResolverCForm": false,
+    "readImplementationOrModelResults": false,
+    "workedIndependently": true,
+    "communicatedWithOtherAgentsOrAdjudicators": false,
+    "usedInternetProviderOrProjectAi": false,
+    "ranLegacySeven": false,
+    "ranSample100": false,
+    "pushedOrDeployed": false,
+    "coarsePrimaryStateObservedOnlyInsideAuthorizedProtocolFiles": true
+  },
+  "sealVerification": {
+    "result": "GO",
+    "allActualFileHashesRecorded": true,
+    "heldoutSealAllSealedFileHashesMatchActual": true,
+    "resolverProtocolSealAllSealedFileHashesMatchActual": true,
+    "protocolAuthorReadAttestationHashesMatchActual": true,
+    "resolverProtocolSealSelfHashRecordedByThisAudit": "b9db60772b9165f0a5840dedd5add2417f30d09236e2d05576efa244ce5d33ab"
+  },
+  "checks": [
+    {
+      "id": "M-01",
+      "name": "protocol-schema-seal-hash-match",
+      "result": "GO"
+    },
+    {
+      "id": "M-02",
+      "name": "original-preregistration-resolver-scope",
+      "result": "NO-GO",
+      "findingIds": ["RMA-P1-003"]
+    },
+    {
+      "id": "M-03",
+      "name": "methodology-auditor-blindness-and-exact-read-list",
+      "result": "GO"
+    },
+    {
+      "id": "M-04",
+      "name": "resolver-c-blindness",
+      "result": "NO-GO",
+      "findingIds": ["RMA-P1-001"]
+    },
+    {
+      "id": "M-05",
+      "name": "resolver-c-all-ten-before-unblinding",
+      "result": "GO"
+    },
+    {
+      "id": "M-06",
+      "name": "free-text-separated-without-hiding-normative-distinction",
+      "result": "NO-GO",
+      "findingIds": ["RMA-P1-002"]
+    },
+    {
+      "id": "M-07",
+      "name": "legacy-a-b-normalization-mechanical-uniqueness",
+      "result": "GO",
+      "note": "The null versus non-null mapping is mechanically unique, but M-06 fails because the mapping is normatively lossy."
+    },
+    {
+      "id": "M-08",
+      "name": "mismatch-code-order-and-presence-derivation",
+      "result": "GO"
+    },
+    {
+      "id": "M-09",
+      "name": "case-level-exact-core-consensus-prevents-fieldwise-hybrid",
+      "result": "GO",
+      "note": "The aggregation mechanics prohibit fieldwise and sectionwise composition; M-02 separately fails the authority for majority resolution."
+    },
+    {
+      "id": "M-10",
+      "name": "exact-gold-derivation",
+      "result": "GO"
+    },
+    {
+      "id": "M-11",
+      "name": "unresolved-fails-whole-admission",
+      "result": "GO"
+    },
+    {
+      "id": "M-12",
+      "name": "minimum-positive-four-and-negative-four",
+      "result": "GO"
+    },
+    {
+      "id": "M-13",
+      "name": "four-language-and-evidence-rules-preserved",
+      "result": "GO"
+    },
+    {
+      "id": "M-14",
+      "name": "deterministic-rules-remain-veto-only",
+      "result": "GO"
+    },
+    {
+      "id": "M-15",
+      "name": "post-result-change-and-rerun-prohibited",
+      "result": "GO"
+    },
+    {
+      "id": "M-16",
+      "name": "originals-and-failure-artifacts-immutable",
+      "result": "GO"
+    },
+    {
+      "id": "M-17",
+      "name": "zero-call-and-external-action-gates-fail-closed",
+      "result": "GO"
+    }
+  ],
+  "findings": [
+    {
+      "id": "RMA-P1-001",
+      "severity": "P1",
+      "title": "Resolver C cannot satisfy the protocol's own blindness requirement",
+      "evidence": [
+        "Resolver preregistration section 3.2 says C must not even be told that primary admission was NO-GO because at least one A/B disagreement existed.",
+        "The same document section 0 states that exact fact, and resolver C's mandatory read-list includes that document.",
+        "Resolver C's mandatory read-list also includes resolver-protocol-seal-v1.json, whose knownPrimaryStateBoundary repeats admission=NO-GO and knownReason=at-least-one-field-disagreement."
+      ],
+      "impact": "Every compliant C necessarily receives forbidden outcome information before adjudication. The required blindness attestation is therefore impossible, and expectation bias cannot be ruled out.",
+      "requiredDisposition": "Keep C execution prohibited. A new immutable protocol/schema/seal version must give C a sealed, C-facing read set that does not disclose any primary outcome state."
+    },
+    {
+      "id": "RMA-P1-002",
+      "severity": "P1",
+      "title": "Legacy critical-mismatch normalization collapses normative distinctions",
+      "evidence": [
+        "The original preregistration makes semantic, usage, and example mismatch values part of the exact normative fingerprint.",
+        "The legacy A/B schema stores each criticalMismatch as a free-text string or null.",
+        "Resolver preregistration section 4.2 discards all non-null string content and maps every value in a section to one generic *_CRITICAL_OTHER code."
+      ],
+      "impact": "Different substantive critical mismatches can normalize to the same controlled core and create false whole-case support; an equivalent mismatch that duplicates another categorical code can also normalize asymmetrically against C. Free-text exclusion therefore hides or distorts a normative distinction instead of merely removing rationale wording.",
+      "requiredDisposition": "Do not aggregate the current A/B forms under this equivalence rule. A new fail-closed design must preserve the original mismatch distinction or use adjudications collected under a pre-sealed controlled taxonomy."
+    },
+    {
+      "id": "RMA-P1-003",
+      "severity": "P1",
+      "title": "Case-level 2-of-3 majority is not authorized by the original preregistration",
+      "evidence": [
+        "Original preregistration section 2 says an A/B field difference fails the entire admission and must not be resolved by majority voting or selecting one side.",
+        "Resolver preregistration section 5 adopts exactly one matching pair among A, B, and C as case-level 2-of-3 consensus.",
+        "The resolver also states that it does not retroactively modify the primary adjudication and may not relax the original v4 gate."
+      ],
+      "impact": "Although the rule correctly blocks fieldwise hybrid fingerprints, it changes the original agreement standard from exact A/B agreement to a majority-based salvage rule. The sealed contracts do not unambiguously grant that relaxation, so admission authority is not fail-closed.",
+      "requiredDisposition": "Keep resolver admission closed. Any future version must explicitly reconcile the base preregistration's majority-vote prohibition before sealing a resolver aggregation rule."
+    }
+  ],
+  "findingCounts": {
+    "P0": 0,
+    "P1": 3,
+    "P2": 0,
+    "P3": 0
+  },
+  "conclusion": {
+    "result": "NO-GO",
+    "reason": "Three P1 findings exist; the predeclared decision rule therefore requires NO-GO.",
+    "methodologyAuditGo": false,
+    "resolverExecutionAuthorized": false,
+    "resolverCExecutionAllowed": false,
+    "nextAllowedAction": "Create and independently audit a new immutable resolver protocol/schema/seal version; do not create or execute the current v1 C form."
+  }
+}
