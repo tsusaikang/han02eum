@@ -547,3 +547,246 @@ fresh result audit v3와 이 체크포인트 작성 전 전체 SHA 재확인에�
 - pre-push fail-closed 조건: 선택 75개만 stage·검증·commit한 뒤, network write 전에 fetch/read-only로 확인한 `origin/refs/heads/main`이 위 pre-commit HEAD와 정확히 같아야 한다. 다르거나 원격 상태를 확정할 수 없으면 push하지 않고 중단·보고한다. push refspec도 명시적으로 `HEAD:refs/heads/main`만 사용한다.
 
 이 체크포인트 작성 시점에는 commit·push·Cloudflare 명령·network 호출을 아직 실행하지 않았다.
+
+## 2026-08-24 Git publication 완료 체크포인트 — main push와 Cloudflare production postflight
+
+### Git publication 결과
+
+사전 승인된 75개 파일만 payload로 만든 커밋을 `main`에 게시했다. 기존 pre-push 체크포인트는 당시 실행 전 상태의 역사 기록으로 그대로 유지한다.
+
+- payload commit: `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`
+- parent commit: `8d349ee8e07d88122320605500be44e373c7aaee`
+- tree: `043ba44e18c41774b99813919080e2f188f12f8c`
+- commit payload: 정확히 75 files = 72 added + 3 modified
+- `.local/**`: 0 files. private/local 산출물은 commit·push에 포함하지 않았다.
+- push: force option 없이 explicit refspec `HEAD:refs/heads/main`으로 정확히 1회 수행했다.
+- post-push remote: `origin/refs/heads/main`은 payload commit `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`와 정확히 같다.
+- pre-push에서 제외한 `README.md`, `package.json`, `package-lock.json`, `public/dictionary-parser.js`, 비-v4 `pilot/**`·`scripts/**`·`test/**` 등 unrelated local changes는 stage·commit·push하지 않고 그대로 보존했다.
+
+### Cloudflare production 상관과 HTTP postflight
+
+- commit-specific GitHub check `Workers Builds: han02eum`은 `completed/success`다.
+- Cloudflare Build ID: `b6b47d33-d636-47a2-891e-9199b29bc25a`
+- 새 Version ID: `d760551d-0e73-4fdf-92df-6f3ff5d16072`
+- 직전 Version ID: `ecf35cda-21fb-46da-8247-135ff9a15d23`
+- `han02eum.dwnc.workers.dev`와 `han02eum.com`의 root 및 lookup API 검증 요청은 모두 HTTP 200이었다.
+
+HTTP endpoint 응답에는 commit 또는 Cloudflare Version ID를 직접 밝히는 header가 없다. 또한 현재 로컬 Wrangler OAuth는 이 Worker가 속한 계정과 다른 account에 연결돼 있어 CLI로 exact active version을 질의할 수 없었다. 따라서 배포 상관은 payload commit에 직접 귀속된 GitHub의 Cloudflare check `Workers Builds: han02eum`이 `completed/success`이고 그 check가 위 Build·Version을 기록한 사실로 확인했다. endpoint HTTP 200은 가용성 확인이며 단독으로 commit/version identity를 증명하지 않는다.
+
+이번 payload commit에는 committed `src/**`, `public/**`, `wrangler*`, `package.json`, `package-lock.json` 변경이 0개다. 따라서 production build/version은 새로 생성됐지만 runtime Worker 코드와 정적 content는 직전 배포와 불변이다. 로컬에 남은 `public/dictionary-parser.js`와 `package*` 변경은 이 commit과 production payload에 포함되지 않았다.
+
+### AI gate·로컬 상태와 다음 기록
+
+이번 publication/postflight에서 provider inference 호출 0회, 프로젝트 AI inference 호출 0회, 기존 v3 legacy 7건 실행 0회, 동일 sample 100건 실행 0회다. network는 승인된 Git push와 Git/Cloudflare read-only postflight verification에만 사용했으며, 그 밖의 provider/project-AI network inference 호출은 0회다. `providerCallsAuthorized=false`, `providerHeldoutExecutionAuthorized=false`, `heldoutGatePassed=false`, `legacySevenAuthorized=false`, `sample100Authorized=false`를 모두 유지하며 publication/data write gate도 새로 열지 않았다.
+
+이 postflight 문서 append 자체는 불필요한 두 번째 `main` push와 Cloudflare production deploy를 피하기 위해 현재 **unstaged local 변경**으로 보존한다. 이 문서만을 위한 추가 stage·commit·push·deploy는 하지 않았으며, 다음에 별도로 승인된 `main` 커밋의 scope에 포함해 게시할 예정이다. 그때까지 unrelated local changes와 함께 보존하되 서로 섞어 stage하지 않는다.
+
+## 2026-08-24 v0.3.0 version notice 구현 전 체크포인트
+
+### 목표와 완료 조건
+
+이번 단계의 목표는 웹사이트 하단에 현재 릴리스 버전을 표시하고, 브라우저가 처음 보는 버전일 때 업데이트 내용을 한 번 자동 안내하며, 사용자가 같은 안내를 언제든 수동으로 다시 열 수 있게 하는 것이다. 사전 데이터·검색 결과·AI gate에는 손대지 않는 독립 UI 기능으로 구현한다.
+
+완료 조건은 다음과 같다.
+
+- `public/release.json`을 `schemaVersion: 1` 릴리스 메타데이터 정본으로 만들고, 현재 버전 `0.3.0`과 아래 네 릴리스 노트를 담는다. `package.json`과 `package-lock.json`의 버전은 정본을 복제하는 mirror로만 `0.3.0`에 맞춘다.
+- footer에 `v0.3.0` 표기와 업데이트 안내를 여는 button을 제공한다. 새 브라우저의 첫 방문과 저장된 버전이 현재 버전과 다른 방문에는 dialog를 자동으로 열고, 같은 버전을 이미 닫아 확인한 경우에는 자동으로 다시 열지 않는다. footer button을 통한 수동 재열기는 저장 상태와 무관하게 항상 가능해야 한다.
+- native `<dialog>` 기반 안내를 키보드와 보조기술로 사용할 수 있게 하고, fetch·metadata·storage 실패가 기존 사전 검색 UI를 깨뜨리지 않게 한다.
+- 순수하고 주입 가능한 controller에 단위 회귀 테스트를 두고, 기존 전체 검증·desktop/mobile·keyboard 접근성 확인·배포 dry-run과 별도 독립 감사를 통과한다.
+- 구현·감사 뒤에도 exact staged payload와 production 영향을 사용자가 다시 확인하기 전에는 `main`에 push하거나 운영 배포하지 않는다.
+
+### 현재 기준선과 보존 경계
+
+- 로컬 branch는 `main`, HEAD는 이미 게시된 `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`다. 연결된 production의 현재 애플리케이션 버전은 `0.2.0`이고, 현 UI에는 버전 표기·업데이트 안내·이 기능의 `localStorage` 상태가 없다.
+- 현재 `package.json`과 `package-lock.json`의 version 및 lockfile root package version은 모두 `0.2.0`이다. 두 파일은 이미 다른 사용자 변경을 포함한 dirty 파일이므로 구현자는 기존 diff를 유지한 채 version 필드만 최소 수정해야 한다.
+- `docs/PROJECT_STATE.md`에는 위 Git publication postflight가 unstaged로 남아 있다. 기존 582행과 그 checkpoint를 덮어쓰거나 다시 작성하지 않고, 이번 checkpoint와 후속 결과도 append-only로 보존한다.
+- 현재 clean UI 진입 파일은 `public/index.html`, `public/app.js`, `public/styles.css`다. `public/dictionary-parser.js`, `README.md`, 비관련 `pilot/**`·`scripts/**`·`test/**`, `.local/**`와 기존 AI fixture/audit/SHA는 이번 기능의 수정·stage·commit 범위에서 제외한다.
+- 현 CSP의 `default-src 'self'`와 `connect-src 'self'`는 same-origin `/release.json` 조회를 허용한다. 외부 origin, inline script, 새 권한 또는 CSP 완화는 추가하지 않는다.
+
+### 확정된 릴리스 메타데이터와 UI 계약
+
+`public/release.json`의 schema v1 정본은 최소한 정수 `schemaVersion`, 비어 있지 않은 문자열 `version`, 비어 있지 않은 문자열 배열 `notes`만 사용한다. 이번 값은 `schemaVersion: 1`, `version: "0.3.0"`이며 UI가 표시할 릴리스 노트는 정확히 다음 네 내용이다.
+
+1. 화면 하단에서 현재 버전을 확인할 수 있습니다.
+2. 새 버전은 업데이트 안내를 한 번 자동으로 보여줍니다.
+3. 하단의 업데이트 안내 버튼으로 언제든 다시 열 수 있습니다.
+4. 이번 업데이트는 사전 데이터와 검색 결과를 변경하지 않습니다.
+
+이후 버전업은 같은 JSON의 `version`과 `notes`를 먼저 갱신하고 package/lock version을 mirror한 뒤 검증한다. 브라우저는 semver 대소 비교가 아니라 현재 정본 문자열과 마지막 확인 문자열의 exact equality만 비교한다. 따라서 처음에는 저장값 부재로 자동 열리고, 값이 다르면 새 버전으로 간주해 자동 열리며, 값이 같으면 자동 열기를 억제한다.
+
+- 저장 key는 정확히 `han02eum:last-seen-release`다. dialog를 단순히 연 시점에는 기록하지 않고, close button 또는 native Escape 취소를 포함해 dialog가 실제로 닫힐 때 현재 release version을 기록한다.
+- footer의 release button은 저장 여부와 무관하게 같은 dialog를 수동으로 다시 연다. 자동·수동 open 모두 현재 focus를 기억하고, dialog 내부의 명시적 close control로 focus를 옮기며, 닫힌 뒤 가능한 경우 원래 opener/focused element로 돌려놓는다.
+- native `<dialog>`의 modal·focus·Escape 동작을 사용하고 접근 가능한 이름을 `aria-labelledby`로 연결한다. 명시적 close button과 의미 있는 note list를 제공하고, mouse 전용 동작이나 별도 불완전한 focus trap을 만들지 않는다.
+- `/release.json`은 same-origin에서 조회하고 stale release 회피를 위해 캐시를 사용하지 않는 요청으로 읽는다. non-2xx, network 오류, unsupported schema version, 빠진/추가되거나 잘못된 필드, 잘못된 version/notes type 등 malformed metadata는 fail-soft 처리한다. 이때 uncaught error 없이 release UI의 자동 안내를 중단하되 기존 검색 기능은 계속 동작해야 한다.
+- `localStorage.getItem`·`setItem`이 차단되거나 예외를 내도 fail-soft 처리한다. 저장 실패 때문에 기존 검색이나 footer/manual dialog가 중단돼서는 안 되며, 영속 억제가 불가능하다는 사실을 false success로 간주하지 않는다.
+- release metadata의 version과 note는 DOM에 `textContent` 또는 동등한 text node로만 삽입한다. `innerHTML`이나 HTML 문자열 해석으로 신뢰 경계를 넓히지 않는다.
+
+### 수정 예상 파일과 구현 순서
+
+- 신규 정본: `public/release.json`
+- 신규 순수 controller: `public/release-notice.js`
+- footer button과 native dialog markup: `public/index.html`
+- controller 초기화 연결: `public/app.js`
+- footer/button/dialog의 desktop·mobile 스타일: `public/styles.css`
+- 단위 회귀 테스트: `test/release-notice.test.mjs`
+- 릴리스 mirror와 필요한 정적 검사 wiring: `package.json`, `package-lock.json`
+- 공식 상태 append: `docs/PROJECT_STATE.md`
+
+구현자는 먼저 위 정본·controller·markup/style·초기화를 만들고 자동 테스트를 통과시킨다. 그 다음 구현자와 다른 담당자가 metadata 정본성, 저장 상태 전이, fail-soft 및 text-only 경계, dialog 접근성, dirty-file 보존, exact 변경 파일 목록을 독립 감사한다. P0/P1 finding이 있으면 push 준비로 넘어가지 않고 수정 후 fresh 재감사를 받는다.
+
+### 필수 검증과 외부 변경 gate
+
+- 단위 테스트는 첫 방문 자동 open, 다른 저장 version의 자동 open, 같은 version 억제, 수동 재열기, close/Escape 시 기록, get/set storage 예외, fetch non-2xx/network 오류, malformed JSON/schema/version/notes, 안전한 text-only 렌더링, focus 이동·복귀를 포함해야 한다.
+- `npm run test:node`, `npm run test:worker`, `npm run check`, `npm run verify`, `git diff --check`를 통과해야 한다. package script를 수정한다면 기존 사용자 변경과 pilot 명령 문자열을 보존하고 새 controller의 syntax/test만 필요한 최소 범위로 연결한다.
+- 실제 브라우저에서 대표 desktop과 mobile 폭을 확인한다. footer가 검색 UI를 가리거나 overflow를 만들지 않고, dialog의 긴 note가 작은 화면 안에서 읽히며, 배경 scroll·close control·시각적 focus가 정상이어야 한다.
+- keyboard-only로 footer button까지 이동해 Enter/Space로 열기, dialog 안 focus 확인, Tab/Shift+Tab, Escape 닫기, opener focus 복귀, 같은 버전 reload 억제와 수동 재열기를 확인한다.
+- `npm run deploy:dry-run`은 반드시 통과해야 하지만 이 단계에서 실제 deploy는 하지 않는다. dry-run 산출물에 `/release.json`과 새 controller가 포함되고 사전 데이터·운영 API 변경이 없음을 확인한다.
+- `main` push는 Cloudflare production build/deploy를 촉발한다. 구현·검증·독립 감사가 끝나도 새 파일과 기존 dirty 파일을 섞어 포괄 stage하지 않는다. exact payload, version `0.3.0`, 릴리스 노트, 사전 데이터 불변, 예상 production 영향을 사용자에게 별도로 제시해 확인받기 전에는 stage·commit·push·deploy를 금지한다.
+
+## 2026-08-25 v0.3.0 release metadata 계약 supersession
+
+### 정정 사유와 우선순위
+
+독립 감사에서 위 2026-08-24 구현 전 체크포인트의 release metadata shape와 실제 inspector·구현 계약이 일치하지 않는 P1을 확인했다. 위 절은 당시 사전 기록으로 수정하지 않고 보존하되, 그중 closed shape를 `{schemaVersion, version, notes}`로 설명한 문구와 `notes` 기반 완료 조건은 이 절로 명시적으로 폐기·대체한다. 이후 v0.3.0 구현·테스트·감사·payload 판정에는 이 supersession이 우선한다.
+
+대체 이유는 화면에서 릴리스 제목, 릴리스 날짜, 변경 목록을 서로 다른 의미와 DOM 요소로 표시하고, same-origin 정본을 매번 `no-store`로 읽어 오래된 버전 안내를 피하려는 inspector·구현 계약 때문이다. release metadata가 UI 표시와 package mirror의 유일한 정본이며, HTML이나 JavaScript에 별도 릴리스 내용 사본을 두어 drift시키지 않는다.
+
+### schema v1 exact closed shape와 v0.3.0 정본
+
+`public/release.json` schema v1은 exact key set `{schemaVersion, version, releasedAt, title, changes}`만 허용한다. 빠진 key와 추가 key를 모두 거부하고, `notes` key는 허용하지 않는다. 실제 정본의 값은 다음과 같다.
+
+- `schemaVersion`: `1`
+- `version`: `"0.3.0"`
+- `releasedAt`: `"2026-08-24"`
+- `title`: `"한영이음 v0.3.0 업데이트"`
+- `changes`:
+  1. `"페이지 하단에서 현재 버전을 확인할 수 있어요."`
+  2. `"새 버전을 처음 만날 때 업데이트 내용을 한 번 안내해요."`
+  3. `"버전 버튼을 눌러 업데이트 내용을 언제든 다시 열 수 있어요."`
+  4. `"단어 검색과 사전 데이터는 기존과 동일하게 유지돼요."`
+
+validator는 `schemaVersion === 1`, 엄격한 `major.minor.patch` version, 실제 존재하는 `YYYY-MM-DD` calendar date, 앞뒤 공백 없는 비어 있지 않은 title, 하나 이상의 앞뒤 공백 없는 비어 있지 않은 change 문자열을 요구한다. UI는 `version`·`releasedAt`, `title`, `changes`를 각각 version/date line, dialog heading, list로 분리해 모두 text node/`textContent`로 렌더링한다. `package.json`, `package-lock.json` top-level 및 lockfile root package의 version은 `public/release.json.version`과 exact equality인 mirror여야 한다.
+
+정본은 same-origin `/release.json`에서 `cache: "no-store"`, `credentials: "same-origin"`, JSON `Accept` 요청으로 읽는다. non-2xx, network/JSON 오류, exact shape·type·date·version 검증 실패는 release UI만 fail-soft unavailable로 만들고 사전 검색 초기화·입력·결과에는 영향을 주지 않는다.
+
+### native dialog와 초기화 상태 전이의 대체 계약
+
+- native `<dialog>`의 callable `showModal()`과 `close()`를 모두 지원하는 환경에서만 release 자동 popup과 interactive release button을 활성화한다. 미지원 환경에서는 불완전한 custom modal, `open` attribute 모사, 수동 focus trap, body scroll lock 또는 별도 Escape handler를 만들지 않는다.
+- native dialog 미지원 또는 `showModal()` 실패 시 popup을 열지 않고 interactive release button을 숨긴 채 기존 사전 검색을 그대로 유지한다. footer의 plain-text version fallback 표시는 현재 수정 중인 구현 결과를 확인한 뒤 후속 완료 체크포인트에서 실제 DOM·동작을 근거로 기록하며, 이 supersession 작성 시점에는 구현 완료나 검증 통과를 주장하지 않는다.
+- document 단위 초기화는 idempotent여야 한다. 같은 document에서 중복 또는 동시 `initializeReleaseNotice()` 호출이 발생해도 metadata fetch, event listener wiring, render, 자동 open을 중복 수행하지 않고 같은 진행/완료 결과를 공유한다.
+- page-session의 `autoOpenedVersions`에는 `view.open({ automatic: true })`가 실제 성공을 반환한 뒤에만 현재 version을 기록한다. open이 `false`를 반환하거나 예외를 내면 성공으로 표시하거나 session suppression을 남기지 않는다.
+- 자동 open 실패는 영구적으로 확인한 것으로 취급하지 않는다. 중복 listener나 동시 popup 없이 후속 정상 초기화 기회 또는 새 document 방문에서 재시도할 수 있어야 한다. 성공적으로 열린 dialog가 close button이나 native Escape로 실제 닫힐 때만 `han02eum:last-seen-release`에 현재 version을 기록한다.
+- metadata fetch·validation 실패, storage read/write 예외, native dialog 미지원·open 실패는 모두 release 기능 내부에서 격리한다. 저장 실패를 성공으로 가장하지 않고, release 안내 실패 때문에 사전 검색을 숨기거나 중단하지 않는다.
+
+### 갱신된 완료 조건과 현재 gate
+
+- exact five-key 정본, title/date/list 분리, `no-store` fetch, package/lock mirror를 자동 테스트로 고정한다.
+- native dialog 지원 환경의 첫 방문·version mismatch 자동 open, same-version 억제, manual reopen, close/Escape 기록, focus 진입·복귀를 검증한다.
+- native dialog 미지원과 `showModal()` 실패에서 custom modal을 만들지 않고 popup/button을 숨기며 검색을 유지하는 fail-soft 동작을 검증한다. plain footer version fallback은 구현 수정 뒤 별도로 확인·기록한다.
+- 같은 document의 순차·동시 초기화가 idempotent이고, 성공한 automatic open 뒤에만 session mark가 생기며 실패한 open은 mark 없이 retry 가능함을 회귀 테스트한다.
+- 구현자가 위 P1을 수정한 뒤 구현자와 다른 담당자가 fresh 독립 재감사를 수행한다. P0/P1 없는 `GO`, 전체 자동 검증, desktop/mobile/keyboard 확인, `npm run deploy:dry-run`, exact payload 사용자 확인 전에는 stage·commit·`main` push·Cloudflare production deploy를 계속 금지한다.
+
+이 supersession 작성 시점에는 계약 정정만 수행했다. 구현 수정 완료, 독립 재감사 `GO`, stage·commit·push·deploy를 주장하거나 허가하지 않는다.
+
+## 2026-08-25 v0.3.0 version notice 로컬 구현 완료 / production 미배포
+
+### 목표·완료 조건과 최종 상태
+
+2026-08-24 시작한 version notice 작업은 2026-08-25 로컬 구현·자동 검증·독립 재감사·실브라우저 QA까지 완료했다. footer에서 현재 버전을 확인하고, 브라우저가 처음 보는 버전만 한 번 자동 안내하며, 같은 내용을 수동으로 다시 열 수 있게 한다는 목표와 위 supersession의 완료 조건을 모두 충족했다. 결과는 **local implementation complete, independent audit `GO`, browser QA `GO`, production not deployed**다.
+
+`public/release.json.releasedAt`의 `2026-08-24`는 작업 완료일을 잘못 적은 값이 아니라 v0.3.0 설계 때 사전 등록한 릴리스 날짜다. 구현과 최종 검증이 자정을 넘어 2026-08-25에 끝났으므로 프로젝트 완료 checkpoint 날짜와 metadata 날짜가 의도적으로 다르다.
+
+이번 기능의 향후 exact payload는 다음 9개 경로뿐이다.
+
+1. `docs/PROJECT_STATE.md`
+2. `package.json`
+3. `package-lock.json`
+4. `public/app.js`
+5. `public/index.html`
+6. `public/styles.css`
+7. `public/release-notice.js`
+8. `public/release.json`
+9. `test/release-notice.test.mjs`
+
+### 릴리스 정본과 확정 동작
+
+schema v1 정본 `public/release.json`은 추가·누락 key를 허용하지 않는 exact `{schemaVersion, version, releasedAt, title, changes}` shape다. 최종 값은 다음과 같다.
+
+- `schemaVersion`: `1`
+- `version`: `"0.3.0"`
+- `releasedAt`: `"2026-08-24"`
+- `title`: `"한영이음 v0.3.0 업데이트"`
+- `changes`:
+  1. `"페이지 하단에서 현재 버전을 확인할 수 있어요."`
+  2. `"새 버전을 처음 만날 때 업데이트 내용을 한 번 안내해요."`
+  3. `"버전 버튼을 눌러 업데이트 내용을 언제든 다시 열 수 있어요."`
+  4. `"단어 검색과 사전 데이터는 기존과 동일하게 유지돼요."`
+
+native dialog와 유효한 metadata를 사용할 수 있는 환경에서는 footer button이 `v0.3.0 업데이트 내용`으로 현재 버전을 표시한다. 별도 plain-text fallback은 만들지 않았고, native dialog 미지원 또는 `showModal()` 예외 경로에서는 interactive release UI와 button을 숨긴 채 기존 검색을 유지한다. 따라서 불완전한 custom modal이나 동작하지 않는 version control을 노출하지 않는다.
+
+- 새 저장 공간 또는 저장된 값이 없는 첫 방문과 저장값이 현재 `0.3.0`과 다른 방문에는 안내가 자동으로 한 번 열린다. 같은 page session에서는 성공한 자동 open을 중복하지 않고, dialog를 닫아 현재 버전을 기록한 뒤의 same-version reload에서는 자동 open을 억제한다.
+- footer version button은 저장 상태와 무관하게 현재 안내를 수동으로 다시 연다. 저장 key는 정확히 `han02eum:last-seen-release`이며, open만으로 쓰지 않고 실제 close가 완료됐을 때 현재 version을 기록한다.
+- `localStorage` read/write 차단·예외, release fetch non-2xx/network/JSON/schema 오류는 모두 release UI 내부에서 fail-soft 처리한다. metadata는 same-origin `/release.json`에서 `cache: "no-store"`로 읽으며, release 기능 실패가 사전 검색을 중단하지 않는다.
+- native dialog 미지원은 fetch·storage 접근 전에 release UI를 unavailable로 끝낸다. `showModal()`이 throw하면 button을 다시 숨기고 false open을 session이나 storage에 기록하지 않으며, 같은 document의 후속 정상 초기화에서 다시 시도할 수 있다.
+- document별 순차·동시 initialization은 idempotent다. 같은 document의 중복 호출은 controller/listener/fetch/open을 중복 생성하지 않고 진행 중 promise 또는 같은 controller를 재사용한다. page-session mark는 automatic `open()`이 실제 `true`로 성공한 뒤에만 기록한다.
+- close button, 명시적 dialog `keydown` Escape, native `cancel`은 한 shared close 경로로 모인다. 실제 close가 정확히 한 번 완료된 뒤 storage를 기록하고 원래 opener/focused element로 focus를 복귀시키며, 이미 닫힌 상태의 Escape/cancel은 no-op이다.
+- version, date, title, changes는 모두 `textContent`/text node로만 렌더링한다. mobile footer trigger는 최소 높이 44px, confirm button은 최소 높이 50px로 유지한다.
+
+### 독립 감사와 수정 이력
+
+첫 독립 감사는 `auditGo=false`였다. 세 key로 잘못 적힌 초기 문서 계약과 실제 five-key metadata 불일치, native dialog 미지원 때의 불완전 fallback, document별 listener 중복 가능성, automatic open 성공 전 session suppression이 주요 문제였다. 이에 supersession을 append하고 exact five-key validator, native-dialog-only fail-soft, document idempotence, open-success 이후 session mark와 retry를 구현했다.
+
+첫 수정 뒤 재감사는 `showModal()`이 throw하는 환경에서 이미 렌더링된 trigger가 다시 숨겨지지 않는 P1을 발견해 다시 `NO-GO`로 판정했다. open 실패 때 trigger를 숨기고 false success/session mark를 남기지 않도록 수정하고 해당 회귀 테스트를 추가했다.
+
+fresh 최종 독립 재감사는 `auditGo=true`, P0=0, P1=0, P2=0이다. 별도 감사 artifact 파일을 만들지는 않았으며, 독립 담당자가 exact source·tests·Git 경계를 읽기 전용으로 재현해 verdict를 확정했다.
+
+### 자동 검증과 실브라우저 QA
+
+- targeted `test/release-notice.test.mjs`: 30/30 통과
+- `npm run verify`: Node 245/245, Worker 3/3, Cloudflare type generation check와 TypeScript/syntax check 모두 통과
+- `git diff --check`: 통과
+- `npm run deploy:dry-run`: 통과. 정적 asset 8개에 `/release.json`과 `/release-notice.js`가 포함됐고 Worker bundle은 8.81 KiB, gzip 3.15 KiB였다. 이는 build 검증일 뿐 실제 배포가 아니며 deploy count는 0이다.
+
+첫 실브라우저 검토는 `browserQaGo=false`였다. Escape/cancel의 close·기록·focus 복귀를 명시적으로 보장하는 동작과 mobile footer trigger의 44px touch target이 부족했다. shared Escape/cancel close path와 trigger 최소 높이 44px를 반영한 뒤 fresh browser QA는 `browserQaGo=true`다.
+
+- desktop 1440×900: dialog 520×439.17px, `clientHeight=scrollHeight=439px`로 내부 잘림·불필요한 scroll이 없었다.
+- mobile 390×844: dialog 337×502.55px, `clientHeight=scrollHeight=503px`; footer trigger 111.95×44px, confirm button 285×50px였다. root `clientWidth=scrollWidth=375px`로 수평 overflow가 없었다.
+- 첫 방문 자동 open, Escape close와 storage 기록, same-version reload 자동 억제, footer button 수동 재열기, close 뒤 focus 복귀를 desktop/mobile에서 확인했다. 최종 console error는 0건이다.
+
+### Git·운영 경계와 다음 단계
+
+- branch `main`의 local HEAD와 upstream은 모두 `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`다. 현재 production source의 package version은 계속 `0.2.0`이며 v0.3.0 UI는 아직 production에 배포되지 않았다.
+- staged file은 0개이고 이번 단계의 commit·push·Cloudflare production deploy도 0회다. 이번 기능 작업에서 provider/project-AI 호출, legacy 7건 실행, 동일 sample 100건 실행도 모두 0회다. 사전 데이터와 검색 API는 수정하지 않았다.
+- working tree에는 위 exact payload 9개 외 기존 unrelated 34개 변경 경로를 그대로 보존했다. `README.md`, `public/dictionary-parser.js`, 비관련 pilot/scripts/tests, `.local/**`를 이 payload에 섞지 않는다.
+- 향후 `package.json`에서는 version `0.2.0 → 0.3.0` 한 hunk만, `package-lock.json`에서는 top-level과 root package version의 두 hunk만 partial stage한다. 기존 scripts 변경과 `linkedom` dependency 및 그 lockfile graph는 unrelated이므로 stage하지 않는다.
+- `main` push는 Cloudflare production 자동 배포를 촉발한다. 위 9경로와 package 두 파일의 exact partial hunks를 다시 제시해 사용자가 payload와 production 영향을 확인하는 별도 실행 단계 전에는 stage·commit·push·deploy하지 않는다.
+
+## 2026-08-25 v0.3.0 production pre-push 체크포인트 — main 선택 커밋·자동 배포 승인, 실행 전
+
+사용자는 v0.3.0 exact payload가 `main` push와 연결된 Cloudflare production 자동 배포로 곧바로 운영에 반영된다는 영향을 안내받은 뒤, **“바로 운영 배포에 반영되어도 상관 없어. 일단은 나 정도만 접속하기 때문이야. 실 서비스 가능한 수준까지 가려면 아직 멀었거든 ㅎ”**라고 명시했다. 이 발언을 이번 v0.3.0 선택 커밋의 `main` push 및 그 한 번의 자동 production 배포 승인으로 기록한다. 서비스가 아직 제한적으로 사용된다는 설명은 영향 수용의 근거이며, 아래 scope 밖 변경이나 반복 push·재배포·rollback 권한으로 확대하지 않는다.
+
+### 승인된 exact payload와 production 전환
+
+- 로컬 기준은 branch `main`, pre-commit HEAD `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`, staged file 0개다.
+- 현재 production 애플리케이션 버전은 `0.2.0`이고 이번 목표는 `0.3.0`이다. `main` push는 연결된 Cloudflare production build/deploy를 자동으로 촉발하여 version notice UI와 정적 metadata를 운영에 반영한다.
+- 승인된 payload는 정확히 다음 9개 경로뿐이다: `docs/PROJECT_STATE.md`, `package.json`, `package-lock.json`, `public/app.js`, `public/index.html`, `public/styles.css`, `public/release-notice.js`, `public/release.json`, `test/release-notice.test.mjs`.
+- `package.json`은 HEAD 대비 version `0.2.0 → 0.3.0` 한 줄만 포함하고 기존 scripts 변경과 `linkedom` dependency는 포함하지 않는다. `package-lock.json`은 top-level version과 root package version의 `0.2.0 → 0.3.0` 두 줄만 포함하고 `linkedom` 및 그 dependency graph는 포함하지 않는다.
+- `public/release.json`은 schema v1 정본이며 package와 lockfile의 위 세 version mirror는 그 `0.3.0`과 정확히 같아야 한다.
+
+### 보존·제외 경계와 실행 조건
+
+- exact payload 밖 기존 unrelated 34개 변경 경로, `.local/**`, `README.md`, `public/dictionary-parser.js`, 비관련 `pilot/**`·`scripts/**`·`test/**`와 기존 AI mapping fixture·audit·SHA는 stage·commit·push하지 않고 그대로 보존한다.
+- 이번 승인은 provider/project-AI 호출, 기존 v3 legacy 7건, 동일 sample 100건, publication/data write gate를 열지 않는다. 해당 호출·실행은 모두 계속 금지·미승인 상태다.
+- commit 전에 staged names가 정확히 위 9개인지, package cached diff가 정확히 version 세 줄뿐인지, `.local`과 unrelated path가 0개인지, staged release/package mirror가 일치하는지 다시 검증한다.
+- network write 전 read-only preflight에서 `origin/refs/heads/main`이 기준 HEAD `c0338fa0e5ffece060b86e1b2622c9445b9ad19f`와 정확히 같아야 한다. 다르거나 원격 상태를 확정할 수 없으면 push하지 않고 중단·보고한다.
+- preflight가 통과한 경우에만 force option 없이 explicit refspec `HEAD:refs/heads/main`으로 정확히 한 번 push한다. push 실패 뒤 재시도, 추가 corrective push, 수동 재배포, rollback은 이번 승인에 포함되지 않으므로 자동 수행하지 않는다.
+
+### 승인 전 검증 증거와 현재 상태
+
+- targeted `test/release-notice.test.mjs`: 30/30 통과
+- `npm run verify`: Node 245/245, Worker 3/3, Cloudflare type generation check 및 TypeScript/syntax check 통과
+- `git diff --check`: 통과
+- `npm run deploy:dry-run`: 통과. `/release.json`과 `/release-notice.js` 포함을 확인했으며 실제 deploy count는 0이다.
+- fresh 독립 코드 감사는 P0=0, P1=0, P2=0으로 `GO`, desktop/mobile/keyboard 실브라우저 QA도 `GO`다.
+
+이 체크포인트 작성 시점에는 exact index 준비 전이며 commit·push·network 호출·Cloudflare production deploy를 아직 실행하지 않았다. 다음 단계는 위 9개 경로만 선택 stage하고 cached payload를 재검증하는 것이며, 그 결과가 기준과 다르면 commit 단계로 넘어가지 않는다.

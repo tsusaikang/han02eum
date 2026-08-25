@@ -1,4 +1,5 @@
 import { parseWiktionaryEntry } from "./dictionary-parser.js";
+import { initializeReleaseNotice } from "./release-notice.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -262,3 +263,7 @@ window.addEventListener("popstate", () => {
 
 const initialWord = new URL(window.location.href).searchParams.get("q");
 if (initialWord) lookup(initialWord, { updateHistory: false });
+
+initializeReleaseNotice().catch(() => {
+  // Release notices are optional and must never interrupt dictionary search.
+});
