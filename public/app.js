@@ -1,5 +1,6 @@
-import { parseWiktionaryEntry } from "./dictionary-parser.js";
+import { detectInputLanguage, parseWiktionaryEntry } from "./dictionary-parser.js";
 import { initializeReleaseNotice } from "./release-notice.js";
+import { findVerifiedSupplements, renderVerifiedSupplements } from "./verified-supplements.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -17,9 +18,12 @@ const ui = {
   audioButton: document.querySelector("#audio-button"),
   translationSection: document.querySelector("#translation-section"),
   translations: document.querySelector("#translation-list"),
+  verifiedSupplements: document.querySelector("#verified-supplements"),
+  definitionsSection: document.querySelector("#definitions-section"),
   definitionKicker: document.querySelector("#definitions-kicker"),
   definitionCount: document.querySelector("#definition-count"),
   definitionGroups: document.querySelector("#definition-groups"),
+  sourceNote: document.querySelector("#source-note"),
   sourceDescription: document.querySelector("#source-description"),
   sourceLink: document.querySelector("#source-link")
 };
@@ -121,7 +125,7 @@ function renderDefinitionGroups(entry) {
   }
 }
 
-function renderEntry(entry) {
+function renderEntry(entry, { wiktionaryAvailable = true } = {}) {
   currentEntry = entry;
   ui.direction.textContent = entry.language === "ko" ? "한국어 → English" : "English → 한국어 · English";
   ui.word.textContent = entry.word;
@@ -131,6 +135,16 @@ function renderEntry(entry) {
   renderPronunciations(entry);
   renderTranslations(entry);
   renderDefinitionGroups(entry);
+  renderVerifiedSupplements(ui.verifiedSupplements, entry.requestedWord || entry.word);
+
+  if (!wiktionaryAvailable) {
+    ui.translationSection.classList.add("is-hidden");
+    ui.definitionsSection.classList.add("is-hidden");
+    ui.sourceNote.classList.add("is-hidden");
+  } else {
+    ui.definitionsSection.classList.remove("is-hidden");
+    ui.sourceNote.classList.remove("is-hidden");
+  }
 
   const revision = entry.revisionId ? `리비전 ${entry.revisionId}` : "현재 공개 항목";
   ui.sourceDescription.textContent = `Wiktionary ${revision}을 정리해 표시했습니다. 내용은 ${entry.license?.name || "CC BY-SA"} 조건을 따릅니다.`;
@@ -141,6 +155,22 @@ function renderEntry(entry) {
     ui.result.scrollIntoView({ behavior, block: "start" });
     ui.word.focus({ preventScroll: true });
   });
+}
+
+function renderSupplementOnlyEntry(word) {
+  renderEntry({
+    word,
+    requestedWord: word,
+    language: detectInputLanguage(word),
+    found: true,
+    pronunciations: [],
+    audio: [],
+    translations: [],
+    definitionGroups: [],
+    sourceUrl: "",
+    revisionId: null,
+    license: null
+  }, { wiktionaryAvailable: false });
 }
 
 function stopAudioState() {
@@ -214,10 +244,21 @@ async function lookup(rawWord, { updateHistory = true } = {}) {
       headers: { Accept: "application/json" }
     });
     const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "사전 항목을 불러오지 못했습니다.");
+    const verifiedSupplements = findVerifiedSupplements(word);
+    if (!response.ok) {
+      if (response.status === 404 && verifiedSupplements.length) {
+        renderSupplementOnlyEntry(word);
+        return;
+      }
+      throw new Error(payload.error || "사전 항목을 불러오지 못했습니다.");
+    }
 
     const entry = parseWiktionaryEntry(payload);
     if (!entry.found) {
+      if (verifiedSupplements.length) {
+        renderSupplementOnlyEntry(word);
+        return;
+      }
       const language = entry.language === "ko" ? "한국어" : "영어";
       showMessage(
         `‘${word}’의 ${language} 항목이 없어요`,
