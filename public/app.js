@@ -66,12 +66,13 @@ function renderPronunciations(entry) {
   for (const value of values) ui.pronunciations.append(makeElement("span", "", value));
 }
 
-function renderTranslations(entry) {
+function renderTranslations(entry, { hasSupplements = false } = {}) {
   ui.translations.replaceChildren();
-  ui.translationSection.classList.toggle("is-hidden", entry.language !== "en");
+  ui.translationSection.classList.toggle("is-hidden", entry.language !== "en" && !hasSupplements);
   if (entry.language !== "en") return;
 
   if (!entry.translations.length) {
+    if (hasSupplements) return;
     const message = makeElement("p", "empty-detail", "이 항목에는 아직 한국어 번역이 등록되지 않았습니다. 영영 뜻은 아래에서 확인할 수 있어요.");
     ui.translations.append(message);
     return;
@@ -133,12 +134,14 @@ function renderEntry(entry, { wiktionaryAvailable = true } = {}) {
     ? "Wikimedia Commons 음원으로 발음 듣기"
     : "기기의 음성 합성으로 발음 듣기";
   renderPronunciations(entry);
-  renderTranslations(entry);
+  const supplementCount = renderVerifiedSupplements(
+    ui.verifiedSupplements,
+    entry.requestedWord || entry.word
+  );
+  renderTranslations(entry, { hasSupplements: supplementCount > 0 });
   renderDefinitionGroups(entry);
-  renderVerifiedSupplements(ui.verifiedSupplements, entry.requestedWord || entry.word);
 
   if (!wiktionaryAvailable) {
-    ui.translationSection.classList.add("is-hidden");
     ui.definitionsSection.classList.add("is-hidden");
     ui.sourceNote.classList.add("is-hidden");
   } else {

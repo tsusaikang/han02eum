@@ -25,6 +25,33 @@ const VERIFIED_SUPPLEMENTS = [
         url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
       }
     }
+  },
+  {
+    id: "enwiktionary:92121812:right:verb-1:verb-1-sense-1::krdict:85281:1",
+    searchTerms: ["right", "시정하다"],
+    english: {
+      headword: "right",
+      partOfSpeech: "verb",
+      partOfSpeechKo: "동사",
+      definition: "To correct.",
+      usageNoteKo: "영어에서는 잘못된 상황이나 일을 바로잡는 타동사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/right",
+      revisionId: 92121812
+    },
+    korean: {
+      id: "krdict:85281:1",
+      entryId: "85281",
+      senseId: "1",
+      headword: "시정하다",
+      definition: "잘못된 것을 바르게 고치다.",
+      examples: ["시정한 부조리.", "관행을 시정하다.", "잘못을 시정하다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=85281&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
   }
 ];
 
@@ -69,8 +96,9 @@ function makeSupplementCard(document, supplement) {
   const koreanWord = makeElement(document, "span", "", supplement.korean.headword);
   koreanWord.lang = "ko";
   pair.append(englishWord, arrow, koreanWord);
-  header.append(
-    pair,
+  const badges = makeElement(document, "div", "supplement-badges");
+  badges.append(
+    makeElement(document, "span", "supplement-source-badge", `${supplement.korean.sourceName} 확인`),
     makeElement(
       document,
       "span",
@@ -78,13 +106,14 @@ function makeSupplementCard(document, supplement) {
       `${supplement.english.partOfSpeechKo} · ${supplement.english.partOfSpeech}`
     )
   );
+  header.append(pair, badges);
 
   const koreanDefinition = makeElement(document, "p", "supplement-definition", supplement.korean.definition);
   const englishDefinition = makeElement(
     document,
     "p",
     "supplement-english-definition",
-    `연결된 영어 뜻: ${supplement.english.definition}`
+    `연결 근거인 영영 뜻: ${supplement.english.definition}`
   );
   const usageNote = makeElement(document, "p", "supplement-usage", supplement.english.usageNoteKo);
 
@@ -129,21 +158,9 @@ export function renderVerifiedSupplements(container, value) {
   if (!supplements.length) return 0;
 
   const document = container.ownerDocument;
-  const section = makeElement(document, "section", "verified-supplements-section");
-  section.setAttribute("aria-labelledby", "verified-supplements-title");
-
-  const heading = makeElement(document, "div", "supplement-section-heading");
-  const headingText = makeElement(document, "div", "");
-  headingText.append(
-    makeElement(document, "p", "section-kicker", "한국어기초사전에서 확인"),
-    makeElement(document, "h3", "", "검증해 보완한 뜻")
-  );
-  headingText.querySelector("h3").id = "verified-supplements-title";
-  heading.append(
-    headingText,
-    makeElement(document, "span", "supplement-count", `${supplements.length}개`)
-  );
-  section.append(heading);
+  const section = makeElement(document, "div", "verified-supplements-section");
+  section.setAttribute("aria-label", "출처가 확인된 보충 한국어 뜻");
+  section.append(makeElement(document, "p", "supplement-group-label", "출처가 확인된 보충 뜻"));
 
   for (const supplement of supplements) {
     section.append(makeSupplementCard(document, supplement));

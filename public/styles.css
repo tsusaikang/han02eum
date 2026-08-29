@@ -578,42 +578,27 @@ a {
 }
 
 .verified-supplements-section {
-  padding: 40px 54px 44px;
-  background: rgba(219, 232, 223, 0.48);
-  border-bottom: 1px solid rgba(31, 93, 72, 0.16);
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(163, 71, 48, 0.2);
 }
 
-.verified-supplements-section .section-kicker {
+.supplement-group-label {
+  margin: 0 0 12px;
   color: var(--green);
-}
-
-.supplement-section-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 20px;
-}
-
-.supplement-section-heading h3 {
-  margin: 7px 0 0;
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-}
-
-.supplement-count {
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
+  font-weight: 800;
 }
 
 .verified-supplement-card {
   padding: 26px;
-  background: rgba(255, 253, 248, 0.82);
-  border: 1px solid rgba(31, 93, 72, 0.18);
+  background: rgba(255, 253, 248, 0.76);
+  border: 1px solid rgba(163, 71, 48, 0.14);
   border-radius: 18px;
+}
+
+.verified-supplement-card + .verified-supplement-card {
+  margin-top: 14px;
 }
 
 .supplement-header {
@@ -643,6 +628,22 @@ a {
   padding: 7px 11px;
   color: var(--green);
   background: var(--green-soft);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.supplement-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.supplement-source-badge {
+  padding: 7px 11px;
+  color: #824531;
+  background: rgba(244, 222, 213, 0.78);
   border-radius: 999px;
   font-size: 12px;
   font-weight: 800;
@@ -1058,7 +1059,6 @@ a {
   .audio-button span:last-child { display: none; }
   .audio-button { width: 46px; height: 46px; padding: 0; justify-content: center; }
   .translation-section,
-  .verified-supplements-section,
   .definitions-section { padding-left: 26px; padding-right: 26px; }
   .supplement-source { display: grid; }
   .supplement-source-links { justify-items: start; }
