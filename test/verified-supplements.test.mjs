@@ -1,7 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { DOMParser } from "linkedom";
 
+import { parseWiktionaryEntry } from "../public/dictionary-parser.js";
 import {
   buildMeaningSummaryGroups,
   findVerifiedSupplements,
@@ -410,6 +412,45 @@ function deployedRoyalParserEntry() {
   };
 }
 
+function reducedLiveRoyalPayload() {
+  return {
+    requestedWord: "royal",
+    title: "royal",
+    revisionId: 92048420,
+    sourceUrl: "https://en.wiktionary.org/wiki/royal",
+    license: {
+      name: "CC BY-SA 4.0",
+      url: "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    html: `
+      <h2 id="English">English</h2>
+      <h3 id="Adjective">Adjective</h3>
+      <ol>
+        <li>Of or relating to a monarch or his (or her) family.</li>
+        <li>Having the air or demeanour of a monarch; illustrious; magnanimous.</li>
+      </ol>
+      <h4 id="Translations">Translations</h4>
+      <div class="NavFrame">
+        <div class="NavHead">of or relating to a monarch or his family — see also regal, monarchic, palatial, majestic</div>
+        <div class="NavContent">
+          <table><tbody><tr><td>Korean</td><td><span lang="ko">왕의</span>, <span lang="ko">왕실의</span></td></tr></tbody></table>
+        </div>
+      </div>
+      <h3 id="Noun">Noun</h3>
+      <ol>
+        <li>(somewhat informal, often capitalised) A royal person; a member of a royal family.</li>
+        <li>(paper, printing) A standard size of printing paper, measuring 25 by 20 inches.</li>
+      </ol>
+      <h4 id="Translations_2">Translations</h4>
+      <div class="NavFrame">
+        <div class="NavHead">royal person</div>
+        <div class="NavContent"><table><tbody><tr><td>German</td><td>Royal</td></tr></tbody></table></div>
+      </div>
+      <h2 id="French">French</h2>
+    `
+  };
+}
+
 test("the Korean meaning summary merges Wiktionary and verified meanings by part of speech", () => {
   const groups = buildMeaningSummaryGroups(royalEntry(), findVerifiedSupplements("royal"));
   assert.deepEqual(groups.map((group) => ({
@@ -472,6 +513,40 @@ test("the deployed flat royal API shape safely restores adjective meanings in th
   assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
   assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
   assert.match(target.textContent, /왕족검증 보완/);
+});
+
+test("the reduced live royal payload keeps nested-table translations under Adjective in the summary DOM", () => {
+  const previousDOMParser = globalThis.DOMParser;
+  globalThis.DOMParser = DOMParser;
+  let entry;
+  try {
+    entry = parseWiktionaryEntry(reducedLiveRoyalPayload());
+  } finally {
+    globalThis.DOMParser = previousDOMParser;
+  }
+
+  assert.deepEqual(entry.translations.map(({ term }) => term), ["왕의", "왕실의"]);
+  const adjective = entry.definitionGroups.find((group) => group.partOfSpeech === "Adjective");
+  assert.deepEqual(
+    adjective.definitions[0].koreanTranslations.map(({ term }) => term),
+    ["왕의", "왕실의"]
+  );
+
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const summary = renderMeaningSummary(target, entry, findVerifiedSupplements("royal"));
+
+  assert.equal(summary.groupCount, 2);
+  assert.equal(summary.meaningCount, 3);
+  assert.deepEqual(target.querySelectorAll("h3").map((heading) => heading.textContent), [
+    "형용사 · Adjective",
+    "명사 · Noun"
+  ]);
+  assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
+  assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
+  assert.equal(target.querySelectorAll("section").some(
+    (section) => section.attributes.get("aria-label") === "뜻"
+  ), false);
 });
 
 test("a flat translation stays unclassified when two parts of speech match ambiguously", () => {
