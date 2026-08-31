@@ -544,7 +544,6 @@ export function renderMeaningSummary(container, entry, supplements = []) {
   container.replaceChildren();
   const document = container.ownerDocument;
   const targetLanguage = entry?.language === "ko" ? "en" : "ko";
-  const verifiedLabel = entry?.language === "ko" ? "검증 연결" : "검증 보완";
 
   groups.forEach((group, index) => {
     const section = makeElement(document, "section", "translation-group");
@@ -572,7 +571,6 @@ export function renderMeaningSummary(container, entry, supplements = []) {
       }
       if (meaning.verified) {
         item.className += " is-verified";
-        item.append(makeElement(document, "small", "translation-verified-label", verifiedLabel));
       }
       items.append(item);
     }
@@ -630,7 +628,7 @@ function makeSupplementCard(document, supplement) {
   const source = makeElement(document, "footer", "supplement-source");
   const sourceText = makeElement(document, "div", "");
   sourceText.append(
-    makeElement(document, "strong", "", `보완 뜻 출처: ${supplement.korean.sourceName}`),
+    makeElement(document, "strong", "", `뜻 출처: ${supplement.korean.sourceName}`),
     makeElement(
       document,
       "span",
@@ -661,7 +659,7 @@ export function renderVerifiedSupplements(container, value) {
 
   const document = container.ownerDocument;
   const section = makeElement(document, "div", "verified-supplements-section");
-  section.setAttribute("aria-label", "위에 표시한 검증 보완 뜻의 출처와 예문");
+  section.setAttribute("aria-label", "위에 표시한 뜻의 출처와 예문");
   section.append(makeElement(document, "p", "supplement-group-label", "위 뜻의 출처와 예문"));
 
   for (const supplement of supplements) {

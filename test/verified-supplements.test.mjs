@@ -488,7 +488,12 @@ test("the actual royal summary DOM shows adjective Korean meanings before the ve
   ]);
   assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
   assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
-  assert.match(target.textContent, /왕족검증 보완/);
+  assert.match(target.textContent, /왕족/);
+  assert.doesNotMatch(target.textContent, /검증 보완|검증 연결/);
+  assert.equal(
+    target.querySelectorAll("span").filter((item) => item.className === "translation-item is-verified").length,
+    1
+  );
   const sections = target.querySelectorAll("section");
   assert.equal(sections.length, 2);
   assert.equal(sections[0].attributes.get("aria-labelledby"), "translation-group-1");
@@ -512,7 +517,8 @@ test("the deployed flat royal API shape safely restores adjective meanings in th
   ]);
   assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
   assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
-  assert.match(target.textContent, /왕족검증 보완/);
+  assert.match(target.textContent, /왕족/);
+  assert.doesNotMatch(target.textContent, /검증 보완|검증 연결/);
 });
 
 test("the reduced live royal payload keeps nested-table translations under Adjective in the summary DOM", () => {
@@ -574,7 +580,8 @@ test("a supplement-only Korean reverse search shows its linked English word inst
   assert.equal(summary.title, "연결된 영어 뜻");
   assert.equal(summary.meaningCount, 1);
   assert.match(target.textContent, /명사 · noun/);
-  assert.match(target.textContent, /royal검증 연결/);
+  assert.match(target.textContent, /royal/);
+  assert.doesNotMatch(target.textContent, /검증 보완|검증 연결/);
   assert.doesNotMatch(target.textContent, /왕족/);
 });
 
@@ -614,8 +621,13 @@ test("the supplement renderer keeps source details under the meaning summary wit
   assert.match(target.textContent, /몰락한 왕족/);
   assert.match(target.textContent, /왕족 출신/);
   assert.match(target.textContent, /왕족의 가문/);
-  assert.match(target.textContent, /보완 뜻 출처: 한국어기초사전/);
+  assert.match(target.textContent, /뜻 출처: 한국어기초사전/);
+  assert.doesNotMatch(target.textContent, /검증 보완|검증 연결|보완 뜻 출처/);
   assert.match(target.textContent, /CC BY-SA 2.0 KR/);
+
+  const section = target.children[0];
+  assert.equal(section.className, "verified-supplements-section");
+  assert.equal(section.attributes.get("aria-label"), "위에 표시한 뜻의 출처와 예문");
 
   const links = [...target.querySelectorAll("a")].map((link) => link.href);
   assert.equal(
