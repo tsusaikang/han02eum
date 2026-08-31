@@ -346,6 +346,122 @@ const VERIFIED_SUPPLEMENTS = [
         url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
       }
     }
+  },
+  {
+    id: "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1::krdict:56457:1",
+    searchTerms: ["minute", "미소하다"],
+    english: {
+      headword: "minute",
+      partOfSpeech: "adjective",
+      partOfSpeechKo: "형용사",
+      definition: "Very small.",
+      examples: ["They found only minute quantities of chemical residue on his clothing."],
+      usageNoteKo: "영어에서는 크기나 양이 매우 작은 상태를 가리키는 형용사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/minute",
+      revisionId: 91663519
+    },
+    korean: {
+      id: "krdict:56457:1",
+      entryId: "56457",
+      senseId: "1",
+      headword: "미소하다",
+      definition: "아주 작다.",
+      examples: ["변화가 미소하다.", "차이가 미소하다.", "크기가 미소하다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=56457&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:91955513:fair:noun-1:noun-1-sense-5::krdict:85119:1",
+    searchTerms: ["fair", "행운"],
+    english: {
+      headword: "fair",
+      partOfSpeech: "noun",
+      partOfSpeechKo: "명사",
+      definition: "(obsolete) Good fortune; good luck.",
+      examples: ["Now, fair befall thee, good Petruchio!"],
+      usageNoteKo: "영어에서는 행운이나 좋은 운수를 가리키던 현재는 쓰이지 않는 명사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/fair",
+      revisionId: 91955513
+    },
+    korean: {
+      id: "krdict:85119:1",
+      entryId: "85119",
+      senseId: "1",
+      headword: "행운",
+      definition: "좋은 운수. 또는 행복한 운수.",
+      examples: ["행운의 여신.", "행운과 액운.", "행운이 깃들다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=85119&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:92060252:turn:noun-1:noun-1-sense-18::krdict:84610:1",
+    searchTerms: ["turn", "성정"],
+    english: {
+      headword: "turn",
+      partOfSpeech: "noun",
+      partOfSpeechKo: "명사",
+      definition: "Character; personality; nature.",
+      examples: [
+        "It was fortunate for his comfort, perhaps, that the man who had been chosen to accompany him was of a talkative turn, for the prisoners insisted upon hearing the story of the explosion a dozen times over, and Rufus Dawes himself had been roused to give the name of the vessel with his own lips."
+      ],
+      usageNoteKo: "영어에서는 사람의 성격이나 기질을 가리키는 명사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/turn",
+      revisionId: 92060252
+    },
+    korean: {
+      id: "krdict:84610:1",
+      entryId: "84610",
+      senseId: "1",
+      headword: "성정",
+      definition: "성질과 마음씨. 또는 타고난 본성.",
+      examples: ["성정이 거칠다.", "성정이 곧다.", "성정이 바르다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=84610&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:92048419:round:verb-1:verb-1-sense-6::krdict:50281:1",
+    searchTerms: ["round", "덤비다"],
+    english: {
+      headword: "round",
+      partOfSpeech: "verb",
+      partOfSpeechKo: "동사",
+      definition: "(intransitive) To turn and attack someone or something (used with on).",
+      examples: [
+        "As a group of policemen went past him, one of them rounded on him, grabbing him by the arm."
+      ],
+      usageNoteKo: "영어에서는 round on의 형태로 갑자기 돌아서서 사람이나 대상을 공격하는 동사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/round",
+      revisionId: 92048419
+    },
+    korean: {
+      id: "krdict:50281:1",
+      entryId: "50281",
+      senseId: "1",
+      headword: "덤비다",
+      definition: "대들거나 달려들다.",
+      examples: ["무작정 덤비다.", "버릇없이 덤비다.", "어른께 덤비다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=50281&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
   }
 ];
 

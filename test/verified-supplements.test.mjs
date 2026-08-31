@@ -164,33 +164,65 @@ test("the verified figure and 숫자 searches resolve to the same sourced mappin
 });
 
 test("the verified minute and 쪼금 searches resolve to the same sourced mapping", () => {
-  const english = findVerifiedSupplements(" MINUTE ");
+  const englishMatches = findVerifiedSupplements(" MINUTE ");
+  const english = englishMatches.find((item) => item.korean.id === "krdict:78005:2");
   const korean = findVerifiedSupplements("쪼금");
 
-  assert.equal(english.length, 1);
+  assert.equal(englishMatches.length, 2);
+  assert.ok(english);
   assert.equal(korean.length, 1);
-  assert.equal(english[0].id, korean[0].id);
+  assert.equal(english.id, korean[0].id);
   assert.equal(
-    english[0].id,
+    english.id,
     "enwiktionary:91663519:minute:noun-1:noun-1-sense-2::krdict:78005:2"
   );
-  assert.equal(english[0].english.partOfSpeech, "noun");
-  assert.equal(english[0].english.revisionId, 91663519);
-  assert.equal(english[0].english.definition, "(informal) A short but unspecified time period.");
-  assert.deepEqual(english[0].english.examples, [
+  assert.equal(english.english.partOfSpeech, "noun");
+  assert.equal(english.english.revisionId, 91663519);
+  assert.equal(english.english.definition, "(informal) A short but unspecified time period.");
+  assert.deepEqual(english.english.examples, [
     "give me a minute",
     "Wait a minute, I’m not ready yet!"
   ]);
-  assert.equal(english[0].english.sourceUrl, "https://en.wiktionary.org/wiki/minute");
-  assert.equal(english[0].korean.id, "krdict:78005:2");
-  assert.equal(english[0].korean.headword, "쪼금");
-  assert.equal(english[0].korean.definition, "짧은 시간 동안.");
-  assert.equal(english[0].korean.sourceName, "한국어기초사전");
-  assert.equal(english[0].korean.license.name, "CC BY-SA 2.0 KR");
-  assert.deepEqual(english[0].korean.examples, [
+  assert.equal(english.english.sourceUrl, "https://en.wiktionary.org/wiki/minute");
+  assert.equal(english.korean.id, "krdict:78005:2");
+  assert.equal(english.korean.headword, "쪼금");
+  assert.equal(english.korean.definition, "짧은 시간 동안.");
+  assert.equal(english.korean.sourceName, "한국어기초사전");
+  assert.equal(english.korean.license.name, "CC BY-SA 2.0 KR");
+  assert.deepEqual(english.korean.examples, [
     "쪼금 전.",
     "쪼금 후.",
     "쪼금만 머물다."
+  ]);
+});
+
+test("the verified minute adjective and 미소하다 searches resolve to the same sourced mapping", () => {
+  const englishMatches = findVerifiedSupplements(" MINUTE ");
+  const english = englishMatches.find((item) => item.korean.id === "krdict:56457:1");
+  const korean = findVerifiedSupplements("미소하다");
+
+  assert.equal(englishMatches.length, 2);
+  assert.ok(english);
+  assert.equal(korean.length, 1);
+  assert.equal(english.id, korean[0].id);
+  assert.equal(
+    english.id,
+    "enwiktionary:91663519:minute:adjective-1:adjective-1-sense-1::krdict:56457:1"
+  );
+  assert.equal(english.english.partOfSpeech, "adjective");
+  assert.equal(english.english.revisionId, 91663519);
+  assert.equal(english.english.definition, "Very small.");
+  assert.deepEqual(english.english.examples, [
+    "They found only minute quantities of chemical residue on his clothing."
+  ]);
+  assert.equal(english.english.sourceUrl, "https://en.wiktionary.org/wiki/minute");
+  assert.equal(english.korean.id, "krdict:56457:1");
+  assert.equal(english.korean.headword, "미소하다");
+  assert.equal(english.korean.definition, "아주 작다.");
+  assert.deepEqual(english.korean.examples, [
+    "변화가 미소하다.",
+    "차이가 미소하다.",
+    "크기가 미소하다."
   ]);
 });
 
@@ -305,6 +337,52 @@ for (const expected of [
     definition: "비좁은 자리에 억지로 들이밀어 넣다.",
     examples: ["솜을 틀어넣다.", "수건을 틀어넣다.", "구멍에 틀어넣다."],
     koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=82629&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "fair",
+    koreanWord: "행운",
+    id: "enwiktionary:91955513:fair:noun-1:noun-1-sense-5::krdict:85119:1",
+    partOfSpeech: "noun",
+    revisionId: 91955513,
+    englishDefinition: "(obsolete) Good fortune; good luck.",
+    englishExamples: ["Now, fair befall thee, good Petruchio!"],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/fair",
+    koreanId: "krdict:85119:1",
+    definition: "좋은 운수. 또는 행복한 운수.",
+    examples: ["행운의 여신.", "행운과 액운.", "행운이 깃들다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=85119&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "turn",
+    koreanWord: "성정",
+    id: "enwiktionary:92060252:turn:noun-1:noun-1-sense-18::krdict:84610:1",
+    partOfSpeech: "noun",
+    revisionId: 92060252,
+    englishDefinition: "Character; personality; nature.",
+    englishExamples: [
+      "It was fortunate for his comfort, perhaps, that the man who had been chosen to accompany him was of a talkative turn, for the prisoners insisted upon hearing the story of the explosion a dozen times over, and Rufus Dawes himself had been roused to give the name of the vessel with his own lips."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/turn",
+    koreanId: "krdict:84610:1",
+    definition: "성질과 마음씨. 또는 타고난 본성.",
+    examples: ["성정이 거칠다.", "성정이 곧다.", "성정이 바르다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=84610&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "round",
+    koreanWord: "덤비다",
+    id: "enwiktionary:92048419:round:verb-1:verb-1-sense-6::krdict:50281:1",
+    partOfSpeech: "verb",
+    revisionId: 92048419,
+    englishDefinition: "(intransitive) To turn and attack someone or something (used with on).",
+    englishExamples: [
+      "As a group of policemen went past him, one of them rounded on him, grabbing him by the arm."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/round",
+    koreanId: "krdict:50281:1",
+    definition: "대들거나 달려들다.",
+    examples: ["무작정 덤비다.", "버릇없이 덤비다.", "어른께 덤비다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=50281&nation=eng&nationCode=6"
   }
 ]) {
   test(`the verified ${expected.englishWord} and ${expected.koreanWord} searches resolve to the same sourced mapping`, () => {
@@ -335,8 +413,8 @@ test("excluded and unrelated words do not receive a verified supplement", () => 
   for (const word of [
     "line", "fast", "screen", "play", "light",
     "bank", "run", "set", "record", "charge", "bear", "spring", "match", "point",
-    "left", "fair", "fine", "mean", "kind", "sound", "watch", "break", "hold", "draw",
-    "turn", "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
+    "left", "fine", "mean", "kind", "sound", "watch", "break", "hold", "draw",
+    "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
     "bat", "club", "ring", "wave", "bill", "draft", "strike", "suit", "court",
     "capital", "subject", "object", "present", "second", "letter", "order", "state",
     "change", "cover", "open", "clear", "hard", "flat", "sharp",
