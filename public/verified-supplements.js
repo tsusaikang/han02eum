@@ -462,6 +462,125 @@ const VERIFIED_SUPPLEMENTS = [
         url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
       }
     }
+  },
+  {
+    id: "enwiktionary:92065773:wave:verb-1:verb-1-sense-8::krdict:29776:1",
+    searchTerms: ["wave", "흔들다"],
+    english: {
+      headword: "wave",
+      partOfSpeech: "verb",
+      partOfSpeechKo: "동사",
+      definition: "(transitive) To cause to move back and forth repeatedly.",
+      examples: [
+        "The starter waved the flag to begin the race.",
+        "His father has waved bills in front of face and said to him — see what you've cost me."
+      ],
+      usageNoteKo: "영어에서는 깃발이나 물건을 앞뒤 또는 좌우로 되풀이해 흔드는 타동사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/wave",
+      revisionId: 92065773
+    },
+    korean: {
+      id: "krdict:29776:1",
+      entryId: "29776",
+      senseId: "1",
+      headword: "흔들다",
+      definition: "무엇을 좌우, 앞뒤로 자꾸 움직이게 하다.",
+      examples: ["고개를 흔들다.", "꼬리를 흔들다.", "머리를 흔들다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=29776&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:92057562:square:adjective-1:adjective-1-sense-1::krdict:41457:1",
+    searchTerms: ["square", "네모나다"],
+    english: {
+      headword: "square",
+      partOfSpeech: "adjective",
+      partOfSpeechKo: "형용사",
+      definition: "Shaped like a square (the polygon).",
+      examples: [
+        "The huge square box, parquet-floored and high-ceilinged, had been arranged to display a suite of bedroom furniture designed and made in the halcyon days of the last quarter of the nineteenth century,."
+      ],
+      usageNoteKo: "영어에서는 물체가 정사각형처럼 네모난 모양임을 가리키는 형용사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/square",
+      revisionId: 92057562
+    },
+    korean: {
+      id: "krdict:41457:1",
+      entryId: "41457",
+      senseId: "1",
+      headword: "네모나다",
+      definition: "네모 모양으로 되어 있다.",
+      examples: ["네모난 상자.", "네모난 얼굴.", "네모난 턱."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=41457&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:92093809:fast:adjective-1:adjective-1-sense-8::krdict:27691:2",
+    searchTerms: ["fast", "곤하다"],
+    english: {
+      headword: "fast",
+      partOfSpeech: "adjective",
+      partOfSpeechKo: "형용사",
+      definition: "Deep or sound (of sleep); fast asleep (of people).",
+      examples: [
+        "Since his majesty went into the field, I have seen her rise from her bed, throw her nightgown upon her, unlock her closet, take forth paper, fold it, write upon’t, read it, afterwards seal it, and again return to bed; yet all this while in a most fast sleep."
+      ],
+      usageNoteKo: "영어에서는 잠이나 잠든 사람이 깊이 잠든 상태를 가리키는 형용사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/fast",
+      revisionId: 92093809
+    },
+    korean: {
+      id: "krdict:27691:2",
+      entryId: "27691",
+      senseId: "2",
+      headword: "곤하다",
+      definition: "잠든 상태가 깊다.",
+      examples: ["곤한 꿈.", "곤한 숨결.", "곤한 잠."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=27691&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
+  },
+  {
+    id: "enwiktionary:91781595:clear:noun-1:noun-1-sense-1::krdict:18694:2",
+    searchTerms: ["clear", "공간"],
+    english: {
+      headword: "clear",
+      partOfSpeech: "noun",
+      partOfSpeechKo: "명사",
+      definition: "Empty or open area.",
+      examples: ["The deer were standing in the clear."],
+      usageNoteKo: "영어에서는 비어 있거나 탁 트인 공간을 가리키는 명사 뜻입니다.",
+      sourceUrl: "https://en.wiktionary.org/wiki/clear",
+      revisionId: 91781595
+    },
+    korean: {
+      id: "krdict:18694:2",
+      entryId: "18694",
+      senseId: "2",
+      headword: "공간",
+      definition: "널리 펼쳐 있는 빈 곳.",
+      examples: ["무한한 공간.", "도시 공간.", "바다 공간."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=18694&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
   }
 ];
 

@@ -383,6 +383,69 @@ for (const expected of [
     definition: "대들거나 달려들다.",
     examples: ["무작정 덤비다.", "버릇없이 덤비다.", "어른께 덤비다."],
     koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=50281&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "wave",
+    koreanWord: "흔들다",
+    id: "enwiktionary:92065773:wave:verb-1:verb-1-sense-8::krdict:29776:1",
+    partOfSpeech: "verb",
+    revisionId: 92065773,
+    englishDefinition: "(transitive) To cause to move back and forth repeatedly.",
+    englishExamples: [
+      "The starter waved the flag to begin the race.",
+      "His father has waved bills in front of face and said to him — see what you've cost me."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/wave",
+    koreanId: "krdict:29776:1",
+    definition: "무엇을 좌우, 앞뒤로 자꾸 움직이게 하다.",
+    examples: ["고개를 흔들다.", "꼬리를 흔들다.", "머리를 흔들다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=29776&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "square",
+    koreanWord: "네모나다",
+    id: "enwiktionary:92057562:square:adjective-1:adjective-1-sense-1::krdict:41457:1",
+    partOfSpeech: "adjective",
+    revisionId: 92057562,
+    englishDefinition: "Shaped like a square (the polygon).",
+    englishExamples: [
+      "The huge square box, parquet-floored and high-ceilinged, had been arranged to display a suite of bedroom furniture designed and made in the halcyon days of the last quarter of the nineteenth century,."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/square",
+    koreanId: "krdict:41457:1",
+    definition: "네모 모양으로 되어 있다.",
+    examples: ["네모난 상자.", "네모난 얼굴.", "네모난 턱."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=41457&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "fast",
+    koreanWord: "곤하다",
+    id: "enwiktionary:92093809:fast:adjective-1:adjective-1-sense-8::krdict:27691:2",
+    partOfSpeech: "adjective",
+    revisionId: 92093809,
+    englishDefinition: "Deep or sound (of sleep); fast asleep (of people).",
+    englishExamples: [
+      "Since his majesty went into the field, I have seen her rise from her bed, throw her nightgown upon her, unlock her closet, take forth paper, fold it, write upon’t, read it, afterwards seal it, and again return to bed; yet all this while in a most fast sleep."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/fast",
+    koreanId: "krdict:27691:2",
+    definition: "잠든 상태가 깊다.",
+    examples: ["곤한 꿈.", "곤한 숨결.", "곤한 잠."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=27691&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "clear",
+    koreanWord: "공간",
+    id: "enwiktionary:91781595:clear:noun-1:noun-1-sense-1::krdict:18694:2",
+    partOfSpeech: "noun",
+    revisionId: 91781595,
+    englishDefinition: "Empty or open area.",
+    englishExamples: ["The deer were standing in the clear."],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/clear",
+    koreanId: "krdict:18694:2",
+    definition: "널리 펼쳐 있는 빈 곳.",
+    examples: ["무한한 공간.", "도시 공간.", "바다 공간."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=18694&nation=eng&nationCode=6"
   }
 ]) {
   test(`the verified ${expected.englishWord} and ${expected.koreanWord} searches resolve to the same sourced mapping`, () => {
@@ -411,14 +474,14 @@ for (const expected of [
 
 test("excluded and unrelated words do not receive a verified supplement", () => {
   for (const word of [
-    "line", "fast", "screen", "play", "light",
+    "line", "screen", "play", "light",
     "bank", "run", "set", "record", "charge", "bear", "spring", "match", "point",
     "left", "fine", "mean", "kind", "sound", "watch", "break", "hold", "draw",
     "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
-    "bat", "club", "ring", "wave", "bill", "draft", "strike", "suit", "court",
+    "bat", "club", "ring", "bill", "draft", "strike", "suit", "court",
     "capital", "subject", "object", "present", "second", "letter", "order", "state",
-    "change", "cover", "open", "clear", "hard", "flat", "sharp",
-    "square", "cool", "warm", "dry", "wet", "head", "foot", "arm",
+    "change", "cover", "open", "hard", "flat", "sharp",
+    "cool", "warm", "dry", "wet", "head", "foot", "arm",
     "back", "shoulder", "body", "trunk", "root", "leaf", "table", "chair",
     "mouse", "port", "terminal", "network", "virus", "bug", "crash", "crane",
     "bark", "iron",
