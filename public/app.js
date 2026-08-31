@@ -1,6 +1,10 @@
 import { detectInputLanguage, parseWiktionaryEntry } from "./dictionary-parser.js";
 import { initializeReleaseNotice } from "./release-notice.js";
-import { findVerifiedSupplements, renderVerifiedSupplements } from "./verified-supplements.js";
+import {
+  findVerifiedSupplements,
+  renderMeaningSummary,
+  renderVerifiedSupplements
+} from "./verified-supplements.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -17,6 +21,7 @@ const ui = {
   pronunciations: document.querySelector("#pronunciation-list"),
   audioButton: document.querySelector("#audio-button"),
   translationSection: document.querySelector("#translation-section"),
+  translationTitle: document.querySelector("#translation-title"),
   translations: document.querySelector("#translation-list"),
   verifiedSupplements: document.querySelector("#verified-supplements"),
   definitionsSection: document.querySelector("#definitions-section"),
@@ -66,26 +71,18 @@ function renderPronunciations(entry) {
   for (const value of values) ui.pronunciations.append(makeElement("span", "", value));
 }
 
-function renderTranslations(entry, { hasSupplements = false } = {}) {
-  ui.translations.replaceChildren();
-  ui.translationSection.classList.toggle("is-hidden", entry.language !== "en" && !hasSupplements);
-  if (entry.language !== "en") return;
+function renderTranslations(entry, supplements = []) {
+  const summary = renderMeaningSummary(ui.translations, entry, supplements);
+  ui.translationTitle.textContent = summary.title;
+  ui.translationSection.classList.toggle(
+    "is-hidden",
+    entry.language !== "en" && !summary.meaningCount
+  );
 
-  if (!entry.translations.length) {
-    if (hasSupplements) return;
+  if (!summary.meaningCount) {
+    if (supplements.length || entry.language !== "en") return;
     const message = makeElement("p", "empty-detail", "이 항목에는 아직 한국어 번역이 등록되지 않았습니다. 영영 뜻은 아래에서 확인할 수 있어요.");
     ui.translations.append(message);
-    return;
-  }
-
-  for (const translation of entry.translations) {
-    const item = makeElement("span", "translation-item", translation.term);
-    if (translation.sense) {
-      const sense = makeElement("small", "", translation.sense);
-      sense.title = translation.sense;
-      item.append(sense);
-    }
-    ui.translations.append(item);
   }
 }
 
@@ -134,11 +131,12 @@ function renderEntry(entry, { wiktionaryAvailable = true } = {}) {
     ? "Wikimedia Commons 음원으로 발음 듣기"
     : "기기의 음성 합성으로 발음 듣기";
   renderPronunciations(entry);
-  const supplementCount = renderVerifiedSupplements(
+  const supplements = findVerifiedSupplements(entry.requestedWord || entry.word);
+  renderVerifiedSupplements(
     ui.verifiedSupplements,
     entry.requestedWord || entry.word
   );
-  renderTranslations(entry, { hasSupplements: supplementCount > 0 });
+  renderTranslations(entry, supplements);
   renderDefinitionGroups(entry);
 
   if (!wiktionaryAvailable) {

@@ -3,7 +3,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import {
+  buildMeaningSummaryGroups,
   findVerifiedSupplements,
+  renderMeaningSummary,
   renderVerifiedSupplements
 } from "../public/verified-supplements.js";
 
@@ -346,13 +348,119 @@ test("excluded and unrelated words do not receive a verified supplement", () => 
   }
 });
 
-test("the supplement renderer keeps meaning details and source together without creating another top-level heading", () => {
+function royalEntry() {
+  return {
+    language: "en",
+    translations: [{ term: "왕의", sense: "of a monarch" }, { term: "왕실의", sense: "of a monarch" }],
+    definitionGroups: [
+      {
+        partOfSpeech: "Adjective",
+        koreanLabel: "형용사",
+        definitions: [
+          {
+            koreanTranslations: [
+              { term: "왕의", sense: "of a monarch" },
+              { term: "왕실의", sense: "of a monarch" }
+            ]
+          }
+        ]
+      },
+      {
+        partOfSpeech: "Noun",
+        koreanLabel: "명사",
+        definitions: [{ koreanTranslations: [] }]
+      }
+    ]
+  };
+}
+
+test("the Korean meaning summary merges Wiktionary and verified meanings by part of speech", () => {
+  const groups = buildMeaningSummaryGroups(royalEntry(), findVerifiedSupplements("royal"));
+  assert.deepEqual(groups.map((group) => ({
+    partOfSpeech: group.partOfSpeech,
+    partOfSpeechKo: group.partOfSpeechKo,
+    meanings: group.meanings.map(({ term, verified }) => ({ term, verified }))
+  })), [
+    {
+      partOfSpeech: "Adjective",
+      partOfSpeechKo: "형용사",
+      meanings: [
+        { term: "왕의", verified: false },
+        { term: "왕실의", verified: false }
+      ]
+    },
+    {
+      partOfSpeech: "Noun",
+      partOfSpeechKo: "명사",
+      meanings: [{ term: "왕족", verified: true }]
+    }
+  ]);
+});
+
+test("the actual royal summary DOM shows adjective Korean meanings before the verified noun", () => {
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const summary = renderMeaningSummary(target, royalEntry(), findVerifiedSupplements("royal"));
+
+  assert.equal(summary.title, "한국어 뜻");
+  assert.equal(summary.groupCount, 2);
+  assert.equal(summary.meaningCount, 3);
+  assert.deepEqual(target.querySelectorAll("h3").map((heading) => heading.textContent), [
+    "형용사 · Adjective",
+    "명사 · Noun"
+  ]);
+  assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
+  assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
+  assert.match(target.textContent, /왕족검증 보완/);
+  const sections = target.querySelectorAll("section");
+  assert.equal(sections.length, 2);
+  assert.equal(sections[0].attributes.get("aria-labelledby"), "translation-group-1");
+  assert.equal(sections[1].attributes.get("aria-labelledby"), "translation-group-2");
+});
+
+test("a supplement-only Korean reverse search shows its linked English word instead of repeating itself", () => {
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const entry = { language: "ko", translations: [], definitionGroups: [] };
+  const summary = renderMeaningSummary(target, entry, findVerifiedSupplements("왕족"));
+
+  assert.equal(summary.title, "연결된 영어 뜻");
+  assert.equal(summary.meaningCount, 1);
+  assert.match(target.textContent, /명사 · noun/);
+  assert.match(target.textContent, /royal검증 연결/);
+  assert.doesNotMatch(target.textContent, /왕족/);
+});
+
+test("ordinary English and Korean searches keep their existing summary behavior", () => {
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const english = renderMeaningSummary(target, {
+    language: "en",
+    translations: [{ term: "안녕", sense: "greeting" }],
+    definitionGroups: []
+  });
+  assert.equal(english.title, "한국어 뜻");
+  assert.equal(english.meaningCount, 1);
+  assert.match(target.textContent, /안녕greeting/);
+
+  const korean = renderMeaningSummary(target, {
+    language: "ko",
+    translations: [],
+    definitionGroups: []
+  });
+  assert.equal(korean.title, "연결된 영어 뜻");
+  assert.equal(korean.meaningCount, 0);
+  assert.equal(target.childElementCount, 0);
+});
+
+test("the supplement renderer keeps source details under the meaning summary without presenting a second pair", () => {
   const document = new TestDocument();
   const target = document.createElement("div");
 
   assert.equal(renderVerifiedSupplements(target, "royal"), 1);
-  assert.match(target.textContent, /royal\s*↔\s*왕족/);
-  assert.match(target.textContent, /출처가 확인된 보충 뜻/);
+  assert.match(target.textContent, /royal의 명사 뜻/);
+  assert.doesNotMatch(target.textContent, /royal\s*↔\s*왕족/);
+  assert.match(target.textContent, /위 뜻의 출처와 예문/);
   assert.match(target.textContent, /한국어기초사전 확인/);
   assert.match(target.textContent, /명사 · noun/);
   assert.match(target.textContent, /임금과 같은 집안인 사람/);

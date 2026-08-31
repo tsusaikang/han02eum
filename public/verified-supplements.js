@@ -362,6 +362,93 @@ export function findVerifiedSupplements(value) {
   return VERIFIED_SUPPLEMENTS.filter((item) => item.searchTerms.includes(term));
 }
 
+function normalizePartOfSpeech(value) {
+  return String(value || "").trim().toLocaleLowerCase("en");
+}
+
+export function buildMeaningSummaryGroups(entry, supplements = []) {
+  const groups = [];
+  const groupsByPartOfSpeech = new Map();
+
+  function ensureGroup(partOfSpeech, partOfSpeechKo) {
+    const key = normalizePartOfSpeech(partOfSpeech) || "unclassified";
+    if (!groupsByPartOfSpeech.has(key)) {
+      const group = {
+        partOfSpeech: partOfSpeech || "",
+        partOfSpeechKo: partOfSpeechKo || "",
+        meanings: []
+      };
+      groupsByPartOfSpeech.set(key, group);
+      groups.push(group);
+    }
+    const group = groupsByPartOfSpeech.get(key);
+    if (!group.partOfSpeechKo && partOfSpeechKo) group.partOfSpeechKo = partOfSpeechKo;
+    return group;
+  }
+
+  function addMeaning(group, meaning) {
+    const existing = group.meanings.find((item) => item.term === meaning.term);
+    if (!existing) {
+      group.meanings.push(meaning);
+      return;
+    }
+    if (meaning.verified) {
+      existing.verified = true;
+      existing.supplementId = meaning.supplementId;
+    }
+  }
+
+  if (entry?.language === "en") {
+    for (const definitionGroup of entry.definitionGroups || []) {
+      const group = ensureGroup(definitionGroup.partOfSpeech, definitionGroup.koreanLabel);
+      for (const definition of definitionGroup.definitions || []) {
+        for (const translation of definition.koreanTranslations || []) {
+          addMeaning(group, {
+            term: translation.term,
+            sense: translation.sense || "",
+            verified: false,
+            supplementId: null
+          });
+        }
+      }
+    }
+
+    const ungrouped = (entry.translations || []).filter(
+      (translation) => !groups.some((group) =>
+        group.meanings.some((meaning) => meaning.term === translation.term)
+      )
+    );
+    if (ungrouped.length) {
+      const group = ensureGroup("", "");
+      for (const translation of ungrouped) {
+        addMeaning(group, {
+          term: translation.term,
+          sense: translation.sense || "",
+          verified: false,
+          supplementId: null
+        });
+      }
+    }
+  }
+
+  for (const supplement of supplements) {
+    const group = ensureGroup(
+      supplement.english.partOfSpeech,
+      supplement.english.partOfSpeechKo
+    );
+    addMeaning(group, {
+      term: entry?.language === "ko"
+        ? supplement.english.headword
+        : supplement.korean.headword,
+      sense: "",
+      verified: true,
+      supplementId: supplement.id
+    });
+  }
+
+  return groups.filter((group) => group.meanings.length);
+}
+
 function makeElement(document, tag, className, text) {
   const element = document.createElement(tag);
   if (className) element.className = className;
@@ -377,19 +464,65 @@ function makeLink(document, href, text) {
   return link;
 }
 
+export function renderMeaningSummary(container, entry, supplements = []) {
+  const groups = buildMeaningSummaryGroups(entry, supplements);
+  container.replaceChildren();
+  const document = container.ownerDocument;
+  const targetLanguage = entry?.language === "ko" ? "en" : "ko";
+  const verifiedLabel = entry?.language === "ko" ? "검증 연결" : "검증 보완";
+
+  groups.forEach((group, index) => {
+    const section = makeElement(document, "section", "translation-group");
+    const headingId = `translation-group-${index + 1}`;
+    const label = group.partOfSpeechKo
+      ? `${group.partOfSpeechKo} · ${group.partOfSpeech}`
+      : group.partOfSpeech;
+    if (label) {
+      const heading = makeElement(document, "h3", "translation-group-label", label);
+      heading.setAttribute("id", headingId);
+      section.setAttribute("aria-labelledby", headingId);
+      section.append(heading);
+    } else {
+      section.setAttribute("aria-label", "뜻");
+    }
+
+    const items = makeElement(document, "div", "translation-group-items");
+    for (const meaning of group.meanings) {
+      const item = makeElement(document, "span", "translation-item", meaning.term);
+      item.setAttribute("lang", targetLanguage);
+      if (meaning.sense) {
+        const sense = makeElement(document, "small", "", meaning.sense);
+        sense.setAttribute("title", meaning.sense);
+        item.append(sense);
+      }
+      if (meaning.verified) {
+        item.className += " is-verified";
+        item.append(makeElement(document, "small", "translation-verified-label", verifiedLabel));
+      }
+      items.append(item);
+    }
+    section.append(items);
+    container.append(section);
+  });
+
+  return {
+    groupCount: groups.length,
+    meaningCount: groups.reduce((sum, group) => sum + group.meanings.length, 0),
+    title: entry?.language === "ko" ? "연결된 영어 뜻" : "한국어 뜻"
+  };
+}
+
 function makeSupplementCard(document, supplement) {
   const card = makeElement(document, "article", "verified-supplement-card");
   card.dataset.supplementId = supplement.id;
 
   const header = makeElement(document, "header", "supplement-header");
-  const pair = makeElement(document, "strong", "supplement-pair");
-  const englishWord = makeElement(document, "span", "", supplement.english.headword);
-  englishWord.lang = "en";
-  const arrow = makeElement(document, "span", "supplement-arrow", "↔");
-  arrow.setAttribute("aria-hidden", "true");
-  const koreanWord = makeElement(document, "span", "", supplement.korean.headword);
-  koreanWord.lang = "ko";
-  pair.append(englishWord, arrow, koreanWord);
+  const context = makeElement(
+    document,
+    "strong",
+    "supplement-context",
+    `${supplement.english.headword}의 ${supplement.english.partOfSpeechKo} 뜻`
+  );
   const badges = makeElement(document, "div", "supplement-badges");
   badges.append(
     makeElement(document, "span", "supplement-source-badge", `${supplement.korean.sourceName} 확인`),
@@ -400,7 +533,7 @@ function makeSupplementCard(document, supplement) {
       `${supplement.english.partOfSpeechKo} · ${supplement.english.partOfSpeech}`
     )
   );
-  header.append(pair, badges);
+  header.append(context, badges);
 
   const koreanDefinition = makeElement(document, "p", "supplement-definition", supplement.korean.definition);
   const englishDefinition = makeElement(
@@ -453,8 +586,8 @@ export function renderVerifiedSupplements(container, value) {
 
   const document = container.ownerDocument;
   const section = makeElement(document, "div", "verified-supplements-section");
-  section.setAttribute("aria-label", "출처가 확인된 보충 한국어 뜻");
-  section.append(makeElement(document, "p", "supplement-group-label", "출처가 확인된 보충 뜻"));
+  section.setAttribute("aria-label", "위에 표시한 검증 보완 뜻의 출처와 예문");
+  section.append(makeElement(document, "p", "supplement-group-label", "위 뜻의 출처와 예문"));
 
   for (const supplement of supplements) {
     section.append(makeSupplementCard(document, supplement));
