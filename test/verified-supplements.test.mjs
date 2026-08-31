@@ -101,10 +101,245 @@ test("the verified right and 시정하다 searches resolve to the same sourced m
   ]);
 });
 
+test("the verified pitch and 진 searches resolve to the same sourced mapping", () => {
+  const english = findVerifiedSupplements(" PITCH ");
+  const korean = findVerifiedSupplements("진");
+
+  assert.equal(english.length, 1);
+  assert.equal(korean.length, 1);
+  assert.equal(english[0].id, korean[0].id);
+  assert.equal(
+    english[0].id,
+    "enwiktionary:92085012:pitch:noun-1:noun-1-sense-1::krdict:76493:1"
+  );
+  assert.equal(english[0].english.partOfSpeech, "noun");
+  assert.equal(english[0].english.revisionId, 92085012);
+  assert.equal(english[0].english.definition, "A sticky, gummy substance secreted by trees; tree sap.");
+  assert.equal(english[0].english.sourceUrl, "https://en.wiktionary.org/wiki/pitch");
+  assert.equal(english[0].korean.id, "krdict:76493:1");
+  assert.equal(english[0].korean.headword, "진");
+  assert.equal(english[0].korean.definition, "풀이나 나무의 껍질 등에서 나오는 끈끈한 물질.");
+  assert.equal(english[0].korean.sourceName, "한국어기초사전");
+  assert.equal(english[0].korean.license.name, "CC BY-SA 2.0 KR");
+  assert.equal(english[0].korean.license.url, "https://creativecommons.org/licenses/by-sa/2.0/kr/");
+  assert.deepEqual(english[0].korean.examples, [
+    "소나무의 진.",
+    "진이 나오다.",
+    "진이 흐르다."
+  ]);
+});
+
+test("the verified figure and 숫자 searches resolve to the same sourced mapping", () => {
+  const english = findVerifiedSupplements(" FIGURE ");
+  const korean = findVerifiedSupplements("숫자");
+
+  assert.equal(english.length, 1);
+  assert.equal(korean.length, 1);
+  assert.equal(english[0].id, korean[0].id);
+  assert.equal(
+    english[0].id,
+    "enwiktionary:91716304:figure:noun-1:noun-1-sense-8::krdict:65425:2"
+  );
+  assert.equal(english[0].english.partOfSpeech, "noun");
+  assert.equal(english[0].english.revisionId, 91716304);
+  assert.equal(english[0].english.definition, "A number, an amount.");
+  assert.deepEqual(english[0].english.examples, [
+    "(i) in the 1966 edition of The Destruction of Dresden Irving contended that 135,000 were estimated authoritatively to have been killed and further contended that the documentation suggested a figure between 100,00 and 250,000;"
+  ]);
+  assert.equal(english[0].english.sourceUrl, "https://en.wiktionary.org/wiki/figure");
+  assert.equal(english[0].korean.id, "krdict:65425:2");
+  assert.equal(english[0].korean.headword, "숫자");
+  assert.equal(english[0].korean.definition, "통계 등에서 숫자가 나타내는 양.");
+  assert.equal(english[0].korean.sourceName, "한국어기초사전");
+  assert.equal(english[0].korean.license.name, "CC BY-SA 2.0 KR");
+  assert.deepEqual(english[0].korean.examples, [
+    "통계 숫자.",
+    "숫자가 감소하다.",
+    "숫자가 증가하다."
+  ]);
+});
+
+test("the verified minute and 쪼금 searches resolve to the same sourced mapping", () => {
+  const english = findVerifiedSupplements(" MINUTE ");
+  const korean = findVerifiedSupplements("쪼금");
+
+  assert.equal(english.length, 1);
+  assert.equal(korean.length, 1);
+  assert.equal(english[0].id, korean[0].id);
+  assert.equal(
+    english[0].id,
+    "enwiktionary:91663519:minute:noun-1:noun-1-sense-2::krdict:78005:2"
+  );
+  assert.equal(english[0].english.partOfSpeech, "noun");
+  assert.equal(english[0].english.revisionId, 91663519);
+  assert.equal(english[0].english.definition, "(informal) A short but unspecified time period.");
+  assert.deepEqual(english[0].english.examples, [
+    "give me a minute",
+    "Wait a minute, I’m not ready yet!"
+  ]);
+  assert.equal(english[0].english.sourceUrl, "https://en.wiktionary.org/wiki/minute");
+  assert.equal(english[0].korean.id, "krdict:78005:2");
+  assert.equal(english[0].korean.headword, "쪼금");
+  assert.equal(english[0].korean.definition, "짧은 시간 동안.");
+  assert.equal(english[0].korean.sourceName, "한국어기초사전");
+  assert.equal(english[0].korean.license.name, "CC BY-SA 2.0 KR");
+  assert.deepEqual(english[0].korean.examples, [
+    "쪼금 전.",
+    "쪼금 후.",
+    "쪼금만 머물다."
+  ]);
+});
+
+for (const expected of [
+  {
+    englishWord: "interest",
+    koreanWord: "관심사",
+    id: "enwiktionary:92080669:interest:noun-1:noun-1-sense-7::krdict:23998:1",
+    partOfSpeech: "noun",
+    revisionId: 92080669,
+    englishDefinition: "(countable) Something which, or someone whom, one is interested in.",
+    englishExamples: ["Lexicography is one of my interests.", "Victorian furniture is an interest of mine."],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/interest",
+    koreanId: "krdict:23998:1",
+    definition: "관심을 끄는 일이나 대상.",
+    examples: ["최대 관심사.", "공통의 관심사.", "세계적 관심사."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=23998&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "bright",
+    koreanWord: "광명하다",
+    id: "enwiktionary:92082661:bright:adjective-1:adjective-1-sense-2::krdict:30718:1",
+    partOfSpeech: "adjective",
+    revisionId: 92082661,
+    englishDefinition: "Of light: brilliant, intense.",
+    englishExamples: ["Could you please dim the light? It’s far too bright."],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/bright",
+    koreanId: "krdict:30718:1",
+    definition: "밝고 환하다.",
+    examples: ["광명한 빛.", "광명한 세상.", "광명한 태양."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=30718&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "face",
+    koreanWord: "면하다",
+    id: "enwiktionary:91983790:face:verb-1:verb-1-sense-7::krdict:55080:1",
+    partOfSpeech: "verb",
+    revisionId: 91983790,
+    englishDefinition: "(intransitive) To have the front in a certain direction.",
+    englishExamples: ["The seats in the carriage faced backwards."],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/face",
+    koreanId: "krdict:55080:1",
+    definition: "어떤 대상이나 방향을 정면으로 향하다.",
+    examples: ["바다를 면하다.", "한길을 면하다.", "골목에 면하다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=55080&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "hand",
+    koreanWord: "건네주다",
+    id: "enwiktionary:91988185:hand:verb-1:verb-1-sense-1::krdict:15884:1",
+    partOfSpeech: "verb",
+    revisionId: 91988185,
+    englishDefinition: "(ditransitive) To give, pass or transmit with the hand, literally or figuratively.",
+    englishExamples: [
+      "He handed them the letter. She handed me an opportunity.",
+      "It has jailed environmental activists and is planning to limit the power of judicial oversight by handing a state-approved body a monopoly over bringing environmental lawsuits."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/hand",
+    koreanId: "krdict:15884:1",
+    definition: "남에게 무엇을 전하여 넘겨주다.",
+    examples: ["돈을 건네주다.", "봉투를 건네주다.", "상자를 건네주다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=15884&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "branch",
+    koreanWord: "가지",
+    id: "enwiktionary:91837451:branch:noun-1:noun-1-sense-2::krdict:59919:2",
+    partOfSpeech: "noun",
+    revisionId: 91837451,
+    englishDefinition: "Any of the parts of something that divides like the branch of a tree.",
+    englishExamples: ["the branch of an antler, a chandelier, or a railway"],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/branch",
+    koreanId: "krdict:59919:2",
+    definition: "근본이 되는 어떤 것에서 다시 갈라져 나온 것.",
+    examples: [
+      "이 좁은 길은 아까 그 큰길의 가지라고 할 수 있다.",
+      "어떤 학문이든 그 큰 줄기에서 갈라져 나온 많은 가지들을 가지고 있다.",
+      "이 책만 읽으면 그의 이론을 이해할 수 있을까요?"
+    ],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=59919&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "cell",
+    koreanWord: "세포",
+    id: "enwiktionary:91924215:cell:noun-1:noun-1-sense-12::krdict:74889:1",
+    partOfSpeech: "noun",
+    revisionId: 91924215,
+    englishDefinition: "(biology) The basic unit of a living organism, consisting of a quantity of protoplasm surrounded by a cell membrane, which is able to synthesize proteins and replicate itself.",
+    englishExamples: [
+      "An American company has applied to experiment in Britain on Parkinson's disease sufferers by injecting their brains with cells from pigs.",
+      "In multicellular organisms, groups of cells form tissues and tissues come together to form organs."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/cell",
+    koreanId: "krdict:74889:1",
+    definition: "생물체를 이루는 기본 단위.",
+    examples: ["피부 세포.", "세포 성장.", "세포 연구."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=74889&nation=eng&nationCode=6"
+  },
+  {
+    englishWord: "jam",
+    koreanWord: "틀어넣다",
+    id: "enwiktionary:92042489:jam:verb-1:verb-1-sense-2::krdict:82629:1",
+    partOfSpeech: "verb",
+    revisionId: 92042489,
+    englishDefinition: "To brusquely force something into a space; to cram, to squeeze.",
+    englishExamples: [
+      "They temporarily stopped the gas tank leak by jamming a piece of taffy into the hole.",
+      "The rush-hour train was jammed with commuters."
+    ],
+    englishSourceUrl: "https://en.wiktionary.org/wiki/jam",
+    koreanId: "krdict:82629:1",
+    definition: "비좁은 자리에 억지로 들이밀어 넣다.",
+    examples: ["솜을 틀어넣다.", "수건을 틀어넣다.", "구멍에 틀어넣다."],
+    koreanSourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=82629&nation=eng&nationCode=6"
+  }
+]) {
+  test(`the verified ${expected.englishWord} and ${expected.koreanWord} searches resolve to the same sourced mapping`, () => {
+    const english = findVerifiedSupplements(` ${expected.englishWord.toUpperCase()} `);
+    const korean = findVerifiedSupplements(expected.koreanWord);
+
+    assert.equal(english.length, 1);
+    assert.equal(korean.length, 1);
+    assert.equal(english[0].id, korean[0].id);
+    assert.equal(english[0].id, expected.id);
+    assert.equal(english[0].english.partOfSpeech, expected.partOfSpeech);
+    assert.equal(english[0].english.revisionId, expected.revisionId);
+    assert.equal(english[0].english.definition, expected.englishDefinition);
+    assert.deepEqual(english[0].english.examples, expected.englishExamples);
+    assert.equal(english[0].english.sourceUrl, expected.englishSourceUrl);
+    assert.equal(english[0].korean.id, expected.koreanId);
+    assert.equal(english[0].korean.headword, expected.koreanWord);
+    assert.equal(english[0].korean.definition, expected.definition);
+    assert.equal(english[0].korean.sourceName, "한국어기초사전");
+    assert.equal(english[0].korean.sourceUrl, expected.koreanSourceUrl);
+    assert.equal(english[0].korean.license.name, "CC BY-SA 2.0 KR");
+    assert.equal(english[0].korean.license.url, "https://creativecommons.org/licenses/by-sa/2.0/kr/");
+    assert.deepEqual(english[0].korean.examples, expected.examples);
+  });
+}
+
 test("excluded and unrelated words do not receive a verified supplement", () => {
   for (const word of [
     "line", "fast", "screen", "play", "light",
     "bank", "run", "set", "record", "charge", "bear", "spring", "match", "point",
+    "left", "fair", "fine", "mean", "kind", "sound", "watch", "break", "hold", "draw",
+    "turn", "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
+    "bat", "club", "ring", "wave", "bill", "draft", "strike", "suit", "court",
+    "capital", "subject", "object", "present", "second", "letter", "order", "state",
+    "change", "cover", "open", "clear", "hard", "flat", "sharp",
+    "square", "cool", "warm", "dry", "wet", "head", "foot", "arm",
+    "back", "shoulder", "body", "trunk", "root", "leaf", "table", "chair",
+    "mouse", "port", "terminal", "network", "virus", "bug", "crash", "crane",
+    "bark", "iron",
     "hello"
   ]) {
     assert.deepEqual(findVerifiedSupplements(word), []);
