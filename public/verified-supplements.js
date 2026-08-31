@@ -366,6 +366,80 @@ function normalizePartOfSpeech(value) {
   return String(value || "").trim().toLocaleLowerCase("en");
 }
 
+const SUMMARY_GLOSS_STOP_WORDS = new Set([
+  "a", "an", "and", "any", "as", "at", "be", "by", "for", "from", "his", "her", "in",
+  "into", "is", "its", "of", "on", "or", "the", "their", "to", "used", "with"
+]);
+const MIN_SUMMARY_TRANSLATION_MATCH = 0.5;
+const MIN_SUMMARY_TRANSLATION_MARGIN = 0.12;
+
+function normalizeSummaryGloss(value) {
+  return String(value || "")
+    .split(/\s+[—–-]\s+(?:see(?:\s+also)?|compare)\b/i, 1)[0]
+    .toLocaleLowerCase("en")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function summaryGlossTokens(value) {
+  return normalizeSummaryGloss(value)
+    .split(" ")
+    .filter((token) => token.length > 1 && !SUMMARY_GLOSS_STOP_WORDS.has(token));
+}
+
+function summaryTranslationMatchScore(definitionText, sourceSense) {
+  const definition = normalizeSummaryGloss(definitionText);
+  const sense = normalizeSummaryGloss(sourceSense);
+  if (!definition || !sense) return 0;
+  if (definition === sense) return 1;
+  if (definition.includes(sense) || sense.includes(definition)) return 0.92;
+
+  const definitionTokens = new Set(summaryGlossTokens(definition));
+  const senseTokens = new Set(summaryGlossTokens(sense));
+  if (!definitionTokens.size || !senseTokens.size) return 0;
+  let shared = 0;
+  for (const token of senseTokens) {
+    if (definitionTokens.has(token)) shared += 1;
+  }
+  return shared / Math.sqrt(definitionTokens.size * senseTokens.size);
+}
+
+function inferTranslationDefinitionGroup(entry, translation) {
+  const definitionGroups = (entry?.definitionGroups || []).filter(
+    (group) => normalizePartOfSpeech(group.partOfSpeech)
+  );
+  const partOfSpeechKeys = new Set(
+    definitionGroups.map((group) => normalizePartOfSpeech(group.partOfSpeech))
+  );
+  if (partOfSpeechKeys.size === 1) return definitionGroups[0] || null;
+  if (!translation?.sense) return null;
+
+  const scoresByPartOfSpeech = new Map();
+  for (const group of definitionGroups) {
+    const key = normalizePartOfSpeech(group.partOfSpeech);
+    const score = Math.max(
+      0,
+      ...(group.definitions || []).map((definition) =>
+        summaryTranslationMatchScore(definition.text, translation.sense)
+      )
+    );
+    const previous = scoresByPartOfSpeech.get(key);
+    if (!previous || score > previous.score) scoresByPartOfSpeech.set(key, { group, score });
+  }
+
+  const scores = [...scoresByPartOfSpeech.values()]
+    .sort((left, right) => right.score - left.score);
+  const best = scores[0];
+  const runnerUp = scores[1];
+  if (
+    !best ||
+    best.score < MIN_SUMMARY_TRANSLATION_MATCH ||
+    (runnerUp && best.score - runnerUp.score < MIN_SUMMARY_TRANSLATION_MARGIN)
+  ) return null;
+  return best.group;
+}
+
 export function buildMeaningSummaryGroups(entry, supplements = []) {
   const groups = [];
   const groupsByPartOfSpeech = new Map();
@@ -418,16 +492,17 @@ export function buildMeaningSummaryGroups(entry, supplements = []) {
         group.meanings.some((meaning) => meaning.term === translation.term)
       )
     );
-    if (ungrouped.length) {
-      const group = ensureGroup("", "");
-      for (const translation of ungrouped) {
-        addMeaning(group, {
-          term: translation.term,
-          sense: translation.sense || "",
-          verified: false,
-          supplementId: null
-        });
-      }
+    for (const translation of ungrouped) {
+      const definitionGroup = inferTranslationDefinitionGroup(entry, translation);
+      const group = definitionGroup
+        ? ensureGroup(definitionGroup.partOfSpeech, definitionGroup.koreanLabel)
+        : ensureGroup("", "");
+      addMeaning(group, {
+        term: translation.term,
+        sense: translation.sense || "",
+        verified: false,
+        supplementId: null
+      });
     }
   }
 

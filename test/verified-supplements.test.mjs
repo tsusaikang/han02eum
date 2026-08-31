@@ -374,6 +374,42 @@ function royalEntry() {
   };
 }
 
+function deployedRoyalParserEntry() {
+  return {
+    language: "en",
+    translations: [
+      {
+        term: "왕의",
+        sense: "of or relating to a monarch or his family — see also regal, monarchic, palatial, majestic"
+      },
+      {
+        term: "왕실의",
+        sense: "of or relating to a monarch or his family — see also regal, monarchic, palatial, majestic"
+      }
+    ],
+    definitionGroups: [
+      {
+        partOfSpeech: "Adjective",
+        koreanLabel: "형용사",
+        definitions: [
+          { text: "Of or relating to a monarch or his (or her) family." },
+          { text: "Having the air or demeanour of a monarch; illustrious; magnanimous." },
+          { text: "In large sailing ships, of a mast right above the topgallant mast and its sails." }
+        ]
+      },
+      {
+        partOfSpeech: "Noun",
+        koreanLabel: "명사",
+        definitions: [
+          { text: "A royal person; a member of a royal family." },
+          { text: "A standard size of printing paper." },
+          { text: "A small sail immediately above the topgallant sail." }
+        ]
+      }
+    ]
+  };
+}
+
 test("the Korean meaning summary merges Wiktionary and verified meanings by part of speech", () => {
   const groups = buildMeaningSummaryGroups(royalEntry(), findVerifiedSupplements("royal"));
   assert.deepEqual(groups.map((group) => ({
@@ -416,6 +452,42 @@ test("the actual royal summary DOM shows adjective Korean meanings before the ve
   assert.equal(sections.length, 2);
   assert.equal(sections[0].attributes.get("aria-labelledby"), "translation-group-1");
   assert.equal(sections[1].attributes.get("aria-labelledby"), "translation-group-2");
+});
+
+test("the deployed flat royal API shape safely restores adjective meanings in the summary DOM", () => {
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const summary = renderMeaningSummary(
+    target,
+    deployedRoyalParserEntry(),
+    findVerifiedSupplements("royal")
+  );
+
+  assert.equal(summary.groupCount, 2);
+  assert.equal(summary.meaningCount, 3);
+  assert.deepEqual(target.querySelectorAll("h3").map((heading) => heading.textContent), [
+    "형용사 · Adjective",
+    "명사 · Noun"
+  ]);
+  assert.ok(target.textContent.indexOf("왕의") < target.textContent.indexOf("왕실의"));
+  assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
+  assert.match(target.textContent, /왕족검증 보완/);
+});
+
+test("a flat translation stays unclassified when two parts of speech match ambiguously", () => {
+  const groups = buildMeaningSummaryGroups({
+    language: "en",
+    translations: [{ term: "후보", sense: "a shared meaning" }],
+    definitionGroups: [
+      { partOfSpeech: "Noun", koreanLabel: "명사", definitions: [{ text: "A shared meaning." }] },
+      { partOfSpeech: "Verb", koreanLabel: "동사", definitions: [{ text: "A shared meaning." }] }
+    ]
+  });
+
+  assert.deepEqual(groups.map((group) => ({
+    partOfSpeech: group.partOfSpeech,
+    meanings: group.meanings.map((meaning) => meaning.term)
+  })), [{ partOfSpeech: "", meanings: ["후보"] }]);
 });
 
 test("a supplement-only Korean reverse search shows its linked English word instead of repeating itself", () => {
