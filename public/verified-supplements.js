@@ -581,6 +581,54 @@ const VERIFIED_SUPPLEMENTS = [
         url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
       }
     }
+  },
+  {
+    id: "enwiktionary:92041120:hard:verb-1:verb-1-sense-1::krdict:36862:1",
+    searchTerms: ["hard", "굳히다"],
+    confidenceTier: "A",
+    numericScore: 0.88,
+    automatedConfidenceLabel: "automated-confidence-tier-A",
+    humanReviewed: false,
+    reasonCodes: [
+      "SOURCE_LEMMA_IN_TARGET_EQUIVALENT",
+      "EXPLICIT_CAUSATIVE_GRAMMAR_MATCH",
+      "STRONG_DEFINITION_OVERLAP",
+      "AUTOMATED_CONFIDENCE_TIER_A"
+    ],
+    english: {
+      headword: "hard",
+      partOfSpeech: "verb",
+      partOfSpeechKo: "동사",
+      definition: "(transitive, obsolete) To make hard, harden.",
+      examples: [
+        "He knows vain men: he sees their harts that hard them In Guiles and Wiles, and will not hee regard them?"
+      ],
+      sourceName: "English Wiktionary",
+      sourceUrl: "https://en.wiktionary.org/wiki/hard",
+      revisionId: 92041120,
+      license: {
+        name: "CC BY-SA 4.0",
+        url: "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    korean: {
+      id: "krdict:36862:1",
+      entryId: "36862",
+      senseId: "1",
+      headword: "굳히다",
+      partOfSpeech: "verb",
+      partOfSpeechKo: "동사",
+      definition: "무르던 것을 단단하거나 딱딱하게 만들다.",
+      englishLemma: "harden; make hard",
+      englishDefinition: "To make a soft thing hard or stiff.",
+      examples: ["석고를 굳히다.", "시멘트를 굳히다.", "지점토를 굳히다."],
+      sourceName: "한국어기초사전",
+      sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=36862&nation=eng&nationCode=6",
+      license: {
+        name: "CC BY-SA 2.0 KR",
+        url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+      }
+    }
   }
 ];
 
@@ -595,6 +643,10 @@ export function findVerifiedSupplements(value) {
   const term = normalizeSearchTerm(value);
   if (!term) return [];
   return VERIFIED_SUPPLEMENTS.filter((item) => item.searchTerms.includes(term));
+}
+
+export function getVerifiedSupplementCount() {
+  return VERIFIED_SUPPLEMENTS.length;
 }
 
 function normalizePartOfSpeech(value) {
@@ -704,6 +756,8 @@ export function buildMeaningSummaryGroups(entry, supplements = []) {
     if (meaning.verified) {
       existing.verified = true;
       existing.supplementId = meaning.supplementId;
+      existing.humanReviewed = meaning.humanReviewed;
+      existing.confidenceTier = meaning.confidenceTier;
     }
   }
 
@@ -752,7 +806,9 @@ export function buildMeaningSummaryGroups(entry, supplements = []) {
         : supplement.korean.headword,
       sense: "",
       verified: true,
-      supplementId: supplement.id
+      supplementId: supplement.id,
+      humanReviewed: supplement.humanReviewed !== false,
+      confidenceTier: supplement.confidenceTier || null
     });
   }
 
@@ -805,7 +861,17 @@ export function renderMeaningSummary(container, entry, supplements = []) {
         item.append(sense);
       }
       if (meaning.verified) {
-        item.className += " is-verified";
+        if (meaning.humanReviewed === false) {
+          item.className += " is-automated";
+          item.append(makeElement(
+            document,
+            "small",
+            "translation-automated-label",
+            `자동 선별 · 신뢰도 ${meaning.confidenceTier} · 사람 검수 전`
+          ));
+        } else {
+          item.className += " is-verified";
+        }
       }
       items.append(item);
     }
@@ -822,6 +888,8 @@ export function renderMeaningSummary(container, entry, supplements = []) {
 
 function makeSupplementCard(document, supplement) {
   const card = makeElement(document, "article", "verified-supplement-card");
+  const isAutomated = supplement.humanReviewed === false;
+  if (isAutomated) card.className += " is-automated";
   card.dataset.supplementId = supplement.id;
 
   const header = makeElement(document, "header", "supplement-header");
@@ -833,7 +901,12 @@ function makeSupplementCard(document, supplement) {
   );
   const badges = makeElement(document, "div", "supplement-badges");
   badges.append(
-    makeElement(document, "span", "supplement-source-badge", `${supplement.korean.sourceName} 확인`),
+    makeElement(
+      document,
+      "span",
+      "supplement-source-badge",
+      isAutomated ? `${supplement.korean.sourceName} 근거` : `${supplement.korean.sourceName} 확인`
+    ),
     makeElement(
       document,
       "span",
@@ -841,6 +914,14 @@ function makeSupplementCard(document, supplement) {
       `${supplement.english.partOfSpeechKo} · ${supplement.english.partOfSpeech}`
     )
   );
+  if (isAutomated) {
+    badges.append(makeElement(
+      document,
+      "span",
+      "supplement-automation-badge",
+      `자동 선별 · 신뢰도 ${supplement.confidenceTier} · 사람 검수 전`
+    ));
+  }
   header.append(context, badges);
 
   const koreanDefinition = makeElement(document, "p", "supplement-definition", supplement.korean.definition);
@@ -850,7 +931,9 @@ function makeSupplementCard(document, supplement) {
     "supplement-english-definition",
     `연결 근거인 영영 뜻: ${supplement.english.definition}`
   );
-  const usageNote = makeElement(document, "p", "supplement-usage", supplement.english.usageNoteKo);
+  const usageNote = supplement.english.usageNoteKo
+    ? makeElement(document, "p", "supplement-usage", supplement.english.usageNoteKo)
+    : null;
 
   const examples = makeElement(document, "div", "supplement-examples");
   examples.append(makeElement(document, "p", "supplement-label", "한국어기초사전 예문"));
@@ -859,6 +942,17 @@ function makeSupplementCard(document, supplement) {
     exampleList.append(makeElement(document, "blockquote", "example", example));
   }
   examples.append(exampleList);
+
+  let englishExamples = null;
+  if (isAutomated && Array.isArray(supplement.english.examples) && supplement.english.examples.length) {
+    englishExamples = makeElement(document, "div", "supplement-examples");
+    englishExamples.append(makeElement(document, "p", "supplement-label", "Wiktionary 원뜻 예문"));
+    const englishExampleList = makeElement(document, "div", "example-list");
+    for (const example of supplement.english.examples) {
+      englishExampleList.append(makeElement(document, "blockquote", "example", example));
+    }
+    englishExamples.append(englishExampleList);
+  }
 
   const source = makeElement(document, "footer", "supplement-source");
   const sourceText = makeElement(document, "div", "");
@@ -878,12 +972,23 @@ function makeSupplementCard(document, supplement) {
     makeLink(
       document,
       supplement.english.sourceUrl,
-      `영어 원뜻 보기 · Wiktionary 리비전 ${supplement.english.revisionId} ↗`
+      `영어 원뜻 보기 · ${supplement.english.sourceName || "Wiktionary"} 리비전 ${supplement.english.revisionId} ↗`
     )
   );
+  if (supplement.english.license) {
+    sourceLinks.append(makeLink(
+      document,
+      supplement.english.license.url,
+      supplement.english.license.name
+    ));
+  }
   source.append(sourceText, sourceLinks);
 
-  card.append(header, koreanDefinition, englishDefinition, usageNote, examples, source);
+  card.append(header, koreanDefinition, englishDefinition);
+  if (usageNote) card.append(usageNote);
+  card.append(examples);
+  if (englishExamples) card.append(englishExamples);
+  card.append(source);
   return card;
 }
 

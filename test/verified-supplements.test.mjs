@@ -7,6 +7,7 @@ import { parseWiktionaryEntry } from "../public/dictionary-parser.js";
 import {
   buildMeaningSummaryGroups,
   findVerifiedSupplements,
+  getVerifiedSupplementCount,
   renderMeaningSummary,
   renderVerifiedSupplements
 } from "../public/verified-supplements.js";
@@ -224,6 +225,66 @@ test("the verified minute adjective and 미소하다 searches resolve to the sam
     "차이가 미소하다.",
     "크기가 미소하다."
   ]);
+});
+
+test("the single automated Tier A hard and 굳히다 mapping preserves its full public provenance without claiming human review", () => {
+  const english = findVerifiedSupplements(" HARD ");
+  const korean = findVerifiedSupplements("굳히다");
+
+  assert.equal(english.length, 1);
+  assert.equal(korean.length, 1);
+  assert.equal(english[0].id, korean[0].id);
+  assert.equal(english[0].id, "enwiktionary:92041120:hard:verb-1:verb-1-sense-1::krdict:36862:1");
+  assert.equal(english[0].confidenceTier, "A");
+  assert.equal(english[0].numericScore, 0.88);
+  assert.equal(english[0].automatedConfidenceLabel, "automated-confidence-tier-A");
+  assert.equal(english[0].humanReviewed, false);
+  assert.deepEqual(english[0].reasonCodes, [
+    "SOURCE_LEMMA_IN_TARGET_EQUIVALENT",
+    "EXPLICIT_CAUSATIVE_GRAMMAR_MATCH",
+    "STRONG_DEFINITION_OVERLAP",
+    "AUTOMATED_CONFIDENCE_TIER_A"
+  ]);
+  assert.deepEqual(english[0].english, {
+    headword: "hard",
+    partOfSpeech: "verb",
+    partOfSpeechKo: "동사",
+    definition: "(transitive, obsolete) To make hard, harden.",
+    examples: [
+      "He knows vain men: he sees their harts that hard them In Guiles and Wiles, and will not hee regard them?"
+    ],
+    sourceName: "English Wiktionary",
+    sourceUrl: "https://en.wiktionary.org/wiki/hard",
+    revisionId: 92041120,
+    license: {
+      name: "CC BY-SA 4.0",
+      url: "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  });
+  assert.deepEqual(english[0].korean, {
+    id: "krdict:36862:1",
+    entryId: "36862",
+    senseId: "1",
+    headword: "굳히다",
+    partOfSpeech: "verb",
+    partOfSpeechKo: "동사",
+    definition: "무르던 것을 단단하거나 딱딱하게 만들다.",
+    englishLemma: "harden; make hard",
+    englishDefinition: "To make a soft thing hard or stiff.",
+    examples: ["석고를 굳히다.", "시멘트를 굳히다.", "지점토를 굳히다."],
+    sourceName: "한국어기초사전",
+    sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=36862&nation=eng&nationCode=6",
+    license: {
+      name: "CC BY-SA 2.0 KR",
+      url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+    }
+  });
+});
+
+test("the product catalog adds exactly one automated A mapping and no lower-tier or effort false-positive mapping", () => {
+  assert.equal(getVerifiedSupplementCount(), 21);
+  assert.equal(findVerifiedSupplements("hard").length, 1);
+  assert.deepEqual(findVerifiedSupplements("노력하다"), []);
 });
 
 for (const expected of [
@@ -480,7 +541,7 @@ test("excluded and unrelated words do not receive a verified supplement", () => 
     "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
     "bat", "club", "ring", "bill", "draft", "strike", "suit", "court",
     "capital", "subject", "object", "present", "second", "letter", "order", "state",
-    "change", "cover", "open", "hard", "flat", "sharp",
+    "change", "cover", "open", "flat", "sharp",
     "cool", "warm", "dry", "wet", "head", "foot", "arm",
     "back", "shoulder", "body", "trunk", "root", "leaf", "table", "chair",
     "mouse", "port", "terminal", "network", "virus", "bug", "crash", "crane",
@@ -783,6 +844,37 @@ test("the supplement renderer keeps source details under the meaning summary wit
   assert.equal(target.childElementCount, 0);
 });
 
+test("the automated hard summary and card visibly disclose Tier A and pending human review", () => {
+  const document = new TestDocument();
+  const summaryTarget = document.createElement("div");
+  const supplement = findVerifiedSupplements("hard")[0];
+  const summary = renderMeaningSummary(summaryTarget, {
+    language: "en",
+    translations: [],
+    definitionGroups: []
+  }, [supplement]);
+
+  assert.equal(summary.meaningCount, 1);
+  assert.match(summaryTarget.textContent, /굳히다자동 선별 · 신뢰도 A · 사람 검수 전/);
+  const summaryItem = summaryTarget.querySelectorAll("span").find((item) => item.className === "translation-item is-automated");
+  assert.ok(summaryItem);
+
+  const cardTarget = document.createElement("div");
+  assert.equal(renderVerifiedSupplements(cardTarget, "굳히다"), 1);
+  assert.match(cardTarget.textContent, /hard의 동사 뜻/);
+  assert.match(cardTarget.textContent, /자동 선별 · 신뢰도 A · 사람 검수 전/);
+  assert.match(cardTarget.textContent, /한국어기초사전 근거/);
+  assert.doesNotMatch(cardTarget.textContent, /한국어기초사전 확인/);
+  assert.match(cardTarget.textContent, /무르던 것을 단단하거나 딱딱하게 만들다/);
+  assert.match(cardTarget.textContent, /\(transitive, obsolete\) To make hard, harden/);
+  assert.match(cardTarget.textContent, /석고를 굳히다/);
+  assert.match(cardTarget.textContent, /He knows vain men/);
+  assert.match(cardTarget.textContent, /CC BY-SA 2.0 KR/);
+  assert.match(cardTarget.textContent, /CC BY-SA 4.0/);
+  const card = cardTarget.querySelectorAll("article")[0];
+  assert.equal(card.className, "verified-supplement-card is-automated");
+});
+
 test("verified supplements are nested inside the single Korean meanings section", () => {
   const html = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
   const koreanMeaningsStart = html.indexOf('<section id="translation-section"');
@@ -794,4 +886,6 @@ test("verified supplements are nested inside the single Korean meanings section"
   assert.ok(supplements > koreanMeaningsStart);
   assert.ok(koreanMeaningsEnd > supplements);
   assert.ok(englishDefinitions > koreanMeaningsEnd);
+  assert.match(html, /사람 검수 또는 자동 선별로 보충한 뜻/);
+  assert.match(html, /자동 선별 항목은 사람 검수 전임을 카드에 표시/);
 });
