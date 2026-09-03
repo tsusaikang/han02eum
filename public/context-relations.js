@@ -1,6 +1,6 @@
 import { findVerifiedSupplements } from "./verified-supplements.js";
 
-const INDEX_VERSION = "context-relations-v1-canary";
+const INDEX_VERSION = "context-relations-v1-full";
 const SHARD_SEED = "context-shard-v1\0";
 const SHARD_COUNT = 64;
 const INITIAL_VISIBLE_COUNT = 8;
