@@ -1,6 +1,7 @@
 import { findVerifiedSupplements } from "./verified-supplements.js";
 
 const INDEX_VERSION = "context-relations-v1-full";
+const RECOVERED_INDEX_VERSION = "context-relations-v2-recovered";
 const SHARD_SEED = "context-shard-v1\0";
 const SHARD_COUNT = 64;
 const INITIAL_VISIBLE_COUNT = 8;
@@ -31,6 +32,24 @@ function exactKoreanSenseIds(lemma) {
   return new Set(findVerifiedSupplements(lemma).map((item) => item.korean.id));
 }
 
+async function loadContextVersion(lemma, version, shardName, { signal, fetchImpl }) {
+  try {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const response = await fetchImpl(`/${version}/${shardName}`, {
+      signal,
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) return [];
+    const payload = await response.json();
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    if (payload?.version !== version || !payload.words || !Array.isArray(payload.words[lemma])) return [];
+    return payload.words[lemma];
+  } catch (error) {
+    if (error?.name === "AbortError") throw error;
+    return [];
+  }
+}
+
 export async function loadContextExpressions(value, {
   signal,
   fetchImpl = globalThis.fetch,
@@ -40,17 +59,16 @@ export async function loadContextExpressions(value, {
   if (!lemma) return [];
   try {
     const shardName = await contextShardName(lemma, digest);
+    const results = await Promise.allSettled([
+      loadContextVersion(lemma, INDEX_VERSION, shardName, { signal, fetchImpl }),
+      loadContextVersion(lemma, RECOVERED_INDEX_VERSION, shardName, { signal, fetchImpl })
+    ]);
     if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-    const response = await fetchImpl(`/${INDEX_VERSION}/${shardName}`, {
-      signal,
-      headers: { Accept: "application/json" }
-    });
-    if (!response.ok) return [];
-    const payload = await response.json();
-    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-    if (payload?.version !== INDEX_VERSION || !payload.words || !Array.isArray(payload.words[lemma])) return [];
     const exactIds = exactKoreanSenseIds(lemma);
-    return payload.words[lemma].filter((item) => !exactIds.has(item.id));
+    return results
+      .filter((result) => result.status === "fulfilled")
+      .flatMap((result) => result.value)
+      .filter((item) => !exactIds.has(item.id));
   } catch (error) {
     if (error?.name === "AbortError") throw error;
     return [];
@@ -86,7 +104,7 @@ function makeExpressionItem(document, item) {
   const heading = makeElement(document, "p", "context-expression-heading");
   heading.append(
     makeElement(document, "strong", "", item.headword),
-    makeElement(document, "span", "", item.partOfSpeechKo || item.partOfSpeech)
+    makeElement(document, "span", "", item.entryTypeKo || item.partOfSpeechKo || item.partOfSpeech)
   );
   article.append(
     heading,
