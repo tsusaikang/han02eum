@@ -300,6 +300,62 @@ test("repeated same-POS sections suppress unmatched summaries in the parsed publ
   assert.equal(entry.definitionGroups.every((group) => group.summaryKoreanTranslations.length === 0), true);
 });
 
+test("the eighth-to-ninth definition display boundary does not suppress an otherwise safe fallback", () => {
+  const parseWithDefinitionCount = (count) => parseFixture(`
+    <h2 id="English">English</h2>
+    <h3>Adjective</h3>
+    <ol>${Array.from({ length: count }, (_, index) =>
+      `<li>Unrelated adjective definition number ${index + 1}.</li>`
+    ).join("")}</ol>
+    <h4>Translations</h4>
+    <div class="NavFrame">
+      <div class="NavHead">resistant to pressure</div>
+      <span lang="ko">딱딱하다</span><span lang="ko">단단하다</span>
+    </div>
+    <h2 id="French">French</h2>
+  `);
+  const eight = parseWithDefinitionCount(8);
+  const nine = parseWithDefinitionCount(9);
+
+  assert.equal(eight.definitionGroups[0].definitions.length, 8);
+  assert.equal(nine.definitionGroups[0].definitions.length, 8);
+  assert.deepEqual(
+    nine.definitionGroups[0].summaryKoreanTranslations,
+    eight.definitionGroups[0].summaryKoreanTranslations
+  );
+  assert.deepEqual(nine.definitionGroups[0].summaryKoreanTranslations.map(({ term }) => term), [
+    "딱딱하다", "단단하다"
+  ]);
+});
+
+test("a hidden ninth assigned translation blocks fallback without leaking into flat translations", () => {
+  const entry = parseFixture(`
+    <h2 id="English">English</h2>
+    <h3>Noun</h3>
+    <ol>
+      ${Array.from({ length: 8 }, (_, index) =>
+        `<li>Visible unrelated definition number ${index + 1}.</li>`
+      ).join("")}
+      <li>A concealed assigned meaning.</li>
+    </ol>
+    <h4>Translations</h4>
+    <div class="NavFrame">
+      <div class="NavHead">A concealed assigned meaning.</div>
+      <span lang="ko">숨은 정상번역</span>
+    </div>
+    <div class="NavFrame">
+      <div class="NavHead">a concrete but unmatched meaning</div>
+      <span lang="ko">미배정 후보</span>
+    </div>
+    <h2 id="French">French</h2>
+  `);
+
+  assert.equal(entry.definitionGroups[0].definitions.length, 8);
+  assert.deepEqual(entry.definitionGroups[0].summaryKoreanTranslations, []);
+  assert.deepEqual(entry.translations, []);
+  assert.doesNotMatch(JSON.stringify(entry), /숨은 정상번역/);
+});
+
 test("parseWiktionaryEntry suppresses unresolved part-of-speech summaries when any translation was assigned", () => {
   const entry = parseFixture(`
     <h2 id="English">English</h2>

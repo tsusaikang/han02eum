@@ -261,8 +261,7 @@ export function classifyUnmatchedTranslationFallback({
   definitions = [],
   assignedTranslations = [],
   partOfSpeech = "",
-  repeatedPartOfSpeech = false,
-  evidenceIncomplete = false
+  repeatedPartOfSpeech = false
 } = {}) {
   const reasonCodes = [];
   const addReason = (reason) => {
@@ -271,7 +270,6 @@ export function classifyUnmatchedTranslationFallback({
 
   if (repeatedPartOfSpeech) addReason("FALLBACK_REPEATED_PART_OF_SPEECH_OCCURRENCE");
   if (assignedTranslations.length) addReason("FALLBACK_ASSIGNED_TRANSLATION_EXISTS_FOR_PART_OF_SPEECH");
-  if (evidenceIncomplete) addReason("FALLBACK_DEFINITION_SCOPE_INCOMPLETE");
 
   const candidates = [];
   for (const block of blocks) {
@@ -333,7 +331,7 @@ export function classifyUnmatchedTranslationFallback({
   if (definitions.length > 1) addReason("FALLBACK_POS_WIDE_MULTI_SENSE_SUMMARY");
   if (translations.length > 1) addReason("FALLBACK_MULTIPLE_TERM_SUMMARY");
 
-  const structuralBlock = repeatedPartOfSpeech || assignedTranslations.length || evidenceIncomplete;
+  const structuralBlock = repeatedPartOfSpeech || assignedTranslations.length;
   const publicTranslations = structuralBlock ? [] : translations;
   if (!publicTranslations.length) addReason("FALLBACK_NO_SAFE_PUBLIC_TRANSLATION");
   const tier = !publicTranslations.length
@@ -372,10 +370,7 @@ function extractDefinitionGroups(document, range, limits) {
 
     const definitionItems = [...list.children]
       .filter((child) => child.tagName === "LI");
-    const selectedDefinitionItems = limits
-      ? definitionItems.slice(0, limits.definitionsPerGroup)
-      : definitionItems;
-    const rawDefinitions = selectedDefinitionItems
+    const rawDefinitions = definitionItems
       .map((item) => ({
         text: textWithoutNestedDetails(item),
         examples: extractExamples(item)
@@ -436,8 +431,7 @@ function extractDefinitionGroups(document, range, limits) {
       koreanLabel: PARTS_OF_SPEECH.get(partKey),
       definitions,
       summaryKoreanTranslations: [],
-      unmatchedTranslationBlocks: unmatched,
-      fallbackDefinitionScopeIncomplete: selectedDefinitionItems.length < definitionItems.length
+      unmatchedTranslationBlocks: unmatched
     });
   }
   const groupsByPart = new Map();
@@ -456,14 +450,12 @@ function extractDefinitionGroups(document, range, limits) {
         definitions: group.definitions,
         assignedTranslations,
         partOfSpeech: group.partOfSpeech,
-        repeatedPartOfSpeech: (partCounts.get(group.partOfSpeech.toLocaleLowerCase("en")) || 0) > 1,
-        evidenceIncomplete: group.fallbackDefinitionScopeIncomplete
+        repeatedPartOfSpeech: (partCounts.get(group.partOfSpeech.toLocaleLowerCase("en")) || 0) > 1
       });
       group.summaryKoreanTranslations = decision.publicEligible ? decision.translations : [];
-      delete group.fallbackDefinitionScopeIncomplete;
     }
   }
-  return limits ? groups.slice(0, limits.groups) : groups;
+  return groups;
 }
 
 function extractPronunciations(document, range) {
@@ -540,7 +532,13 @@ export function parseWiktionaryEntry(
         definitionsPerGroup: DEFAULT_DEFINITIONS_PER_GROUP,
         groups: DEFAULT_GROUP_LIMIT
       };
-  const definitionGroups = extractDefinitionGroups(document, range, limits);
+  const allDefinitionGroups = extractDefinitionGroups(document, range, limits);
+  const definitionGroups = limits
+    ? allDefinitionGroups.slice(0, limits.groups).map((group) => ({
+        ...group,
+        definitions: group.definitions.slice(0, limits.definitionsPerGroup)
+      }))
+    : allDefinitionGroups;
   return {
     word: title || requestedWord,
     requestedWord,

@@ -616,6 +616,13 @@ function reducedLiveHardPayload() {
       <ol>
         <li>(of material or fluid) Solid and firm.</li>
         <li>(personal or social) Having a severe property; presenting difficulty.</li>
+        <li>Difficult to accomplish.</li>
+        <li>Demanding in practice.</li>
+        <li>Severe or harsh.</li>
+        <li>Powerful or intense.</li>
+        <li>Containing dissolved minerals.</li>
+        <li>Having a high alcoholic content.</li>
+        <li>(slang, vulgar) Sexually aroused.</li>
       </ol>
       <h4 id="Translations">Translations</h4>
       <div class="NavFrame">
