@@ -5,6 +5,7 @@ import {
   renderMeaningSummary,
   renderVerifiedSupplements
 } from "./verified-supplements.js";
+import { loadContextExpressions, renderContextExpressions } from "./context-relations.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -24,6 +25,7 @@ const ui = {
   translationTitle: document.querySelector("#translation-title"),
   translations: document.querySelector("#translation-list"),
   verifiedSupplements: document.querySelector("#verified-supplements"),
+  contextExpressions: document.querySelector("#context-expression-section"),
   definitionsSection: document.querySelector("#definitions-section"),
   definitionKicker: document.querySelector("#definitions-kicker"),
   definitionCount: document.querySelector("#definition-count"),
@@ -174,6 +176,24 @@ function renderSupplementOnlyEntry(word) {
   }, { wiktionaryAvailable: false });
 }
 
+function renderContextOnlyEntry(word) {
+  renderEntry({
+    word,
+    requestedWord: word,
+    language: "en",
+    found: true,
+    pronunciations: [],
+    audio: [],
+    translations: [],
+    definitionGroups: [],
+    sourceUrl: "",
+    revisionId: null,
+    license: null
+  }, { wiktionaryAvailable: false });
+  ui.translations.replaceChildren();
+  ui.translationSection.classList.add("is-hidden");
+}
+
 function stopAudioState() {
   ui.audioButton.classList.remove("is-playing");
   ui.audioButton.setAttribute("aria-pressed", "false");
@@ -218,7 +238,7 @@ function playPronunciation() {
   currentAudio.play().catch(() => speakWithDevice(currentEntry.word, currentEntry.language));
 }
 
-async function lookup(rawWord, { updateHistory = true } = {}) {
+export async function lookup(rawWord, { updateHistory = true } = {}) {
   const word = rawWord.normalize("NFC").trim().replace(/\s+/g, " ");
   if (!word) {
     ui.input.focus();
@@ -226,11 +246,13 @@ async function lookup(rawWord, { updateHistory = true } = {}) {
   }
 
   activeRequest?.abort();
-  activeRequest = new AbortController();
+  const request = new AbortController();
+  activeRequest = request;
   currentEntry = null;
   currentAudio?.pause();
   window.speechSynthesis?.cancel();
   ui.input.value = word;
+  renderContextExpressions(ui.contextExpressions, []);
   setView("loading");
 
   if (updateHistory) {
@@ -240,15 +262,28 @@ async function lookup(rawWord, { updateHistory = true } = {}) {
   }
 
   try {
-    const response = await fetch(`/api/lookup?word=${encodeURIComponent(word)}`, {
-      signal: activeRequest.signal,
-      headers: { Accept: "application/json" }
-    });
+    const [apiResult, contextResult] = await Promise.allSettled([
+      fetch(`/api/lookup?word=${encodeURIComponent(word)}`, {
+        signal: request.signal,
+        headers: { Accept: "application/json" }
+      }),
+      loadContextExpressions(word, { signal: request.signal })
+    ]);
+    if (request !== activeRequest) return;
+    if (apiResult.status === "rejected") throw apiResult.reason;
+    if (contextResult.status === "rejected") {
+      if (contextResult.reason?.name === "AbortError") return;
+    }
+    const response = apiResult.value;
+    const contextExpressions = contextResult.status === "fulfilled" ? contextResult.value : [];
     const payload = await response.json();
+    if (request !== activeRequest) return;
     const verifiedSupplements = findVerifiedSupplements(word);
     if (!response.ok) {
-      if (response.status === 404 && verifiedSupplements.length) {
-        renderSupplementOnlyEntry(word);
+      if (response.status === 404 && (verifiedSupplements.length || contextExpressions.length)) {
+        if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
+        else renderContextOnlyEntry(word);
+        renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
       throw new Error(payload.error || "사전 항목을 불러오지 못했습니다.");
@@ -256,8 +291,10 @@ async function lookup(rawWord, { updateHistory = true } = {}) {
 
     const entry = parseWiktionaryEntry(payload);
     if (!entry.found) {
-      if (verifiedSupplements.length) {
-        renderSupplementOnlyEntry(word);
+      if (verifiedSupplements.length || contextExpressions.length) {
+        if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
+        else renderContextOnlyEntry(word);
+        renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
       const language = entry.language === "ko" ? "한국어" : "영어";
@@ -268,8 +305,9 @@ async function lookup(rawWord, { updateHistory = true } = {}) {
       return;
     }
     renderEntry(entry);
+    renderContextExpressions(ui.contextExpressions, contextExpressions);
   } catch (error) {
-    if (error.name === "AbortError") return;
+    if (request !== activeRequest || error?.name === "AbortError") return;
     showMessage("검색 결과를 가져오지 못했어요", error.message || "잠시 후 다시 시도해 주세요.");
   }
 }

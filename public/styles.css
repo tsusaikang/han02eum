@@ -601,6 +601,119 @@ a {
   margin-top: 16px;
 }
 
+.context-expression-section {
+  padding: 24px 54px;
+  background: #f1efe9;
+  border-bottom: 1px solid var(--line);
+}
+
+.context-expression-disclosure {
+  color: var(--ink);
+}
+
+.context-expression-summary {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.context-expression-body {
+  padding-top: 18px;
+}
+
+.context-expression-intro {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.context-expression-list {
+  display: grid;
+  gap: 10px;
+}
+
+.context-expression-item {
+  padding: 15px 17px;
+  background: rgba(255, 253, 248, 0.72);
+  border: 1px solid #d9d5cc;
+  border-radius: 12px;
+}
+
+.context-expression-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 0;
+}
+
+.context-expression-heading strong {
+  font-size: 16px;
+}
+
+.context-expression-heading span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.context-expression-definition {
+  margin: 7px 0 0;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.context-source-details {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.context-source-summary {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.context-source-copy {
+  margin: 7px 0 0;
+}
+
+.context-source-copy a {
+  color: var(--muted);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.context-source-copy a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.context-expression-more {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  min-height: 44px;
+  padding: 9px 13px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid #c9c5bc;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .verified-supplement-card {
   padding: 16px 18px;
   background: rgba(255, 253, 248, 0.76);
@@ -1014,6 +1127,7 @@ a {
   .audio-button span:last-child { display: none; }
   .audio-button { width: 46px; height: 46px; padding: 0; justify-content: center; }
   .translation-section,
+  .context-expression-section,
   .definitions-section { padding-left: 26px; padding-right: 26px; }
   .translation-group { display: grid; gap: 7px; }
   .translation-group-label { flex-basis: auto; margin-top: 0; }
