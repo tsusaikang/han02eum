@@ -727,6 +727,115 @@ a {
   font-weight: 750;
 }
 
+.korean-only-section {
+  padding: 24px 54px;
+  background: #f4f1ea;
+  border-bottom: 1px solid var(--line);
+}
+
+.korean-only-disclosure {
+  color: var(--ink);
+}
+
+.korean-only-section-summary,
+.korean-only-source-summary {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.korean-only-section-summary {
+  font-size: 14px;
+}
+
+.korean-only-body {
+  padding-top: 18px;
+}
+
+.korean-only-intro {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.korean-only-list {
+  display: grid;
+  gap: 10px;
+}
+
+.korean-only-item {
+  padding: 16px 18px;
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid #d8d2c7;
+  border-radius: 12px;
+}
+
+.korean-only-field {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  padding: 7px 0;
+}
+
+.korean-only-field p {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.korean-only-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.korean-only-details {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.korean-only-source-summary {
+  font-weight: 700;
+}
+
+.korean-only-source-copy {
+  margin: 7px 0 0;
+}
+
+.korean-only-source-copy a {
+  color: var(--muted);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.korean-only-source-copy a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.korean-only-more {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  min-height: 44px;
+  padding: 9px 13px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid #c9c5bc;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .context-expression-section {
   padding: 24px 54px;
   background: #f1efe9;
@@ -1254,11 +1363,13 @@ a {
   .audio-button { width: 46px; height: 46px; padding: 0; justify-content: center; }
   .translation-section,
   .korean-source-section,
+  .korean-only-section,
   .context-expression-section,
   .definitions-section { padding-left: 26px; padding-right: 26px; }
   .translation-group { display: grid; gap: 7px; }
   .translation-group-label { flex-basis: auto; margin-top: 0; }
   .korean-source-field { grid-template-columns: 1fr; gap: 2px; }
+  .korean-only-field { grid-template-columns: 1fr; gap: 2px; }
   .supplement-source { display: grid; }
   .supplement-source-links { justify-items: start; }
   .definition-group { grid-template-columns: 1fr; gap: 18px; }

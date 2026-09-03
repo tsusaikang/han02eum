@@ -10,6 +10,10 @@ import {
   loadKoreanSourceRelations,
   renderKoreanSourceRelations
 } from "./korean-source-relations.js";
+import {
+  loadKoreanOnlyReferences,
+  renderKoreanOnlyReferences
+} from "./korean-only-references.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -30,6 +34,7 @@ const ui = {
   translations: document.querySelector("#translation-list"),
   verifiedSupplements: document.querySelector("#verified-supplements"),
   koreanSourceRelations: document.querySelector("#korean-source-relation-section"),
+  koreanOnlyReferences: document.querySelector("#korean-only-reference-section"),
   contextExpressions: document.querySelector("#context-expression-section"),
   definitionsSection: document.querySelector("#definitions-section"),
   definitionKicker: document.querySelector("#definitions-kicker"),
@@ -277,6 +282,7 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
   ui.input.value = word;
   renderContextExpressions(ui.contextExpressions, []);
   renderKoreanSourceRelations(ui.koreanSourceRelations, []);
+  renderKoreanOnlyReferences(ui.koreanOnlyReferences, []);
   setView("loading");
 
   if (updateHistory) {
@@ -286,34 +292,51 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
   }
 
   try {
-    const [apiResult, contextResult, koreanSourceResult] = await Promise.allSettled([
+    const [apiResult, contextResult, koreanSourceResult, koreanOnlyResult] = await Promise.allSettled([
       fetch(`/api/lookup?word=${encodeURIComponent(word)}`, {
         signal: request.signal,
         headers: { Accept: "application/json" }
       }),
       loadContextExpressions(word, { signal: request.signal }),
-      loadKoreanSourceRelations(word, { signal: request.signal })
+      loadKoreanSourceRelations(word, { signal: request.signal }),
+      loadKoreanOnlyReferences(word, { signal: request.signal })
     ]);
     if (request !== activeRequest) return;
-    if (apiResult.status === "rejected") throw apiResult.reason;
     if (contextResult.status === "rejected") {
       if (contextResult.reason?.name === "AbortError") return;
     }
     if (koreanSourceResult.status === "rejected") {
       if (koreanSourceResult.reason?.name === "AbortError") return;
     }
-    const response = apiResult.value;
+    if (koreanOnlyResult.status === "rejected") {
+      if (koreanOnlyResult.reason?.name === "AbortError") return;
+    }
     const contextExpressions = contextResult.status === "fulfilled" ? contextResult.value : [];
     const koreanSourceRelations = koreanSourceResult.status === "fulfilled" ? koreanSourceResult.value : [];
+    const koreanOnlyReferences = koreanOnlyResult.status === "fulfilled" ? koreanOnlyResult.value : [];
+    const verifiedSupplements = findVerifiedSupplements(word);
+    const hasLocalResult = verifiedSupplements.length || contextExpressions.length || koreanSourceRelations.length || koreanOnlyReferences.length;
+    if (apiResult.status === "rejected") {
+      if (apiResult.reason?.name === "AbortError") return;
+      if (!hasLocalResult) throw apiResult.reason;
+      if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
+      else if (koreanSourceRelations.length || koreanOnlyReferences.length) renderKoreanSourceOnlyEntry(word);
+      else renderContextOnlyEntry(word);
+      renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
+      renderKoreanOnlyReferences(ui.koreanOnlyReferences, koreanOnlyReferences);
+      renderContextExpressions(ui.contextExpressions, contextExpressions);
+      return;
+    }
+    const response = apiResult.value;
     const payload = await response.json();
     if (request !== activeRequest) return;
-    const verifiedSupplements = findVerifiedSupplements(word);
     if (!response.ok) {
-      if (response.status === 404 && (verifiedSupplements.length || contextExpressions.length || koreanSourceRelations.length)) {
+      if (response.status === 404 && hasLocalResult) {
         if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
-        else if (koreanSourceRelations.length) renderKoreanSourceOnlyEntry(word);
+        else if (koreanSourceRelations.length || koreanOnlyReferences.length) renderKoreanSourceOnlyEntry(word);
         else renderContextOnlyEntry(word);
         renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
+        renderKoreanOnlyReferences(ui.koreanOnlyReferences, koreanOnlyReferences);
         renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
@@ -322,11 +345,12 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
 
     const entry = parseWiktionaryEntry(payload);
     if (!entry.found) {
-      if (verifiedSupplements.length || contextExpressions.length || koreanSourceRelations.length) {
+      if (hasLocalResult) {
         if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
-        else if (koreanSourceRelations.length) renderKoreanSourceOnlyEntry(word);
+        else if (koreanSourceRelations.length || koreanOnlyReferences.length) renderKoreanSourceOnlyEntry(word);
         else renderContextOnlyEntry(word);
         renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
+        renderKoreanOnlyReferences(ui.koreanOnlyReferences, koreanOnlyReferences);
         renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
@@ -339,6 +363,7 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
     }
     renderEntry(entry);
     renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
+    renderKoreanOnlyReferences(ui.koreanOnlyReferences, koreanOnlyReferences);
     renderContextExpressions(ui.contextExpressions, contextExpressions);
   } catch (error) {
     if (request !== activeRequest || error?.name === "AbortError") return;
