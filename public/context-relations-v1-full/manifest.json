@@ -1,0 +1,483 @@
+{
+  "version": "context-relations-v1-full",
+  "source": {
+    "name": "한국어기초사전",
+    "url": "https://krdict.korean.go.kr/",
+    "license": {
+      "name": "CC BY-SA 2.0 KR",
+      "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+    }
+  },
+  "inputs": {
+    "source": {
+      "path": ".local/pilot/krdict-en-senses.jsonl",
+      "rows": 71058,
+      "sha256": "4ffe523dc3b357e0c7e98d12fc79600b2aabb229569e5ad0cd49d19908ac3eef"
+    },
+    "directLedger": {
+      "path": ".local/pilot/relation-provenance-v14/direct-krdict-single-english-strings.jsonl",
+      "rows": 17895,
+      "sha256": "9386cab1dda7a99b36efdbadd1dda3f68c16a84eebbb971b12c4e763c292e3dc"
+    }
+  },
+  "inventory": {
+    "directWords": 17895,
+    "directOccurrences": 62523,
+    "duplicateWordSensePairs": 0,
+    "normalizationFailures": 0,
+    "excludedWords": [
+      "jam",
+      "royal"
+    ]
+  },
+  "shards": [
+    {
+      "file": "shard-00.json",
+      "words": 287,
+      "occurrences": 1050,
+      "bytes": 427648,
+      "sha256": "3e21a2af058c39f22332425be2de2e072ac1ccbbb1b5f236e7b11a60f84e069f"
+    },
+    {
+      "file": "shard-01.json",
+      "words": 318,
+      "occurrences": 1197,
+      "bytes": 485654,
+      "sha256": "25d7d1106cddcfa45cce8db4eff51db132f9a30f27b97afe8c0b9b89e2cb622d"
+    },
+    {
+      "file": "shard-02.json",
+      "words": 270,
+      "occurrences": 949,
+      "bytes": 388596,
+      "sha256": "5a298f3912b0c4c7e9683ed697a3a6ab1df1ffc90b8fa5c85a6f9d8cd583e200"
+    },
+    {
+      "file": "shard-03.json",
+      "words": 277,
+      "occurrences": 1047,
+      "bytes": 425905,
+      "sha256": "a51d7de9057772a8f88d511c10b030c18f9a00b8a58bd12807a4633292fb50a9"
+    },
+    {
+      "file": "shard-04.json",
+      "words": 260,
+      "occurrences": 1018,
+      "bytes": 418886,
+      "sha256": "f9a5596acd5b1e207ed4d2210a7bae16225725c626a8777363c706a8c8656e99"
+    },
+    {
+      "file": "shard-05.json",
+      "words": 271,
+      "occurrences": 895,
+      "bytes": 369370,
+      "sha256": "d76db0516f0bad93528bf819d73ac64ebc4fcef0bebba92d94526880c420ab7c"
+    },
+    {
+      "file": "shard-06.json",
+      "words": 278,
+      "occurrences": 980,
+      "bytes": 400225,
+      "sha256": "04089692bdef8c176c0be454ab5b2e25d396171770de6b82ca038e6d52066308"
+    },
+    {
+      "file": "shard-07.json",
+      "words": 308,
+      "occurrences": 1209,
+      "bytes": 495997,
+      "sha256": "d223604afb6cde63798c82f8727589ca338df5f744720c188e70521f8eb2a4ef"
+    },
+    {
+      "file": "shard-08.json",
+      "words": 275,
+      "occurrences": 977,
+      "bytes": 404864,
+      "sha256": "831dfd50860de1216cc5aa62190f7712298916f8635b10c13cacec93c1a027b5"
+    },
+    {
+      "file": "shard-09.json",
+      "words": 271,
+      "occurrences": 860,
+      "bytes": 353478,
+      "sha256": "0a7886ff98637c965015a1996f8f420a863948ddc470c776d49a8a309602ab75"
+    },
+    {
+      "file": "shard-10.json",
+      "words": 276,
+      "occurrences": 871,
+      "bytes": 360527,
+      "sha256": "6c79a57aba8c3398ceb6d2076904dbfa33bb6e5faca272015af3d5c70dc45ddd"
+    },
+    {
+      "file": "shard-11.json",
+      "words": 267,
+      "occurrences": 892,
+      "bytes": 368166,
+      "sha256": "cc994df1e59e0f49b210422e75e70ef94f8daf28ca46406728c4b50a8c2c110f"
+    },
+    {
+      "file": "shard-12.json",
+      "words": 272,
+      "occurrences": 762,
+      "bytes": 315314,
+      "sha256": "ef9b3cea5df0ca95ec812da30de37dfdfd5c65a7643cf4327d0c2fe6618a966c"
+    },
+    {
+      "file": "shard-13.json",
+      "words": 267,
+      "occurrences": 968,
+      "bytes": 402012,
+      "sha256": "ca12db49dba14ff902c3e76db5f4edd28764d114a22220b44135382fae640b6a"
+    },
+    {
+      "file": "shard-14.json",
+      "words": 271,
+      "occurrences": 1132,
+      "bytes": 460813,
+      "sha256": "80b56b41bb4c7c130e121a26b20e22b794895792fd8601b26a3da2b09c1f303c"
+    },
+    {
+      "file": "shard-15.json",
+      "words": 293,
+      "occurrences": 940,
+      "bytes": 387509,
+      "sha256": "30006e92e64b85ef4d6df1e36d79f0b196b2223974b9faf359e968e17b74b3cc"
+    },
+    {
+      "file": "shard-16.json",
+      "words": 266,
+      "occurrences": 1039,
+      "bytes": 429237,
+      "sha256": "18a7fc60caa3b72b5e1629fcda7d8dff0783fab4dcbf3f5b7dc33a8ef07f54ab"
+    },
+    {
+      "file": "shard-17.json",
+      "words": 301,
+      "occurrences": 985,
+      "bytes": 404521,
+      "sha256": "f48aef79a629990183dadaaa3e44ba8e0f37205ea3af936e2e338ddbdb8b13c3"
+    },
+    {
+      "file": "shard-18.json",
+      "words": 303,
+      "occurrences": 1020,
+      "bytes": 422214,
+      "sha256": "dba285c62065b2a5e2b6e9d3e69c5c032bec0156049c14d4123201c17d7b315b"
+    },
+    {
+      "file": "shard-19.json",
+      "words": 280,
+      "occurrences": 945,
+      "bytes": 392837,
+      "sha256": "43ca3e913031e87d48a5191fb60180f2deb1804714c45f1becc01d9933ecc9d8"
+    },
+    {
+      "file": "shard-20.json",
+      "words": 267,
+      "occurrences": 945,
+      "bytes": 387543,
+      "sha256": "78c903c1fe1b0186bb3f80f8ec96c85b84ee2e6559de9489aa24f9974f987141"
+    },
+    {
+      "file": "shard-21.json",
+      "words": 301,
+      "occurrences": 894,
+      "bytes": 365954,
+      "sha256": "20ff445aeb32dcb955a2d1fc8e26768730009fed91582ce2e6f71aea4bdcbd25"
+    },
+    {
+      "file": "shard-22.json",
+      "words": 306,
+      "occurrences": 966,
+      "bytes": 400549,
+      "sha256": "ec488b4b595bc6e792a82bae8978b0223f0014dbc372881bc55afec455bd9c1e"
+    },
+    {
+      "file": "shard-23.json",
+      "words": 280,
+      "occurrences": 1052,
+      "bytes": 429320,
+      "sha256": "b40f1b953b333ef4f1a871fd764052a1c71cadab586296bd3f76071c9b6d9417"
+    },
+    {
+      "file": "shard-24.json",
+      "words": 259,
+      "occurrences": 811,
+      "bytes": 336336,
+      "sha256": "3e3998180582a3a0b96c02f5f8861e8d4ea4027a5a74b393e096386b832ca8d9"
+    },
+    {
+      "file": "shard-25.json",
+      "words": 249,
+      "occurrences": 981,
+      "bytes": 404967,
+      "sha256": "3a672c60276c199fb372f6b4e57435ff28e971aeb3567442b619a67a06d7d4ee"
+    },
+    {
+      "file": "shard-26.json",
+      "words": 274,
+      "occurrences": 1052,
+      "bytes": 434726,
+      "sha256": "c22b85d150b06110d2c8d81041e5b736acda9fa220bbf4286f9989b652cea810"
+    },
+    {
+      "file": "shard-27.json",
+      "words": 274,
+      "occurrences": 787,
+      "bytes": 323400,
+      "sha256": "0e458efaa582c13e7e9e2d7477fb254a6b15dad9d3b85ca1eb093e476d5cf26b"
+    },
+    {
+      "file": "shard-28.json",
+      "words": 279,
+      "occurrences": 950,
+      "bytes": 387726,
+      "sha256": "a1fa2b820d00728b89df1a9bc3c18fbc36654542ace8e8ca39fd2ad04bcfd047"
+    },
+    {
+      "file": "shard-29.json",
+      "words": 258,
+      "occurrences": 1024,
+      "bytes": 419446,
+      "sha256": "0984b6524b1a89f500f78f0432eaaf89935bb5345ee92fcd9ac257944b3cf0b0"
+    },
+    {
+      "file": "shard-30.json",
+      "words": 280,
+      "occurrences": 1079,
+      "bytes": 444517,
+      "sha256": "ce4d7e74a278110a77d7238397f617231f8ef29b109aa686657005ff205159f2"
+    },
+    {
+      "file": "shard-31.json",
+      "words": 265,
+      "occurrences": 883,
+      "bytes": 365022,
+      "sha256": "035341214dd7e9313445b8e3a9bbd0a862748e5dceefd366d629325a24f89bea"
+    },
+    {
+      "file": "shard-32.json",
+      "words": 267,
+      "occurrences": 999,
+      "bytes": 408077,
+      "sha256": "3c85af581a74485014f54427397f614d42663ebcdbafb9b85d09dc0d5fb5ac99"
+    },
+    {
+      "file": "shard-33.json",
+      "words": 297,
+      "occurrences": 1080,
+      "bytes": 446832,
+      "sha256": "7b2f6169da46d904b117052cbd96f3baa1a8085d51b9f5fce58df94e40b34f6c"
+    },
+    {
+      "file": "shard-34.json",
+      "words": 267,
+      "occurrences": 984,
+      "bytes": 405818,
+      "sha256": "c6ecafabfc02a8fd164f1721b101717fa82ceaada9b79fd984e13416e9156bb3"
+    },
+    {
+      "file": "shard-35.json",
+      "words": 297,
+      "occurrences": 1022,
+      "bytes": 421963,
+      "sha256": "f870736c68782dc15913ab72bcd4989365f254db5431b4e1a1be763ae9631153"
+    },
+    {
+      "file": "shard-36.json",
+      "words": 293,
+      "occurrences": 1199,
+      "bytes": 488118,
+      "sha256": "f26d66596172b9b0f2db31e97d7db585dc1891c57c584f17b4359f7c6db14619"
+    },
+    {
+      "file": "shard-37.json",
+      "words": 274,
+      "occurrences": 888,
+      "bytes": 364007,
+      "sha256": "5235cf68f5728281f8e8c9c8d3695dd6b091b28b31313601fd04a27399806662"
+    },
+    {
+      "file": "shard-38.json",
+      "words": 277,
+      "occurrences": 808,
+      "bytes": 327696,
+      "sha256": "28df5bf859f35b63ba7622337d926e3a855817f9d9901e803aed1eb18ed6ac07"
+    },
+    {
+      "file": "shard-39.json",
+      "words": 281,
+      "occurrences": 965,
+      "bytes": 391926,
+      "sha256": "ccbf2bfe28fef6e0e5f1b3ead23254069e4a671c06b74d240a2ccd3cc101cb4b"
+    },
+    {
+      "file": "shard-40.json",
+      "words": 273,
+      "occurrences": 1024,
+      "bytes": 427139,
+      "sha256": "5ae3a0ca1f5f7a500df856b88d89a2dd9a88d8957a3320423baade0cad966254"
+    },
+    {
+      "file": "shard-41.json",
+      "words": 299,
+      "occurrences": 1248,
+      "bytes": 515817,
+      "sha256": "f9c8559c1da1e929e513aebb5c9abc31e3027006e5fc7904075f4f5dcb1178bb"
+    },
+    {
+      "file": "shard-42.json",
+      "words": 287,
+      "occurrences": 861,
+      "bytes": 358587,
+      "sha256": "661290b8fb0813309b3fc93b1acdc07c26d06807953d1d758a59cd6f879e8bbc"
+    },
+    {
+      "file": "shard-43.json",
+      "words": 274,
+      "occurrences": 1058,
+      "bytes": 439392,
+      "sha256": "000b00d84e4d29b9a38efb247627065707bcbee31c0f79b20693e0ea74cd9738"
+    },
+    {
+      "file": "shard-44.json",
+      "words": 278,
+      "occurrences": 841,
+      "bytes": 345656,
+      "sha256": "991a4f0cdcc28ead2ae4ae57aae66829f125e1de30b6ae2333644e36c19eb8d3"
+    },
+    {
+      "file": "shard-45.json",
+      "words": 295,
+      "occurrences": 1125,
+      "bytes": 459228,
+      "sha256": "dfa142efb326e3bf535a1e1e5cca56ef96406de3c2b763bf5a52407db48cd2e0"
+    },
+    {
+      "file": "shard-46.json",
+      "words": 255,
+      "occurrences": 991,
+      "bytes": 410913,
+      "sha256": "1344766169ee2e11c1bc3974ec19fe4a2d37273a4f422b039dafdc784e838a72"
+    },
+    {
+      "file": "shard-47.json",
+      "words": 283,
+      "occurrences": 853,
+      "bytes": 355486,
+      "sha256": "3abb2704a5743ae5f05c9127ee0c4259d6a250153ade199d748379751d8816c9"
+    },
+    {
+      "file": "shard-48.json",
+      "words": 262,
+      "occurrences": 849,
+      "bytes": 349277,
+      "sha256": "8a9914976e8a5f20e5835845b1fd4d0a3a4ecbc37900048e3295fcd7ebcb4947"
+    },
+    {
+      "file": "shard-49.json",
+      "words": 305,
+      "occurrences": 880,
+      "bytes": 362860,
+      "sha256": "140d292cfe8c56bc2430b2acd0e5ef22032bff86196a154659e087034052412f"
+    },
+    {
+      "file": "shard-50.json",
+      "words": 284,
+      "occurrences": 1102,
+      "bytes": 449416,
+      "sha256": "584e761687bbf78f9fa80cf2145912a8ac869a6fd8810a2d5b8840acde1df5f8"
+    },
+    {
+      "file": "shard-51.json",
+      "words": 253,
+      "occurrences": 819,
+      "bytes": 336824,
+      "sha256": "61d48eb379c6cbc55d7c74f93e6d5617e94dd03b771b1f8e36f266788498e940"
+    },
+    {
+      "file": "shard-52.json",
+      "words": 261,
+      "occurrences": 924,
+      "bytes": 376986,
+      "sha256": "ad819413c8690b1ac22cdba3d5d061e48cff1ca0ba9c253aa655347c5c882dec"
+    },
+    {
+      "file": "shard-53.json",
+      "words": 299,
+      "occurrences": 924,
+      "bytes": 379914,
+      "sha256": "d7e53f29172e93497347ed9d1b937018d2f377fb48a35e52b94454670b4ea47f"
+    },
+    {
+      "file": "shard-54.json",
+      "words": 276,
+      "occurrences": 872,
+      "bytes": 361679,
+      "sha256": "87021731e1bbd81bfa758774731ecc42e792e92fd0cbaed5ae8d170129384498"
+    },
+    {
+      "file": "shard-55.json",
+      "words": 263,
+      "occurrences": 908,
+      "bytes": 370281,
+      "sha256": "9d09068e3d9518a569dbd557d0240d2493432bf1537c5da99d6077c03c6afd2d"
+    },
+    {
+      "file": "shard-56.json",
+      "words": 275,
+      "occurrences": 1073,
+      "bytes": 439870,
+      "sha256": "59a65e5c68a9c3d56501a66d5a36df5f18faf12b8728b26b5e5dbeefc247f479"
+    },
+    {
+      "file": "shard-57.json",
+      "words": 300,
+      "occurrences": 1135,
+      "bytes": 469962,
+      "sha256": "45b5d77e845b190bc3c2cd6aa8c21ddca6007dd48ee9e878ba547a52ef215d33"
+    },
+    {
+      "file": "shard-58.json",
+      "words": 286,
+      "occurrences": 1046,
+      "bytes": 430660,
+      "sha256": "1698fcdf35abb458fbb720634682a352049ab4a9966a0579f69fd66284207800"
+    },
+    {
+      "file": "shard-59.json",
+      "words": 294,
+      "occurrences": 879,
+      "bytes": 360528,
+      "sha256": "c9812b7df8c93b19888d15bafb2c8296d588edb740d26b691c20aba77220995b"
+    },
+    {
+      "file": "shard-60.json",
+      "words": 284,
+      "occurrences": 868,
+      "bytes": 357634,
+      "sha256": "b23dd183e3690d95bb969046cebf754e0379880e2a4212c87829eef93c8228f3"
+    },
+    {
+      "file": "shard-61.json",
+      "words": 278,
+      "occurrences": 1051,
+      "bytes": 429659,
+      "sha256": "25777886eefd583eec65eca87d830b0e5c2e61de9d128a360df22f11f4ecf526"
+    },
+    {
+      "file": "shard-62.json",
+      "words": 287,
+      "occurrences": 1093,
+      "bytes": 456524,
+      "sha256": "4a50ec42297ecc1ccd236517a5a174b7a71328ba2550768e13ce9f463a1b398c"
+    },
+    {
+      "file": "shard-63.json",
+      "words": 288,
+      "occurrences": 994,
+      "bytes": 408670,
+      "sha256": "8d98830962bd628a3d487560feeb807cce9f93f3cf356bbaf7a856d9d96c9122"
+    }
+  ]
+}
