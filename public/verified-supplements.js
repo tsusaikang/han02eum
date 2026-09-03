@@ -726,6 +726,20 @@ export function buildMeaningSummaryGroups(entry, supplements = []) {
       }
     }
 
+    for (const definitionGroup of entry.definitionGroups || []) {
+      const group = ensureGroup(definitionGroup.partOfSpeech, definitionGroup.koreanLabel);
+      if (!group.meanings.length) {
+        for (const translation of definitionGroup.summaryKoreanTranslations || []) {
+          addMeaning(group, {
+            term: translation.term,
+            sense: translation.sense || "",
+            verified: false,
+            supplementId: null
+          });
+        }
+      }
+    }
+
     const ungrouped = (entry.translations || []).filter(
       (translation) => !groups.some((group) =>
         group.meanings.some((meaning) => meaning.term === translation.term)

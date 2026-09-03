@@ -600,6 +600,39 @@ function reducedLiveRoyalPayload() {
   };
 }
 
+function reducedLiveHardPayload() {
+  return {
+    requestedWord: "hard",
+    title: "hard",
+    revisionId: 92041120,
+    sourceUrl: "https://en.wiktionary.org/wiki/hard",
+    license: {
+      name: "CC BY-SA 4.0",
+      url: "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    html: `
+      <h2 id="English">English</h2>
+      <h3 id="Adjective">Adjective</h3>
+      <ol>
+        <li>(of material or fluid) Solid and firm.</li>
+        <li>(personal or social) Having a severe property; presenting difficulty.</li>
+      </ol>
+      <h4 id="Translations">Translations</h4>
+      <div class="NavFrame">
+        <div class="NavHead">resistant to pressure</div>
+        <div class="NavContent"><span lang="ko">딱딱하다</span>, <span lang="ko">단단하다</span></div>
+      </div>
+      <div class="NavFrame">
+        <div class="NavHead">requiring a lot of effort to do or understand</div>
+        <div class="NavContent"><span lang="ko">어렵다</span></div>
+      </div>
+      <h3 id="Verb">Verb</h3>
+      <ol><li>(transitive, obsolete) To make hard, harden.</li></ol>
+      <h2 id="French">French</h2>
+    `
+  };
+}
+
 test("the Korean meaning summary merges Wiktionary and verified meanings by part of speech", () => {
   const groups = buildMeaningSummaryGroups(royalEntry(), findVerifiedSupplements("royal"));
   assert.deepEqual(groups.map((group) => ({
@@ -704,6 +737,40 @@ test("the reduced live royal payload keeps nested-table translations under Adjec
   ), false);
 });
 
+test("the hard fixture restores three adjective meanings without reviving the rejected verb supplement", () => {
+  const previousDOMParser = globalThis.DOMParser;
+  globalThis.DOMParser = DOMParser;
+  let entry;
+  try {
+    entry = parseWiktionaryEntry(reducedLiveHardPayload());
+  } finally {
+    globalThis.DOMParser = previousDOMParser;
+  }
+
+  const groups = buildMeaningSummaryGroups(entry, findVerifiedSupplements("hard"));
+  assert.deepEqual(groups.map((group) => ({
+    partOfSpeech: group.partOfSpeech,
+    meanings: group.meanings.map(({ term }) => term)
+  })), [{
+    partOfSpeech: "Adjective",
+    meanings: ["딱딱하다", "단단하다", "어렵다"]
+  }]);
+  assert.deepEqual(findVerifiedSupplements("hard"), []);
+  assert.deepEqual(findVerifiedSupplements("굳히다"), []);
+
+  const document = new TestDocument();
+  const target = document.createElement("div");
+  const summary = renderMeaningSummary(target, entry, findVerifiedSupplements("hard"));
+  assert.equal(summary.meaningCount, 3);
+  assert.deepEqual(target.querySelectorAll("h3").map((heading) => heading.textContent), [
+    "형용사 · Adjective"
+  ]);
+  assert.match(target.textContent, /딱딱하다/);
+  assert.match(target.textContent, /단단하다/);
+  assert.match(target.textContent, /어렵다/);
+  assert.doesNotMatch(target.textContent, /굳히다|동사 · Verb/);
+});
+
 test("a flat translation stays unclassified when two parts of speech match ambiguously", () => {
   const groups = buildMeaningSummaryGroups({
     language: "en",
@@ -718,6 +785,31 @@ test("a flat translation stays unclassified when two parts of speech match ambig
     partOfSpeech: group.partOfSpeech,
     meanings: group.meanings.map((meaning) => meaning.term)
   })), [{ partOfSpeech: "", meanings: ["후보"] }]);
+});
+
+test("an assigned meaning suppresses unresolved summaries across repeated groups of the same part of speech", () => {
+  const groups = buildMeaningSummaryGroups({
+    language: "en",
+    translations: [{ term: "확정", sense: "matched meaning" }],
+    definitionGroups: [
+      {
+        partOfSpeech: "Adjective",
+        koreanLabel: "형용사",
+        definitions: [{ koreanTranslations: [] }],
+        summaryKoreanTranslations: [{ term: "미배정", sense: "unmatched meaning" }]
+      },
+      {
+        partOfSpeech: "Adjective",
+        koreanLabel: "형용사",
+        definitions: [{
+          koreanTranslations: [{ term: "확정", sense: "matched meaning" }]
+        }],
+        summaryKoreanTranslations: []
+      }
+    ]
+  });
+
+  assert.deepEqual(groups.map((group) => group.meanings.map(({ term }) => term)), [["확정"]]);
 });
 
 test("a supplement-only Korean reverse search shows its linked English word instead of repeating itself", () => {

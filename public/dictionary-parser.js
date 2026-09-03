@@ -221,6 +221,17 @@ function attachTranslationBlocks(definitions, blocks) {
   return { assignments, unmatched };
 }
 
+function uniqueTranslations(blocks) {
+  const translations = [];
+  for (const block of blocks) {
+    for (const translation of block.translations) {
+      if (translations.some((item) => item.term === translation.term)) continue;
+      translations.push(translation);
+    }
+  }
+  return translations;
+}
+
 function extractDefinitionGroups(document, range, limits) {
   const groups = [];
   const partCounts = new Map();
@@ -262,6 +273,13 @@ function extractDefinitionGroups(document, range, limits) {
       extractTranslationBlocks(document, candidate, range.headings, end, range.order)
     );
     const { assignments, unmatched } = attachTranslationBlocks(rawDefinitions, translationBlocks);
+    const assignedKoreanTranslationCount = assignments.reduce(
+      (count, assigned) => count + assigned.reduce(
+        (subtotal, { block }) => subtotal + block.translations.length,
+        0
+      ),
+      0
+    );
     const definitions = rawDefinitions.map((definition, index) => {
       const assigned = assignments[index];
       const koreanTranslations = assigned.flatMap(({ block }) => block.translations);
@@ -295,6 +313,9 @@ function extractDefinitionGroups(document, range, limits) {
       partOfSpeech,
       koreanLabel: PARTS_OF_SPEECH.get(partKey),
       definitions,
+      summaryKoreanTranslations: assignedKoreanTranslationCount === 0
+        ? uniqueTranslations(unmatched)
+        : [],
       unmatchedTranslationBlocks: unmatched
     });
     if (limits && groups.length === limits.groups) break;
