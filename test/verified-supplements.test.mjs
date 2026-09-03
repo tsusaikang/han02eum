@@ -227,63 +227,10 @@ test("the verified minute adjective and 미소하다 searches resolve to the sam
   ]);
 });
 
-test("the single automated Tier A hard and 굳히다 mapping preserves its full public provenance without claiming human review", () => {
-  const english = findVerifiedSupplements(" HARD ");
-  const korean = findVerifiedSupplements("굳히다");
-
-  assert.equal(english.length, 1);
-  assert.equal(korean.length, 1);
-  assert.equal(english[0].id, korean[0].id);
-  assert.equal(english[0].id, "enwiktionary:92041120:hard:verb-1:verb-1-sense-1::krdict:36862:1");
-  assert.equal(english[0].confidenceTier, "A");
-  assert.equal(english[0].numericScore, 0.88);
-  assert.equal(english[0].automatedConfidenceLabel, "automated-confidence-tier-A");
-  assert.equal(english[0].humanReviewed, false);
-  assert.deepEqual(english[0].reasonCodes, [
-    "SOURCE_LEMMA_IN_TARGET_EQUIVALENT",
-    "EXPLICIT_CAUSATIVE_GRAMMAR_MATCH",
-    "STRONG_DEFINITION_OVERLAP",
-    "AUTOMATED_CONFIDENCE_TIER_A"
-  ]);
-  assert.deepEqual(english[0].english, {
-    headword: "hard",
-    partOfSpeech: "verb",
-    partOfSpeechKo: "동사",
-    definition: "(transitive, obsolete) To make hard, harden.",
-    examples: [
-      "He knows vain men: he sees their harts that hard them In Guiles and Wiles, and will not hee regard them?"
-    ],
-    sourceName: "English Wiktionary",
-    sourceUrl: "https://en.wiktionary.org/wiki/hard",
-    revisionId: 92041120,
-    license: {
-      name: "CC BY-SA 4.0",
-      url: "https://creativecommons.org/licenses/by-sa/4.0/"
-    }
-  });
-  assert.deepEqual(english[0].korean, {
-    id: "krdict:36862:1",
-    entryId: "36862",
-    senseId: "1",
-    headword: "굳히다",
-    partOfSpeech: "verb",
-    partOfSpeechKo: "동사",
-    definition: "무르던 것을 단단하거나 딱딱하게 만들다.",
-    englishLemma: "harden; make hard",
-    englishDefinition: "To make a soft thing hard or stiff.",
-    examples: ["석고를 굳히다.", "시멘트를 굳히다.", "지점토를 굳히다."],
-    sourceName: "한국어기초사전",
-    sourceUrl: "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=36862&nation=eng&nationCode=6",
-    license: {
-      name: "CC BY-SA 2.0 KR",
-      url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
-    }
-  });
-});
-
-test("the product catalog adds exactly one automated A mapping and no lower-tier or effort false-positive mapping", () => {
-  assert.equal(getVerifiedSupplementCount(), 21);
-  assert.equal(findVerifiedSupplements("hard").length, 1);
+test("the rejected hard and 굳히다 mapping is absent while the original public catalog remains", () => {
+  assert.equal(getVerifiedSupplementCount(), 20);
+  assert.deepEqual(findVerifiedSupplements("hard"), []);
+  assert.deepEqual(findVerifiedSupplements("굳히다"), []);
   assert.deepEqual(findVerifiedSupplements("노력하다"), []);
 });
 
@@ -809,27 +756,28 @@ test("ordinary English and Korean searches keep their existing summary behavior"
   assert.equal(target.childElementCount, 0);
 });
 
-test("the supplement renderer keeps source details under the meaning summary without presenting a second pair", () => {
+test("the supplement renderer keeps a concise definition and collapsed source details", () => {
   const document = new TestDocument();
   const target = document.createElement("div");
 
   assert.equal(renderVerifiedSupplements(target, "royal"), 1);
-  assert.match(target.textContent, /royal의 명사 뜻/);
+  assert.doesNotMatch(target.textContent, /royal의 명사 뜻/);
   assert.doesNotMatch(target.textContent, /royal\s*↔\s*왕족/);
-  assert.match(target.textContent, /위 뜻의 출처와 예문/);
-  assert.match(target.textContent, /한국어기초사전 확인/);
-  assert.match(target.textContent, /명사 · noun/);
   assert.match(target.textContent, /임금과 같은 집안인 사람/);
-  assert.match(target.textContent, /몰락한 왕족/);
-  assert.match(target.textContent, /왕족 출신/);
-  assert.match(target.textContent, /왕족의 가문/);
-  assert.match(target.textContent, /뜻 출처: 한국어기초사전/);
-  assert.doesNotMatch(target.textContent, /검증 보완|검증 연결|보완 뜻 출처/);
+  assert.doesNotMatch(target.textContent, /몰락한 왕족|왕족 출신|왕족의 가문/);
+  assert.match(target.textContent, /출처 보기/);
+  assert.match(target.textContent, /한국어기초사전/);
   assert.match(target.textContent, /CC BY-SA 2.0 KR/);
+  assert.match(target.textContent, /CC BY-SA 4.0/);
+  assert.doesNotMatch(target.textContent, /자동 선별|신뢰도|사람 검수 전|한국어기초사전 예문|Wiktionary 원뜻 예문|위 뜻의 출처와 예문/);
 
   const section = target.children[0];
   assert.equal(section.className, "verified-supplements-section");
-  assert.equal(section.attributes.get("aria-label"), "위에 표시한 뜻의 출처와 예문");
+  assert.equal(section.attributes.get("aria-label"), "뜻 설명과 출처");
+  const details = target.querySelectorAll("details");
+  assert.equal(details.length, 1);
+  assert.equal(details[0].attributes.has("open"), false);
+  assert.equal(target.querySelectorAll("summary")[0].textContent, "출처 보기");
 
   const links = [...target.querySelectorAll("a")].map((link) => link.href);
   assert.equal(
@@ -838,41 +786,11 @@ test("the supplement renderer keeps source details under the meaning summary wit
   );
   assert.equal(links.includes("https://creativecommons.org/licenses/by-sa/2.0/kr/"), true);
   assert.equal(links.includes("https://en.wiktionary.org/wiki/royal"), true);
+  assert.equal(links.includes("https://creativecommons.org/licenses/by-sa/4.0/"), true);
   assert.equal(target.querySelectorAll("h3").length, 0);
 
   assert.equal(renderVerifiedSupplements(target, "hello"), 0);
   assert.equal(target.childElementCount, 0);
-});
-
-test("the automated hard summary and card visibly disclose Tier A and pending human review", () => {
-  const document = new TestDocument();
-  const summaryTarget = document.createElement("div");
-  const supplement = findVerifiedSupplements("hard")[0];
-  const summary = renderMeaningSummary(summaryTarget, {
-    language: "en",
-    translations: [],
-    definitionGroups: []
-  }, [supplement]);
-
-  assert.equal(summary.meaningCount, 1);
-  assert.match(summaryTarget.textContent, /굳히다자동 선별 · 신뢰도 A · 사람 검수 전/);
-  const summaryItem = summaryTarget.querySelectorAll("span").find((item) => item.className === "translation-item is-automated");
-  assert.ok(summaryItem);
-
-  const cardTarget = document.createElement("div");
-  assert.equal(renderVerifiedSupplements(cardTarget, "굳히다"), 1);
-  assert.match(cardTarget.textContent, /hard의 동사 뜻/);
-  assert.match(cardTarget.textContent, /자동 선별 · 신뢰도 A · 사람 검수 전/);
-  assert.match(cardTarget.textContent, /한국어기초사전 근거/);
-  assert.doesNotMatch(cardTarget.textContent, /한국어기초사전 확인/);
-  assert.match(cardTarget.textContent, /무르던 것을 단단하거나 딱딱하게 만들다/);
-  assert.match(cardTarget.textContent, /\(transitive, obsolete\) To make hard, harden/);
-  assert.match(cardTarget.textContent, /석고를 굳히다/);
-  assert.match(cardTarget.textContent, /He knows vain men/);
-  assert.match(cardTarget.textContent, /CC BY-SA 2.0 KR/);
-  assert.match(cardTarget.textContent, /CC BY-SA 4.0/);
-  const card = cardTarget.querySelectorAll("article")[0];
-  assert.equal(card.className, "verified-supplement-card is-automated");
 });
 
 test("verified supplements are nested inside the single Korean meanings section", () => {
@@ -886,6 +804,12 @@ test("verified supplements are nested inside the single Korean meanings section"
   assert.ok(supplements > koreanMeaningsStart);
   assert.ok(koreanMeaningsEnd > supplements);
   assert.ok(englishDefinitions > koreanMeaningsEnd);
-  assert.match(html, /사람 검수 또는 자동 선별로 보충한 뜻/);
-  assert.match(html, /자동 선별 항목은 사람 검수 전임을 카드에 표시/);
+  assert.match(html, /사전 자료:/);
+  assert.doesNotMatch(html, /자동 선별|신뢰도|사람 검수 전/);
+});
+
+test("public supplement code contains no internal automatic grading payload or review-report labels", () => {
+  const source = readFileSync(new URL("../public/verified-supplements.js", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /confidenceTier|numericScore|automatedConfidenceLabel|humanReviewed|reasonCodes/);
+  assert.doesNotMatch(source, /자동 선별|신뢰도|사람 검수 전|한국어기초사전 예문|Wiktionary 원뜻 예문|위 뜻의 출처와 예문/);
 });
