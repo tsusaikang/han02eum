@@ -1,6 +1,7 @@
 import { findVerifiedSupplements } from "./verified-supplements.js";
 
 const INDEX_VERSION = "korean-source-relations-v1-full";
+const RECOVERED_INDEX_VERSION = "korean-source-relations-v2-recovered";
 const SHARD_SEED = "korean-source-shard-v1\0";
 const SHARD_COUNT = 64;
 const INITIAL_VISIBLE_COUNT = 8;
@@ -59,6 +60,24 @@ export function suppressExactEnglishTokens(key, records) {
   });
 }
 
+async function loadKoreanSourceVersion(key, version, shardName, { signal, fetchImpl }) {
+  try {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const response = await fetchImpl(`/${version}/${shardName}`, {
+      signal,
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) return [];
+    const payload = await response.json();
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    if (payload?.version !== version || !payload.words || !Array.isArray(payload.words[key])) return [];
+    return payload.words[key];
+  } catch (error) {
+    if (error?.name === "AbortError") throw error;
+    return [];
+  }
+}
+
 export async function loadKoreanSourceRelations(value, {
   signal,
   fetchImpl = globalThis.fetch,
@@ -68,16 +87,15 @@ export async function loadKoreanSourceRelations(value, {
   if (!key || !/[가-힣ㄱ-ㅎㅏ-ㅣ]/u.test(key)) return [];
   try {
     const shardName = await koreanSourceShardName(key, digest);
+    const results = await Promise.allSettled([
+      loadKoreanSourceVersion(key, INDEX_VERSION, shardName, { signal, fetchImpl }),
+      loadKoreanSourceVersion(key, RECOVERED_INDEX_VERSION, shardName, { signal, fetchImpl })
+    ]);
     if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-    const response = await fetchImpl(`/${INDEX_VERSION}/${shardName}`, {
-      signal,
-      headers: { Accept: "application/json" }
-    });
-    if (!response.ok) return [];
-    const payload = await response.json();
-    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-    if (payload?.version !== INDEX_VERSION || !payload.words || !Array.isArray(payload.words[key])) return [];
-    return suppressExactEnglishTokens(key, payload.words[key]);
+    return suppressExactEnglishTokens(
+      key,
+      results.filter((result) => result.status === "fulfilled").flatMap((result) => result.value)
+    );
   } catch (error) {
     if (error?.name === "AbortError") throw error;
     return [];
@@ -114,7 +132,7 @@ function makeSourceDetails(document, record) {
 function makeKoreanSourceItem(document, record) {
   const article = makeElement(document, "article", "korean-source-item");
   const heading = makeElement(document, "p", "korean-source-heading");
-  const primaryPartOfSpeech = record.partOfSpeechKo || record.partOfSpeech;
+  const primaryPartOfSpeech = record.entryTypeKo || record.partOfSpeechKo || record.partOfSpeech;
   heading.append(makeElement(document, "strong", "", primaryPartOfSpeech));
   if (record.partOfSpeech && record.partOfSpeech !== primaryPartOfSpeech) {
     heading.append(makeElement(document, "span", "", record.partOfSpeech));
