@@ -822,9 +822,6 @@ export function renderMeaningSummary(container, entry, supplements = []) {
         sense.setAttribute("title", meaning.sense);
         item.append(sense);
       }
-      if (meaning.verified) {
-        item.className += " is-verified";
-      }
       items.append(item);
     }
     section.append(items);

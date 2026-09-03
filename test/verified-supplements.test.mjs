@@ -656,7 +656,7 @@ test("the Korean meaning summary merges Wiktionary and verified meanings by part
   ]);
 });
 
-test("the actual royal summary DOM shows adjective Korean meanings before the verified noun", () => {
+test("the actual royal summary DOM shows Korean meanings in order with uniform styling", () => {
   const document = new TestDocument();
   const target = document.createElement("div");
   const summary = renderMeaningSummary(target, royalEntry(), findVerifiedSupplements("royal"));
@@ -672,9 +672,17 @@ test("the actual royal summary DOM shows adjective Korean meanings before the ve
   assert.ok(target.textContent.indexOf("왕실의") < target.textContent.indexOf("왕족"));
   assert.match(target.textContent, /왕족/);
   assert.doesNotMatch(target.textContent, /검증 보완|검증 연결/);
+  const meaningItems = target.querySelectorAll("span")
+    .filter((item) => item.className === "translation-item");
+  assert.equal(meaningItems.length, 3);
+  assert.deepEqual(meaningItems.map((item) => item.className), [
+    "translation-item",
+    "translation-item",
+    "translation-item"
+  ]);
   assert.equal(
-    target.querySelectorAll("span").filter((item) => item.className === "translation-item is-verified").length,
-    1
+    target.querySelectorAll("span").filter((item) => item.className.includes("is-verified")).length,
+    0
   );
   const sections = target.querySelectorAll("section");
   assert.equal(sections.length, 2);
@@ -904,4 +912,5 @@ test("public supplement code contains no internal automatic grading payload or r
   const source = readFileSync(new URL("../public/verified-supplements.js", import.meta.url), "utf8");
   assert.doesNotMatch(source, /confidenceTier|numericScore|automatedConfidenceLabel|humanReviewed|reasonCodes/);
   assert.doesNotMatch(source, /자동 선별|신뢰도|사람 검수 전|한국어기초사전 예문|Wiktionary 원뜻 예문|위 뜻의 출처와 예문/);
+  assert.doesNotMatch(source, /is-verified/);
 });
