@@ -6,6 +6,10 @@ import {
   renderVerifiedSupplements
 } from "./verified-supplements.js";
 import { loadContextExpressions, renderContextExpressions } from "./context-relations.js";
+import {
+  loadKoreanSourceRelations,
+  renderKoreanSourceRelations
+} from "./korean-source-relations.js";
 
 const ui = {
   form: document.querySelector("#search-form"),
@@ -25,6 +29,7 @@ const ui = {
   translationTitle: document.querySelector("#translation-title"),
   translations: document.querySelector("#translation-list"),
   verifiedSupplements: document.querySelector("#verified-supplements"),
+  koreanSourceRelations: document.querySelector("#korean-source-relation-section"),
   contextExpressions: document.querySelector("#context-expression-section"),
   definitionsSection: document.querySelector("#definitions-section"),
   definitionKicker: document.querySelector("#definitions-kicker"),
@@ -194,6 +199,24 @@ function renderContextOnlyEntry(word) {
   ui.translationSection.classList.add("is-hidden");
 }
 
+function renderKoreanSourceOnlyEntry(word) {
+  renderEntry({
+    word,
+    requestedWord: word,
+    language: "ko",
+    found: true,
+    pronunciations: [],
+    audio: [],
+    translations: [],
+    definitionGroups: [],
+    sourceUrl: "",
+    revisionId: null,
+    license: null
+  }, { wiktionaryAvailable: false });
+  ui.translations.replaceChildren();
+  ui.translationSection.classList.add("is-hidden");
+}
+
 function stopAudioState() {
   ui.audioButton.classList.remove("is-playing");
   ui.audioButton.setAttribute("aria-pressed", "false");
@@ -253,6 +276,7 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
   window.speechSynthesis?.cancel();
   ui.input.value = word;
   renderContextExpressions(ui.contextExpressions, []);
+  renderKoreanSourceRelations(ui.koreanSourceRelations, []);
   setView("loading");
 
   if (updateHistory) {
@@ -262,27 +286,34 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
   }
 
   try {
-    const [apiResult, contextResult] = await Promise.allSettled([
+    const [apiResult, contextResult, koreanSourceResult] = await Promise.allSettled([
       fetch(`/api/lookup?word=${encodeURIComponent(word)}`, {
         signal: request.signal,
         headers: { Accept: "application/json" }
       }),
-      loadContextExpressions(word, { signal: request.signal })
+      loadContextExpressions(word, { signal: request.signal }),
+      loadKoreanSourceRelations(word, { signal: request.signal })
     ]);
     if (request !== activeRequest) return;
     if (apiResult.status === "rejected") throw apiResult.reason;
     if (contextResult.status === "rejected") {
       if (contextResult.reason?.name === "AbortError") return;
     }
+    if (koreanSourceResult.status === "rejected") {
+      if (koreanSourceResult.reason?.name === "AbortError") return;
+    }
     const response = apiResult.value;
     const contextExpressions = contextResult.status === "fulfilled" ? contextResult.value : [];
+    const koreanSourceRelations = koreanSourceResult.status === "fulfilled" ? koreanSourceResult.value : [];
     const payload = await response.json();
     if (request !== activeRequest) return;
     const verifiedSupplements = findVerifiedSupplements(word);
     if (!response.ok) {
-      if (response.status === 404 && (verifiedSupplements.length || contextExpressions.length)) {
+      if (response.status === 404 && (verifiedSupplements.length || contextExpressions.length || koreanSourceRelations.length)) {
         if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
+        else if (koreanSourceRelations.length) renderKoreanSourceOnlyEntry(word);
         else renderContextOnlyEntry(word);
+        renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
         renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
@@ -291,9 +322,11 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
 
     const entry = parseWiktionaryEntry(payload);
     if (!entry.found) {
-      if (verifiedSupplements.length || contextExpressions.length) {
+      if (verifiedSupplements.length || contextExpressions.length || koreanSourceRelations.length) {
         if (verifiedSupplements.length) renderSupplementOnlyEntry(word);
+        else if (koreanSourceRelations.length) renderKoreanSourceOnlyEntry(word);
         else renderContextOnlyEntry(word);
+        renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
         renderContextExpressions(ui.contextExpressions, contextExpressions);
         return;
       }
@@ -305,6 +338,7 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
       return;
     }
     renderEntry(entry);
+    renderKoreanSourceRelations(ui.koreanSourceRelations, koreanSourceRelations);
     renderContextExpressions(ui.contextExpressions, contextExpressions);
   } catch (error) {
     if (request !== activeRequest || error?.name === "AbortError") return;
