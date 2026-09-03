@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { DOMParser } from "linkedom";
 
-import { parseWiktionaryEntry } from "../public/dictionary-parser.js";
+import {
+  classifyUnmatchedTranslationFallback,
+  parseWiktionaryEntry
+} from "../public/dictionary-parser.js";
 
 const previousDOMParser = globalThis.DOMParser;
 globalThis.DOMParser = DOMParser;
@@ -163,6 +166,138 @@ test("parseWiktionaryEntry keeps unresolved translations as a part-of-speech sum
   assert.equal(adjective.definitions.every((definition) => definition.koreanTranslations.length === 0), true);
   assert.deepEqual(verb.summaryKoreanTranslations, []);
   assert.deepEqual(entry.translations, []);
+});
+
+test("hard keeps source-backed unmatched adjective terms under general fallback rules", () => {
+  const decision = classifyUnmatchedTranslationFallback({
+    partOfSpeech: "Adjective",
+    definitions: [
+      { text: "(of material or fluid) Solid and firm." },
+      { text: "Difficult, requiring much effort." },
+      { text: "(slang, vulgar) Sexually aroused." }
+    ],
+    blocks: [
+      {
+        id: "translation-1",
+        sense: "resistant to pressure",
+        translations: [{ term: "딱딱하다" }, { term: "단단하다" }]
+      },
+      {
+        id: "translation-2",
+        sense: "requiring a lot of effort to do or understand",
+        translations: [{ term: "어렵다" }]
+      },
+      {
+        id: "translation-9",
+        sense: "to be checked",
+        translations: []
+      }
+    ]
+  });
+
+  assert.equal(decision.tier, "B");
+  assert.equal(decision.publicEligible, true);
+  assert.deepEqual(decision.translations.map(({ term }) => term), ["딱딱하다", "단단하다", "어렵다"]);
+  assert.ok(decision.reasonCodes.includes("FALLBACK_SOURCE_USAGE_LABEL_OWNERSHIP_UNCLEAR"));
+});
+
+test("back placeholder fallback is fail-closed and never emits a term without a real gloss", () => {
+  const decision = classifyUnmatchedTranslationFallback({
+    definitions: [{ text: "Returned to a previous place." }],
+    blocks: [{
+      id: "translation-5",
+      sense: "to be checked",
+      translations: [{ term: "뒤쪽의" }, { term: "되돌리다" }]
+    }]
+  });
+
+  assert.equal(decision.tier, "D");
+  assert.deepEqual(decision.translations, []);
+  assert.ok(decision.reasonCodes.includes("FALLBACK_GLOSS_PLACEHOLDER"));
+});
+
+test("state fallback is hidden when an assigned translation already exists for the part of speech", () => {
+  const decision = classifyUnmatchedTranslationFallback({
+    partOfSpeech: "Verb",
+    definitions: [{ text: "To express in words." }],
+    assignedTranslations: [{ term: "진술하다", sense: "express in words" }],
+    blocks: [{
+      id: "translation-1",
+      sense: "declare to be a fact",
+      translations: [{ term: "선언" }]
+    }]
+  });
+
+  assert.equal(decision.tier, "D");
+  assert.deepEqual(decision.translations, []);
+  assert.ok(decision.reasonCodes.includes("FALLBACK_ASSIGNED_TRANSLATION_EXISTS_FOR_PART_OF_SPEECH"));
+  assert.ok(decision.reasonCodes.includes("FALLBACK_KOREAN_TERM_PART_OF_SPEECH_SHAPE_MISMATCH"));
+});
+
+test("match file and scale repeated noun occurrences are blocked as cross-etymology fallbacks", () => {
+  for (const term of ["경기", "줄", "비늘"]) {
+    const decision = classifyUnmatchedTranslationFallback({
+      definitions: [{ text: "A source definition." }],
+      repeatedPartOfSpeech: true,
+      blocks: [{
+        id: "translation-1",
+        sense: "a concrete source gloss",
+        translations: [{ term }]
+      }]
+    });
+    assert.equal(decision.tier, "D");
+    assert.deepEqual(decision.translations, []);
+    assert.ok(decision.reasonCodes.includes("FALLBACK_REPEATED_PART_OF_SPEECH_OCCURRENCE"));
+  }
+});
+
+test("close removes a term reused with conflicting glosses while retaining unambiguous terms", () => {
+  const decision = classifyUnmatchedTranslationFallback({
+    partOfSpeech: "Verb",
+    definitions: [{ text: "To shut something." }, { text: "To end something." }],
+    blocks: [
+      { id: "translation-1", sense: "move a door", translations: [{ term: "닫다" }] },
+      { id: "translation-2", sense: "become unreceptive", translations: [{ term: "닫다" }] },
+      { id: "translation-3", sense: "put an end to", translations: [{ term: "끝내다" }] }
+    ]
+  });
+
+  assert.equal(decision.publicEligible, true);
+  assert.deepEqual(decision.translations, [{ term: "끝내다", sense: "put an end to" }]);
+  assert.ok(decision.reasonCodes.includes("FALLBACK_TERM_CONFLICTS_ACROSS_GLOSSES"));
+});
+
+test("point blocks a term whose translation gloss looks cut off", () => {
+  const decision = classifyUnmatchedTranslationFallback({
+    definitions: [{ text: "A decimal point." }],
+    blocks: [{
+      id: "translation-17",
+      sense: "arithmetic: decimal point (note: many languages use a comma rather than a dot, and hence the translations into these languages reflect ",
+      translations: [{ term: "점" }]
+    }]
+  });
+
+  assert.equal(decision.tier, "D");
+  assert.deepEqual(decision.translations, []);
+  assert.ok(decision.reasonCodes.includes("FALLBACK_GLOSS_TRUNCATED_OR_INCOMPLETE"));
+});
+
+test("repeated same-POS sections suppress unmatched summaries in the parsed public payload", () => {
+  const entry = parseFixture(`
+    <h2 id="English">English</h2>
+    <h3>Noun</h3>
+    <ol><li>A sporting event.</li></ol>
+    <h4>Translations</h4>
+    <div class="NavFrame"><div class="NavHead">unrelated event gloss</div><span lang="ko">경기</span></div>
+    <h3>Noun</h3>
+    <ol><li>A fire-lighting stick.</li></ol>
+    <h4>Translations</h4>
+    <div class="NavFrame"><div class="NavHead">unrelated fire gloss</div><span lang="ko">성냥</span></div>
+    <h2 id="French">French</h2>
+  `);
+
+  assert.equal(entry.definitionGroups.length, 2);
+  assert.equal(entry.definitionGroups.every((group) => group.summaryKoreanTranslations.length === 0), true);
 });
 
 test("parseWiktionaryEntry suppresses unresolved part-of-speech summaries when any translation was assigned", () => {

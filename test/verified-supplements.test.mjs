@@ -765,6 +765,7 @@ test("the hard fixture restores three adjective meanings without reviving the re
   }]);
   assert.deepEqual(findVerifiedSupplements("hard"), []);
   assert.deepEqual(findVerifiedSupplements("굳히다"), []);
+  assert.doesNotMatch(JSON.stringify(entry), /confidence|tier|reasonCodes|humanReviewed|reviewStatus/i);
 
   const document = new TestDocument();
   const target = document.createElement("div");
@@ -818,6 +819,25 @@ test("an assigned meaning suppresses unresolved summaries across repeated groups
   });
 
   assert.deepEqual(groups.map((group) => group.meanings.map(({ term }) => term)), [["확정"]]);
+});
+
+test("a supplement suppresses unresolved fallback meanings for the same part of speech", () => {
+  const groups = buildMeaningSummaryGroups({
+    language: "en",
+    translations: [],
+    definitionGroups: [{
+      partOfSpeech: "Noun",
+      koreanLabel: "명사",
+      definitions: [{ koreanTranslations: [] }],
+      summaryKoreanTranslations: [{ term: "미배정", sense: "unmatched meaning" }]
+    }]
+  }, [{
+    id: "fixture",
+    english: { headword: "fixture", partOfSpeech: "noun", partOfSpeechKo: "명사" },
+    korean: { headword: "확정 보완" }
+  }]);
+
+  assert.deepEqual(groups.map((group) => group.meanings.map(({ term }) => term)), [["확정 보완"]]);
 });
 
 test("a supplement-only Korean reverse search shows its linked English word instead of repeating itself", () => {

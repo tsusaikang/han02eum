@@ -27,6 +27,13 @@ const DEFAULT_DEFINITIONS_PER_GROUP = 8;
 const DEFAULT_GROUP_LIMIT = 8;
 const MIN_TRANSLATION_MATCH = 0.5;
 const MIN_TRANSLATION_MARGIN = 0.12;
+const MAX_FALLBACK_GLOSS_LENGTH = 159;
+
+const USAGE_LABELS = [
+  "obsolete", "archaic", "dated", "historical", "informal", "slang", "vulgar",
+  "rare", "literary", "nonstandard", "offensive", "derogatory", "dialectal",
+  "chiefly", "regional"
+];
 
 const GLOSS_STOP_WORDS = new Set([
   "a", "an", "and", "any", "as", "at", "be", "by", "for", "from", "his", "her", "in",
@@ -169,7 +176,7 @@ function extractTranslationBlocks(document, heading, headings, rangeEnd, order) 
   return containers.map((container, index) => {
     const sense = cleanText(
       container.querySelector(".NavHead, .vsToggleElement, caption")?.textContent
-    ).replace(/^translations?\s*/i, "").slice(0, 160);
+    ).replace(/^translations?\s*/i, "");
     const translations = [];
     for (const node of container.querySelectorAll("[lang='ko']")) {
       if (node.parentElement?.closest("[lang='ko']")) continue;
@@ -221,15 +228,130 @@ function attachTranslationBlocks(definitions, blocks) {
   return { assignments, unmatched };
 }
 
-function uniqueTranslations(blocks) {
-  const translations = [];
+function fallbackUsageLabels(texts) {
+  const normalized = texts.join(" ").toLocaleLowerCase("en");
+  return USAGE_LABELS.filter((label) => new RegExp(`\\b${label}\\b`, "u").test(normalized));
+}
+
+function fallbackGlossProblem(value) {
+  const gloss = cleanText(value);
+  if (!gloss) return "FALLBACK_GLOSS_MISSING";
+  if (/^(?:to be checked|check(?:ed)?|translation(?:s)? needed|please add|todo|tbd|n\/?a|\?+)\.?$/iu.test(gloss)) {
+    return "FALLBACK_GLOSS_PLACEHOLDER";
+  }
+  const hasUnclosedDelimiter = [
+    ["(", ")"], ["[", "]"], ["{", "}"]
+  ].some(([open, close]) => gloss.split(open).length !== gloss.split(close).length);
+  if (
+    gloss.length > MAX_FALLBACK_GLOSS_LENGTH ||
+    hasUnclosedDelimiter ||
+    /(?:\.\.\.|…|[,;:(\[\{\-–—])\s*$/u.test(gloss)
+  ) {
+    return "FALLBACK_GLOSS_TRUNCATED_OR_INCOMPLETE";
+  }
+  return null;
+}
+
+function normalizedFallbackTerm(value) {
+  return cleanText(value).normalize("NFKC").toLocaleLowerCase("ko");
+}
+
+export function classifyUnmatchedTranslationFallback({
+  blocks = [],
+  definitions = [],
+  assignedTranslations = [],
+  partOfSpeech = "",
+  repeatedPartOfSpeech = false,
+  evidenceIncomplete = false
+} = {}) {
+  const reasonCodes = [];
+  const addReason = (reason) => {
+    if (!reasonCodes.includes(reason)) reasonCodes.push(reason);
+  };
+
+  if (repeatedPartOfSpeech) addReason("FALLBACK_REPEATED_PART_OF_SPEECH_OCCURRENCE");
+  if (assignedTranslations.length) addReason("FALLBACK_ASSIGNED_TRANSLATION_EXISTS_FOR_PART_OF_SPEECH");
+  if (evidenceIncomplete) addReason("FALLBACK_DEFINITION_SCOPE_INCOMPLETE");
+
+  const candidates = [];
   for (const block of blocks) {
-    for (const translation of block.translations) {
-      if (translations.some((item) => item.term === translation.term)) continue;
-      translations.push(translation);
+    const translations = Array.isArray(block?.translations) ? block.translations : [];
+    if (!translations.length) continue;
+    const gloss = cleanText(block?.sense);
+    const glossProblem = fallbackGlossProblem(gloss);
+    if (glossProblem) {
+      addReason(glossProblem);
+      continue;
+    }
+    if (fallbackUsageLabels([gloss]).length) {
+      addReason("FALLBACK_TRANSLATION_USAGE_LABEL_REQUIRES_ALIGNMENT");
+      continue;
+    }
+    for (const translation of translations) {
+      const term = cleanText(translation?.term);
+      if (!term) {
+        addReason("FALLBACK_TERM_MISSING");
+        continue;
+      }
+      if (
+        /^(?:verb|adjective)$/iu.test(cleanText(partOfSpeech)) &&
+        !/다(?:\([^)]*\))?$/u.test(term)
+      ) {
+        addReason("FALLBACK_KOREAN_TERM_PART_OF_SPEECH_SHAPE_MISMATCH");
+        continue;
+      }
+      candidates.push({ term, sense: gloss, blockId: String(block?.id || "") });
     }
   }
-  return translations;
+
+  const glossesByTerm = new Map();
+  for (const candidate of candidates) {
+    const termKey = normalizedFallbackTerm(candidate.term);
+    if (!glossesByTerm.has(termKey)) glossesByTerm.set(termKey, new Set());
+    glossesByTerm.get(termKey).add(normalizeGloss(candidate.sense));
+  }
+
+  const translations = [];
+  for (const candidate of candidates) {
+    const termKey = normalizedFallbackTerm(candidate.term);
+    if ((glossesByTerm.get(termKey)?.size || 0) > 1) {
+      addReason("FALLBACK_TERM_CONFLICTS_ACROSS_GLOSSES");
+      continue;
+    }
+    if (translations.some((translation) =>
+      normalizedFallbackTerm(translation.term) === termKey &&
+      normalizeGloss(translation.sense) === normalizeGloss(candidate.sense)
+    )) {
+      addReason("FALLBACK_DUPLICATE_TERM_GLOSS_REMOVED");
+      continue;
+    }
+    translations.push({ term: candidate.term, sense: candidate.sense });
+  }
+
+  const sourceUsageLabels = fallbackUsageLabels(definitions.map((definition) => String(definition?.text || "")));
+  if (sourceUsageLabels.length) addReason("FALLBACK_SOURCE_USAGE_LABEL_OWNERSHIP_UNCLEAR");
+  if (definitions.length > 1) addReason("FALLBACK_POS_WIDE_MULTI_SENSE_SUMMARY");
+  if (translations.length > 1) addReason("FALLBACK_MULTIPLE_TERM_SUMMARY");
+
+  const structuralBlock = repeatedPartOfSpeech || assignedTranslations.length || evidenceIncomplete;
+  const publicTranslations = structuralBlock ? [] : translations;
+  if (!publicTranslations.length) addReason("FALLBACK_NO_SAFE_PUBLIC_TRANSLATION");
+  const tier = !publicTranslations.length
+    ? "D"
+    : sourceUsageLabels.length || reasonCodes.some((reason) =>
+      reason === "FALLBACK_POS_WIDE_MULTI_SENSE_SUMMARY" ||
+      reason === "FALLBACK_MULTIPLE_TERM_SUMMARY" ||
+      reason === "FALLBACK_DUPLICATE_TERM_GLOSS_REMOVED"
+    )
+      ? "B"
+      : "A";
+
+  return {
+    tier,
+    reasonCodes,
+    publicEligible: tier === "A" || tier === "B",
+    translations: publicTranslations
+  };
 }
 
 function extractDefinitionGroups(document, range, limits) {
@@ -313,14 +435,35 @@ function extractDefinitionGroups(document, range, limits) {
       partOfSpeech,
       koreanLabel: PARTS_OF_SPEECH.get(partKey),
       definitions,
-      summaryKoreanTranslations: assignedKoreanTranslationCount === 0
-        ? uniqueTranslations(unmatched)
-        : [],
-      unmatchedTranslationBlocks: unmatched
+      summaryKoreanTranslations: [],
+      unmatchedTranslationBlocks: unmatched,
+      fallbackDefinitionScopeIncomplete: selectedDefinitionItems.length < definitionItems.length
     });
-    if (limits && groups.length === limits.groups) break;
   }
-  return groups;
+  const groupsByPart = new Map();
+  for (const group of groups) {
+    const key = group.partOfSpeech.toLocaleLowerCase("en");
+    if (!groupsByPart.has(key)) groupsByPart.set(key, []);
+    groupsByPart.get(key).push(group);
+  }
+  for (const samePartGroups of groupsByPart.values()) {
+    const assignedTranslations = samePartGroups.flatMap((group) =>
+      group.definitions.flatMap((definition) => definition.koreanTranslations || [])
+    );
+    for (const group of samePartGroups) {
+      const decision = classifyUnmatchedTranslationFallback({
+        blocks: group.unmatchedTranslationBlocks,
+        definitions: group.definitions,
+        assignedTranslations,
+        partOfSpeech: group.partOfSpeech,
+        repeatedPartOfSpeech: (partCounts.get(group.partOfSpeech.toLocaleLowerCase("en")) || 0) > 1,
+        evidenceIncomplete: group.fallbackDefinitionScopeIncomplete
+      });
+      group.summaryKoreanTranslations = decision.publicEligible ? decision.translations : [];
+      delete group.fallbackDefinitionScopeIncomplete;
+    }
+  }
+  return limits ? groups.slice(0, limits.groups) : groups;
 }
 
 function extractPronunciations(document, range) {

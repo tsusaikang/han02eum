@@ -682,6 +682,9 @@ function inferTranslationDefinitionGroup(entry, translation) {
 export function buildMeaningSummaryGroups(entry, supplements = []) {
   const groups = [];
   const groupsByPartOfSpeech = new Map();
+  const supplementPartOfSpeechKeys = new Set(
+    supplements.map((supplement) => normalizePartOfSpeech(supplement?.english?.partOfSpeech)).filter(Boolean)
+  );
 
   function ensureGroup(partOfSpeech, partOfSpeechKo) {
     const key = normalizePartOfSpeech(partOfSpeech) || "unclassified";
@@ -728,7 +731,8 @@ export function buildMeaningSummaryGroups(entry, supplements = []) {
 
     for (const definitionGroup of entry.definitionGroups || []) {
       const group = ensureGroup(definitionGroup.partOfSpeech, definitionGroup.koreanLabel);
-      if (!group.meanings.length) {
+      const partOfSpeechKey = normalizePartOfSpeech(definitionGroup.partOfSpeech);
+      if (!group.meanings.length && !supplementPartOfSpeechKeys.has(partOfSpeechKey)) {
         for (const translation of definitionGroup.summaryKoreanTranslations || []) {
           addMeaning(group, {
             term: translation.term,
