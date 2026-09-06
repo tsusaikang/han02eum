@@ -1,3 +1,5 @@
+import { VERIFIED_SUPPLEMENTS_V15 } from "./verified-supplements-v15-data.js";
+
 const VERIFIED_SUPPLEMENTS = [
   {
     id: "enwiktionary:92048420:royal:noun-1:noun-1-sense-1::krdict:68298:1",
@@ -581,7 +583,8 @@ const VERIFIED_SUPPLEMENTS = [
         url: "https://creativecommons.org/licenses/by-sa/2.0/kr/"
       }
     }
-  }
+  },
+  ...VERIFIED_SUPPLEMENTS_V15
 ];
 
 function normalizeSearchTerm(value) {

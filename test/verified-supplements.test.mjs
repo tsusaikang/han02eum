@@ -228,10 +228,12 @@ test("the verified minute adjective and 미소하다 searches resolve to the sam
 });
 
 test("the rejected hard and 굳히다 mapping is absent while the original public catalog remains", () => {
-  assert.equal(getVerifiedSupplementCount(), 20);
+  assert.equal(getVerifiedSupplementCount(), 82);
   assert.deepEqual(findVerifiedSupplements("hard"), []);
   assert.deepEqual(findVerifiedSupplements("굳히다"), []);
   assert.deepEqual(findVerifiedSupplements("노력하다"), []);
+  assert.deepEqual(findVerifiedSupplements("waltz"), []);
+  assert.deepEqual(findVerifiedSupplements("ribbon"), []);
 });
 
 for (const expected of [
