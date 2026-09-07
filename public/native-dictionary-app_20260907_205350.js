@@ -104,7 +104,7 @@ export function renderEnglishEntries(container, entries) {
       }
       item.append(examples);
     }
-    item.append(sourceDetails(document, {name:"한국어판 위키낱말사전 기여자",url:entry.sourceUrl}, entry.license, "Kaikki에서 추출한 자료를 검색에 맞게 정리했습니다."));
+    item.append(sourceDetails(document, {name:"한국어판 위키낱말사전 기여자",url:entry.sourceUrl}, entry.license, entry.sourceNote || "Kaikki에서 추출한 자료를 검색에 맞게 정리했습니다."));
     return item;
   });
 }

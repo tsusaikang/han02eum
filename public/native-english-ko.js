@@ -1,3 +1,5 @@
+import { NATIVE_ENGLISH_KO_CORRECTIONS } from './native-english-ko-corrections_20260907_231251.js';
+
 export const NATIVE_ENGLISH_KO_VERSION = 'native-english-ko_20260907_205330';
 function normalizeOriginalCase(value) {
   return String(value ?? '').normalize('NFKC').trim().replace(/\s+/gu, ' ');
@@ -22,6 +24,8 @@ export async function lookupEnglishEntry(value, { signal, fetchImpl = globalThis
   if (data?.version !== NATIVE_ENGLISH_KO_VERSION || !data.words || typeof data.words !== 'object') throw new Error('영한 사전 자료 형식을 확인할 수 없습니다.');
   const entries = Object.hasOwn(data.words, key) ? data.words[key] : [];
   if (!Array.isArray(entries)) throw new Error('영한 사전 항목을 읽지 못했습니다.');
-  const exactCase = entries.filter(entry => normalizeOriginalCase(entry.word) === normalizeOriginalCase(value));
-  return exactCase.length ? exactCase : entries;
+  const corrections = Object.hasOwn(NATIVE_ENGLISH_KO_CORRECTIONS, key) ? NATIVE_ENGLISH_KO_CORRECTIONS[key] : [];
+  const combined = [...corrections, ...entries];
+  const exactCase = combined.filter(entry => normalizeOriginalCase(entry.word) === normalizeOriginalCase(value));
+  return exactCase.length ? exactCase : combined;
 }

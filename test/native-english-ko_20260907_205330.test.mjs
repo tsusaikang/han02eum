@@ -32,3 +32,24 @@ test('real English native shards load phrases, preserve senses, and distinguish 
   assert.deepEqual(await lookupEnglishEntry('qzxnomatcheverxyz',{fetchImpl}),[]);
   await assert.rejects(lookupEnglishEntry('apple',{fetchImpl:async()=>({ok:false})}),/불러오지/);
 });
+
+test('tree restores source-page senses before the unchanged extracted verb', async () => {
+  const shardPath = new URL('../public/native-english-ko_20260907_205330/' + await nativeEnglishShardName('tree'), import.meta.url);
+  const extracted = JSON.parse(await readFile(shardPath, 'utf8')).words.tree;
+  assert.equal(extracted.length, 1);
+  assert.equal(extracted[0].pos, 'verb');
+  assert.equal(extracted[0].posTitle, '타동사');
+  assert.deepEqual(extracted[0].senses.map(sense => sense.glosses), [['동물을 쫓아 나무 위로 오르게 하다. (tree up)']]);
+  const fetchImpl = async url => ({ok:true,json:async()=>JSON.parse(await readFile(new URL('../public'+url,import.meta.url),'utf8'))});
+  const corrected = await lookupEnglishEntry('tree', {fetchImpl});
+  assert.deepEqual(corrected.flatMap(entry => entry.senses.map(sense => sense.glosses)), [
+    ['(식물) 나무.'], ['나뭇가지 구조, 계보.'], ['동물을 쫓아 나무 위로 오르게 하다. (tree up)']
+  ]);
+  assert.equal(corrected[0].pos, 'unknown');
+  assert.equal(corrected[0].posTitle, undefined);
+  assert.deepEqual(corrected[0].senses[0].examples, [{text:'Some trees are being grown in the back yard.',translation:'몇몇 나무들이 뒤뜰에서 자라는 중이다.'}]);
+  assert.equal(corrected[0].senses[1].examples, undefined);
+  assert.equal(corrected[0].sourceUrl, 'https://ko.wiktionary.org/wiki/tree#영어');
+  assert.deepEqual(corrected.slice(1), extracted);
+  assert.deepEqual(await lookupEnglishEntry(' TREE ', {fetchImpl}), corrected);
+});
