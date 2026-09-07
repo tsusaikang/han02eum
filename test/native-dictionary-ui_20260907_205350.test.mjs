@@ -15,6 +15,7 @@ test("the main page connects the native app and both real primary dictionaries",
   assert.equal(document.querySelector('script[type="module"]').getAttribute("src"),"/native-dictionary-app_20260907_205350.js");
   assert.equal(document.querySelector('link[rel="stylesheet"]').getAttribute("href"),"/native-dictionary_20260907_205350.css");
   assert.equal(document.querySelector("#legacy-search-link").getAttribute("href"),"/legacy_20260907_205800.html");
+  assert.equal(document.querySelector('input[name="direction"]'),null);
   const app=createDictionaryApp({
     lookupEnglishEntry:(query,options)=>lookupEnglishEntry(query,{...options,fetchImpl:fetchLocal}),
     lookupKoreanEntry:(query,options)=>lookupKoreanEntry(query,{...options,fetchImpl:fetchLocal})
@@ -22,9 +23,12 @@ test("the main page connects the native app and both real primary dictionaries",
   await app.search("apple");
   assert.equal(document.querySelector("#result-word").textContent,"apple");
   assert.ok(document.querySelector(".meaning-content").textContent.includes("사과"));
+  assert.equal(document.querySelector(".result-direction").textContent,"영어 → 한국어");
+  assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),true);
   await app.search("나무");
   assert.equal(document.querySelector("#result-word").textContent,"나무");
   assert.ok(document.querySelector(".meaning-content").textContent.includes("tree"));
+  assert.equal(document.querySelector(".result-direction").textContent,"한국어 → 영어");
 });
 
 test("actual primary data renders Korean English meanings and unknown POS without inferred labels",async()=>{
@@ -68,10 +72,10 @@ test("all source glosses stay together and more reveals the remaining senses",()
   assert.equal(area.querySelectorAll(".sense-meaning").length,20);
 });
 
-test("auto direction supports normalized Hangul and user overrides",()=>{
+test("direction always follows the input including normalized Hangul",()=>{
   assert.equal(resolveDirection("나무"),"ko-en");
   assert.equal(resolveDirection("take off"),"en-ko");
-  assert.equal(resolveDirection("나무","en-ko"),"en-ko");
+  assert.equal(resolveDirection("나무","en-ko"),"ko-en");
 });
 
 test("latest request wins and a failed source is never described as a missing word",async()=>{
@@ -80,6 +84,7 @@ test("latest request wins and a failed source is never described as a missing wo
   const app=createDictionaryApp({lookupEnglishEntry:word=>new Promise(resolve=>pending.set(word,resolve)),lookupKoreanEntry:async()=>[]},{document,window:{}});
   const first=app.search("first");
   const second=app.search("second");
+  assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),false);
   pending.get("second")([{word:"second",senses:[{glosses:["두 번째"]}]}]);
   await second;
   pending.get("first")([{word:"first",senses:[{glosses:["첫 번째"]}]}]);
@@ -90,6 +95,7 @@ test("latest request wins and a failed source is never described as a missing wo
   const broken=createDictionaryApp({lookupEnglishEntry:async()=>{throw Error("network")},lookupKoreanEntry:async()=>[]},{document:other,window:{}});
   await broken.search("first");
   assert.ok(other.querySelector("#lookup-area").textContent.includes("불러오지 못했어요"));
+  assert.equal(other.querySelector("#lookup-status").classList.contains("sr-only"),false);
   assert.ok(!other.querySelector("#lookup-area").textContent.includes("풀이가 없습니다"));
 });
 
@@ -98,6 +104,7 @@ test("partial Korean lookup and ordinary missing word produce distinct copy",asy
   const app=createDictionaryApp({lookupEnglishEntry:async()=>[],lookupKoreanEntry:async(_query,{onWarning})=>{onWarning("internal diagnostic");return [];}},{document,window:{}});
   await app.search("나무");
   assert.ok(document.querySelector("#lookup-area").textContent.includes("모두 확인하지 못했어요"));
+  assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),false);
   assert.ok(!document.body.textContent.includes("internal diagnostic"));
   await app.search("missing");
   assert.ok(document.querySelector("#lookup-area").textContent.includes("한국어 풀이가 없습니다"));
@@ -114,6 +121,7 @@ test("a missing English primary opens the distinct Korean source automatically",
   assert.ok(document.querySelector(".related-details").textContent.includes("나무의 한국어 원뜻"));
   assert.ok(document.querySelector(".empty-result").textContent.includes("위키낱말사전"));
   assert.equal(document.querySelector("#lookup-status").textContent,"한국어기초사전의 관련 항목을 표시했습니다.");
+  assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),true);
 });
 
 test("related-only status preserves loading scope, partial warnings, and newer search results",async()=>{
@@ -143,16 +151,18 @@ test("search retains browser history and back restores the home and search query
   const listeners=new Map();
   const location={href:"https://example.test/"};
   const history=[];
-  const window={location,history:{pushState(_state,_title,url){history.push(url.href);location.href=url.href;}},addEventListener(name,fn){listeners.set(name,fn);}};
+  const window={location,history:{pushState(_state,_title,url){history.push(url.href);location.href=url.href;},replaceState(_state,_title,url){location.href=url.href;}},addEventListener(name,fn){listeners.set(name,fn);}};
   const app=createDictionaryApp({lookupEnglishEntry:async word=>[{word,senses:[{glosses:[word]}]}],lookupKoreanEntry:async()=>[]},{document,window});
   await app.search("apple");
   await app.search("apple");
   await app.search("hard");
   assert.equal(history.length,2);
-  location.href=history[0];
+  location.href=`${history[0]}&direction=ko-en`;
   listeners.get("popstate")();
   await new Promise(resolve=>setImmediate(resolve));
   assert.equal(document.querySelector("#result-word").textContent,"apple");
+  assert.equal(document.querySelector(".result-direction").textContent,"영어 → 한국어");
+  assert.equal(new URL(location.href).searchParams.has("direction"),false);
   assert.equal(history.length,2);
   location.href="https://example.test/";
   listeners.get("popstate")();

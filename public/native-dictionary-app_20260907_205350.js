@@ -141,8 +141,7 @@ export function renderKoreanEntries(container, records, {related = false} = {}) 
   });
 }
 
-export function resolveDirection(query, choice = "auto") {
-  if (choice === "en-ko" || choice === "ko-en") return choice;
+export function resolveDirection(query) {
   return /[\p{Script=Hangul}]/u.test(query.normalize("NFC")) ? "ko-en" : "en-ko";
 }
 
@@ -155,6 +154,10 @@ export function createDictionaryApp(services, {document = globalThis.document, w
   const initialContent = Array.from(area.childNodes, node => node.cloneNode(true));
   let controller = null;
   let serial = 0;
+  const setStatus = (message, {success = false} = {}) => {
+    status.textContent = message;
+    status.classList.toggle("sr-only", success);
+  };
 
   async function search(query, {history = true} = {}) {
     query = String(query || "").normalize("NFC").trim().replace(/\s+/gu, " ").slice(0, 80);
@@ -162,21 +165,19 @@ export function createDictionaryApp(services, {document = globalThis.document, w
     input.value = query;
     const legacy = document.querySelector("#legacy-search-link");
     if (legacy) legacy.href = `/legacy_20260907_205800.html?q=${encodeURIComponent(query)}`;
-    const choice = document.querySelector('input[name="direction"]:checked')?.value || "auto";
-    const direction = resolveDirection(query, choice);
+    const direction = resolveDirection(query);
     controller?.abort();
     controller = new AbortController();
     const request = ++serial;
     const requestSignal = controller.signal;
     document.body.classList.add("has-results");
     area.setAttribute("aria-busy", "true");
-    status.textContent = "뜻을 찾고 있습니다…";
+    setStatus("뜻을 찾고 있습니다…");
     area.replaceChildren();
     if (history && window?.history?.pushState) {
       const url = new URL(window.location.href);
       url.searchParams.set("q", query);
-      if (choice === "auto") url.searchParams.delete("direction");
-      else url.searchParams.set("direction", choice);
+      url.searchParams.delete("direction");
       if (url.href !== window.location.href) window.history.pushState({}, "", url);
     }
     let warned = false;
@@ -208,7 +209,7 @@ export function createDictionaryApp(services, {document = globalThis.document, w
         meaning.append(empty);
       }
       article.append(meaning);
-      status.textContent = warned ? "일부 자료를 불러오지 못했습니다. 확인된 뜻을 먼저 보여 드립니다." : count ? "검색 결과를 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.";
+      setStatus(warned ? "일부 자료를 불러오지 못했습니다. 확인된 뜻을 먼저 보여 드립니다." : count ? "검색 결과를 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.", {success:!warned && count > 0});
       if (direction === "en-ko" && services.lookupKoreanByEnglish) {
         const related = el(document, "details", "related-details");
         related.append(el(document, "summary", "", "한국어기초사전에서 함께 찾기"));
@@ -228,9 +229,9 @@ export function createDictionaryApp(services, {document = globalThis.document, w
             if (!renderKoreanEntries(body, records, {related:true})) body.append(el(document, "p", "sense-reference", "함께 찾은 한국어 항목이 없습니다."));
             if (partial) body.append(el(document, "p", "sense-reference", "일부 자료를 불러오지 못했습니다. 잠시 후 다시 검색해 주세요."));
             if (!count) {
-              status.textContent = partial || warned
+              setStatus(partial || warned
                 ? "일부 자료를 불러오지 못했습니다. 확인된 관련 항목을 먼저 보여 드립니다."
-                : records.length ? "한국어기초사전의 관련 항목을 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.";
+                : records.length ? "한국어기초사전의 관련 항목을 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.", {success:!partial && !warned && records.length > 0});
             }
           } catch (error) {
             if (request !== serial || error?.name === "AbortError") return;
@@ -261,7 +262,7 @@ export function createDictionaryApp(services, {document = globalThis.document, w
       retry.addEventListener("click", () => search(query));
       message.append(retry);
       area.replaceChildren(message);
-      status.textContent = "검색 중 연결 문제가 발생했습니다.";
+      setStatus("검색 중 연결 문제가 발생했습니다.");
     } finally {
       if (request === serial) area.setAttribute("aria-busy", "false");
     }
@@ -271,8 +272,6 @@ export function createDictionaryApp(services, {document = globalThis.document, w
   document.addEventListener("click", event => {
     const button = event.target.closest?.("button[data-query]");
     if (!button) return;
-    const auto = document.querySelector('input[name="direction"][value="auto"]');
-    if (auto) auto.checked = true;
     search(button.dataset.query);
   });
   document.addEventListener("keydown", event => {
@@ -284,10 +283,9 @@ export function createDictionaryApp(services, {document = globalThis.document, w
   const restoreUrl = () => {
     const url = window?.location?.href ? new URL(window.location.href) : null;
     if (!url) return;
-    const direction = url.searchParams.get("direction");
-    const choice = ["en-ko", "ko-en"].includes(direction) ? direction : "auto";
-    for (const radio of document.querySelectorAll('input[name="direction"]')) {
-      radio.checked = radio.value === choice;
+    if (url.searchParams.has("direction")) {
+      url.searchParams.delete("direction");
+      window.history?.replaceState?.({}, "", url);
     }
     const query = url.searchParams.get("q");
     if (query) search(query, {history:false});
@@ -295,7 +293,7 @@ export function createDictionaryApp(services, {document = globalThis.document, w
       serial += 1;
       controller?.abort();
       input.value = "";
-      status.textContent = "";
+      setStatus("");
       area.setAttribute("aria-busy", "false");
       area.replaceChildren(...initialContent.map(node => node.cloneNode(true)));
       document.body.classList.remove("has-results");
