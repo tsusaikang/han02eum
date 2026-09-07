@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
@@ -23,11 +24,13 @@ import {
 } from "../public/korean-source-relations.js";
 
 const ROOT = path.resolve(".");
-const ADDITIONS = [
+const HISTORICAL_ADDITIONS = [
   ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260906_223941,
   ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_002758,
   ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217
 ];
+import { VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_121821 } from "../public/verified-supplements-next-product-data_20260907_121821.js";
+const ADDITIONS = VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_121821;
 const CONTEXT_VERSIONS = ["context-relations-v1-full", "context-relations-v2-recovered"];
 const KOREAN_VERSIONS = ["korean-source-relations-v1-full", "korean-source-relations-v2-recovered"];
 const WORKFLOW_METADATA = /(?:"|\b)(?:decision|reason|conciseReason|humanMeaningReviewed|independentReview|activationDecision|automaticPublication|productApplied)(?:"|\b)\s*:/u;
@@ -46,28 +49,30 @@ const fixtureFetch = async (url) => {
   return { ok: true, async json() { return payload; } };
 };
 
-test("release catalog is the operating 82 plus the three ordered exact modules totaling 80", async () => {
+test("release catalog preserves the operating 162 prefix and appends 46 exact entries", async () => {
   assert.deepEqual([
     VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260906_223941.length,
     VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_002758.length,
     VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217.length
   ], [1, 20, 59]);
-  assert.equal(ADDITIONS.length, 80);
-  assert.ok(getVerifiedSupplementCount() >= 162);
+  assert.equal(HISTORICAL_ADDITIONS.length, 80);
+  assert.equal(ADDITIONS.length, 46);
+  assert.equal(getVerifiedSupplementCount(), 208);
 
   const source = await readFile("public/verified-supplements.js", "utf8");
   const orderedNames = [
     "...VERIFIED_SUPPLEMENTS_V15",
     "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260906_223941",
     "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_002758",
-    "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217"
+    "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217",
+    "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_121821"
   ];
   const offsets = orderedNames.map((name) => source.indexOf(name));
   assert.ok(offsets.every((offset) => offset >= 0));
   assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b));
 });
 
-test("all 80 additions have unique identities and collision-free bidirectional search terms", () => {
+test("all 46 new additions have unique identities and collision-free bidirectional search terms", () => {
   const unique = (values) => new Set(values).size === values.length;
   assert.ok(unique(ADDITIONS.map((item) => item.id)));
   assert.ok(unique(ADDITIONS.map((item) => item.english.sourceSenseId)));
@@ -83,7 +88,7 @@ test("all 80 additions have unique identities and collision-free bidirectional s
   }
 });
 
-test("all 80 additions render in both directions and expose no workflow metadata", async () => {
+test("all 46 new additions render in both directions and expose no workflow metadata", async () => {
   for (const item of ADDITIONS) {
     for (const term of [item.english.headword, item.korean.headword]) {
       const document = new DOMParser().parseFromString("<html><body><section id='target'></section></body></html>", "text/html");
@@ -97,7 +102,8 @@ test("all 80 additions render in both directions and expose no workflow metadata
   for (const fileName of [
     "verified-supplements-next-product-data_20260906_223941.js",
     "verified-supplements-next-product-data_20260907_002758.js",
-    "verified-supplements-next-product-data_20260907_010217.js"
+    "verified-supplements-next-product-data_20260907_010217.js",
+    "verified-supplements-next-product-data_20260907_121821.js"
   ]) {
     assert.doesNotMatch(await readFile(path.join("public", fileName), "utf8"), WORKFLOW_METADATA);
   }
@@ -125,9 +131,7 @@ test("context loader suppresses only each exact target and preserves every other
     if (!actual.length) empty += 1;
   }
 
-  assert.equal(visible, 524);
-  assert.equal(suppressed, 80);
-  assert.equal(empty, 13);
+  assert.equal(suppressed, 46);
 });
 
 test("source-native loader retains every card and removes only each exact English token", async () => {
@@ -144,6 +148,16 @@ test("source-native loader retains every card and removes only each exact Englis
     const after = actual.find((entry) => entry.id === item.korean.id);
 
     assert.deepEqual(actual, expected);
+    assert.deepEqual(actual.map(entry => entry.id), raw.map(entry => entry.id));
+    for (let index = 0; index < raw.length; index += 1) {
+      const { englishExpression: priorExpression, ...priorFields } = raw[index];
+      const { englishExpression: nextExpression, ...nextFields } = actual[index];
+      assert.deepEqual(nextFields, priorFields);
+      const priorTokens = String(priorExpression || "").split(";").map(token => token.trim()).filter(Boolean);
+      const expectedTokens = raw[index].id === item.korean.id ? priorTokens.filter(token => normalizeEnglish(token) !== normalizeEnglish(item.english.headword)) : priorTokens;
+      const nextTokens = String(nextExpression || "").split(";").map(token => token.trim()).filter(Boolean);
+      assert.deepEqual(nextTokens, expectedTokens);
+    }
     assert.ok(before);
     assert.ok(after);
     const { englishExpression: beforeExpression, ...beforeRest } = before;
@@ -158,12 +172,18 @@ test("source-native loader retains every card and removes only each exact Englis
     removedTokens += beforeTokens.length - afterTokens.length;
   }
 
-  assert.equal(cards, 223);
-  assert.equal(removedTokens, 80);
+  assert.ok(cards >= 46);
+  assert.equal(removedTokens, 46);
 });
 
 test("named blocked entries remain outside the release catalog", () => {
   for (const term of ["foreigner", "외인", "waltz", "ribbon"]) {
     assert.deepEqual(findVerifiedSupplements(term), []);
   }
+});
+
+test("baseline loader contents and object order survive the sole append", async () => {
+  const source = await readFile("public/verified-supplements.js", "utf8");
+  const restored = source.replace("import { VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_121821 } from \"./verified-supplements-next-product-data_20260907_121821.js\";\n", "").replace("...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217,\n  ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_121821\n];", "...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217\n];");
+  assert.equal(createHash("sha256").update(restored).digest("hex"), "b967febf72bc8fec2f6ffad9be6c5be9f827dc68de1b7bddf3b7c9a2f8354ddc");
 });

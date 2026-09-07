@@ -64,7 +64,7 @@ test("shard failure is isolated and abort remains observable", async () => {
   );
 });
 
-test("render-time exact suppression retains the historical six and applies the 142 selected additions", () => {
+test("render-time exact suppression retains the historical six and applies the 188 selected additions", () => {
   const all = loadAllRecords();
   const removed = [];
   let beforeCount = 0;
@@ -81,8 +81,8 @@ test("render-time exact suppression retains the historical six and applies the 1
       assert.equal(output[index].englishDescription, record.englishDescription);
     });
   }
-  assert.equal(beforeCount - afterCount, 148);
-  assert.equal(removed.length, 148);
+  assert.equal(beforeCount - afterCount, 194);
+  assert.equal(removed.length, 194);
   const historical = [
     ["가지", "krdict:59919:2", "branch"],
     ["광명하다", "krdict:30718:1", "bright"],

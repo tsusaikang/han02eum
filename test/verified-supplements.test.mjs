@@ -227,8 +227,8 @@ test("the verified minute adjective and 미소하다 searches resolve to the sam
   ]);
 });
 
-test("rejected mappings remain absent while the local public catalog contains 162 exact items", () => {
-  assert.equal(getVerifiedSupplementCount(), 162);
+test("rejected mappings remain absent while the local public catalog contains 208 exact items", () => {
+  assert.equal(getVerifiedSupplementCount(), 208);
   assert.deepEqual(findVerifiedSupplements("hard"), []);
   assert.deepEqual(findVerifiedSupplements("굳히다"), []);
   assert.deepEqual(findVerifiedSupplements("노력하다"), []);
