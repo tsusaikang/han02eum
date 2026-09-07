@@ -64,7 +64,7 @@ test("shard failure is isolated and abort remains observable", async () => {
   );
 });
 
-test("render-time exact suppression retains the historical six and applies the 62 selected additions", () => {
+test("render-time exact suppression retains the historical six and applies the 142 selected additions", () => {
   const all = loadAllRecords();
   const removed = [];
   let beforeCount = 0;
@@ -81,8 +81,8 @@ test("render-time exact suppression retains the historical six and applies the 6
       assert.equal(output[index].englishDescription, record.englishDescription);
     });
   }
-  assert.equal(beforeCount - afterCount, 68);
-  assert.equal(removed.length, 68);
+  assert.equal(beforeCount - afterCount, 148);
+  assert.equal(removed.length, 148);
   const historical = [
     ["가지", "krdict:59919:2", "branch"],
     ["광명하다", "krdict:30718:1", "bright"],
@@ -92,6 +92,7 @@ test("render-time exact suppression retains the historical six and applies the 6
     ["흔들다", "krdict:29776:1", "wave"]
   ];
   for (const expected of historical) assert.ok(removed.some((row) => row.join("|") === expected.join("|")));
+  assert.ok(removed.some((row) => row.join("|") === "어저께|krdict:14587:1|yesterday"));
   assert.equal(suppressExactEnglishTokens("면하다", all.get("면하다")).find((item) => item.id === "krdict:55080:1").englishExpression, "front");
   assert.equal(suppressExactEnglishTokens("흔들다", all.get("흔들다"))[0].englishExpression, "sway; flap; wag; shake");
   assert.equal(suppressExactEnglishTokens("숫자", all.get("숫자")).find((item) => item.id === "krdict:65425:2").englishDescription.length > 0, true);

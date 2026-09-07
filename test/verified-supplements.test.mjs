@@ -227,8 +227,8 @@ test("the verified minute adjective and 미소하다 searches resolve to the sam
   ]);
 });
 
-test("the rejected hard and 굳히다 mapping is absent while the original public catalog remains", () => {
-  assert.equal(getVerifiedSupplementCount(), 82);
+test("rejected mappings remain absent while the local public catalog contains 162 exact items", () => {
+  assert.equal(getVerifiedSupplementCount(), 162);
   assert.deepEqual(findVerifiedSupplements("hard"), []);
   assert.deepEqual(findVerifiedSupplements("굳히다"), []);
   assert.deepEqual(findVerifiedSupplements("노력하다"), []);
@@ -488,7 +488,7 @@ test("excluded and unrelated words do not receive a verified supplement", () => 
     "bank", "run", "set", "record", "charge", "bear", "spring", "match", "point",
     "left", "fine", "mean", "kind", "sound", "watch", "break", "hold", "draw",
     "current", "issue", "case", "file", "key", "scale", "date", "board", "field",
-    "bat", "club", "ring", "bill", "draft", "strike", "suit", "court",
+    "bat", "club", "ring", "draft", "strike", "suit", "court",
     "capital", "subject", "object", "present", "second", "letter", "order", "state",
     "change", "cover", "open", "flat", "sharp",
     "cool", "warm", "dry", "wet", "head", "foot", "arm",

@@ -1,4 +1,7 @@
 import { VERIFIED_SUPPLEMENTS_V15 } from "./verified-supplements-v15-data.js";
+import { VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260906_223941 } from "./verified-supplements-next-product-data_20260906_223941.js";
+import { VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_002758 } from "./verified-supplements-next-product-data_20260907_002758.js";
+import { VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217 } from "./verified-supplements-next-product-data_20260907_010217.js";
 
 const VERIFIED_SUPPLEMENTS = [
   {
@@ -584,7 +587,10 @@ const VERIFIED_SUPPLEMENTS = [
       }
     }
   },
-  ...VERIFIED_SUPPLEMENTS_V15
+  ...VERIFIED_SUPPLEMENTS_V15,
+  ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260906_223941,
+  ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_002758,
+  ...VERIFIED_SUPPLEMENTS_NEXT_PRODUCT_20260907_010217
 ];
 
 function normalizeSearchTerm(value) {
