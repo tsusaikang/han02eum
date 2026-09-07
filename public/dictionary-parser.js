@@ -22,6 +22,13 @@ const PARTS_OF_SPEECH = new Map([
   ["symbol", "기호"]
 ]);
 
+// These source headings were absent from the historical extraction vocabulary.
+// Add them only to the source view, so old POS occurrence IDs cannot move.
+const SOURCE_PARTS_OF_SPEECH = new Map([
+  ["number", "수사"], ["prepositional phrase", "전치사구"],
+  ["postposition", "후치사"], ["punctuation mark", "문장 부호"], ["participle", "분사"]
+]);
+
 const FOLLOWING = 4;
 const DEFAULT_DEFINITIONS_PER_GROUP = 8;
 const DEFAULT_GROUP_LIMIT = 8;
@@ -352,7 +359,42 @@ export function classifyUnmatchedTranslationFallback({
   };
 }
 
-function extractDefinitionGroups(document, range, limits) {
+// Source detail mode is separate from the historical matching/collection view.
+// Never put recovered nodes into definitions: its IDs and translation assignments
+// are used by reviewed mappings and must retain their historical identity.
+function sourceDefinitionTree(lists, originals, groupId) {
+  let originalIndex = 0;
+  function itemTree(item, id, parentId, sourcePath, original) {
+    const text = textWithoutNestedDetails(item);
+    const own = item.cloneNode(true);
+    own.querySelectorAll("ol").forEach((node) => node.remove());
+    const children = [...item.querySelectorAll("ol")]
+      .filter((list) => list.closest("li") === item &&
+        !list.parentElement?.closest("dl, ul, table, blockquote, .quotation, .e-example, .nyms-toggle, .HQToggle"))
+      .flatMap((list, listIndex) => [...list.children].filter((node) => node.tagName === "LI")
+        .map((node, index) => itemTree(node, `${id}-sub-${listIndex + 1}-${index + 1}`, id,
+          [...sourcePath, listIndex + 1, index + 1])))
+      .filter(Boolean);
+    if (!text && !children.length) return null;
+    return {
+      ...(original || { id, koreanTranslations: [], translationCoverage: {
+        status: "unreviewed-source-sense", sourceSenses: [], matchMethod: null, matches: []
+      } }),
+      id, text, examples: extractExamples(own), parentId, sourcePath, children
+    };
+  }
+  return lists.flatMap((list, listIndex) => [...list.children]
+    .filter((node) => node.tagName === "LI")
+    .map((item, index) => {
+      const original = listIndex === 0 && textWithoutNestedDetails(item) ? originals[originalIndex++] : null;
+      const id = original?.id || `${groupId}-source-list-${listIndex + 1}-item-${index + 1}`;
+      return itemTree(item, id, null, [listIndex + 1, index + 1], original);
+    })).filter(Boolean);
+}
+
+function extractDefinitionGroups(document, range, limits, includeSourceDetails = false) {
+  const recoveredGroups = [];
+  const groupHeadingOrder = new Map();
   const groups = [];
   const partCounts = new Map();
   const partHeadings = range.headings.filter((heading) => {
@@ -377,12 +419,30 @@ function extractDefinitionGroups(document, range, limits) {
       }))
       .filter((definition) => definition.text);
 
-    if (!rawDefinitions.length) continue;
+    // Extra definition lists must be in this POS body, before any subordinate
+    // heading; lists under Examples/Synonyms/References are not definitions.
+    const bodyEnd = range.headings.find((candidate) => isAfter(heading, candidate, range.order)) || end;
+    const sourceLists = lists.filter((candidate, index) =>
+      index === 0 || (isBetween(candidate, heading, bodyEnd, range.order) &&
+      !candidate.parentElement?.closest("dl, ul, table, blockquote, .quotation, .e-example, .nyms-toggle, .HQToggle")));
+    if (!rawDefinitions.length) {
+      if (includeSourceDetails) {
+        const partOfSpeech = headingText(heading);
+        const id = `source-${partOfSpeech.toLowerCase().replace(/\s+/g, "-")}-heading-${range.headings.indexOf(heading) + 1}`;
+        groupHeadingOrder.set(id, range.headings.indexOf(heading));
+        const sourceDefinitions = sourceDefinitionTree(sourceLists, [], id);
+        if (sourceDefinitions.length) recoveredGroups.push({ id, partOfSpeech,
+          koreanLabel: PARTS_OF_SPEECH.get(partOfSpeech.toLowerCase()), definitions: [], sourceDefinitions,
+          summaryKoreanTranslations: [], unmatchedTranslationBlocks: [] });
+      }
+      continue;
+    }
     const partOfSpeech = headingText(heading);
     const partKey = partOfSpeech.toLocaleLowerCase("en");
     const occurrence = (partCounts.get(partKey) || 0) + 1;
     partCounts.set(partKey, occurrence);
     const groupId = `${partKey.replace(/\s+/g, "-")}-${occurrence}`;
+    groupHeadingOrder.set(groupId, range.headings.indexOf(heading));
     const translationHeadings = range.headings.filter(
       (candidate) => isBetween(candidate, heading, end, range.order) && /^translations?$/i.test(headingText(candidate))
     );
@@ -430,6 +490,7 @@ function extractDefinitionGroups(document, range, limits) {
       partOfSpeech,
       koreanLabel: PARTS_OF_SPEECH.get(partKey),
       definitions,
+      ...(includeSourceDetails ? { sourceDefinitions: sourceDefinitionTree(sourceLists, definitions, groupId) } : {}),
       summaryKoreanTranslations: [],
       unmatchedTranslationBlocks: unmatched
     });
@@ -455,7 +516,26 @@ function extractDefinitionGroups(document, range, limits) {
       group.summaryKoreanTranslations = decision.publicEligible ? decision.translations : [];
     }
   }
-  return groups;
+  if (includeSourceDetails) {
+    for (const heading of range.headings) {
+      const partOfSpeech = headingText(heading);
+      const partKey = partOfSpeech.toLowerCase();
+      if (!isBetween(heading, range.start, range.end, range.order) || !SOURCE_PARTS_OF_SPEECH.has(partKey)) continue;
+      const bodyEnd = range.headings.find((candidate) => isAfter(heading, candidate, range.order)) || range.end;
+      const lists = [...document.querySelectorAll("ol")].filter((list) =>
+        isBetween(list, heading, bodyEnd, range.order) &&
+        !list.parentElement?.closest("ol, dl, ul, table, blockquote, .quotation, .e-example, .nyms-toggle, .HQToggle"));
+      const id = `source-${partKey.replace(/\s+/g, "-")}-heading-${range.headings.indexOf(heading) + 1}`;
+      const sourceDefinitions = sourceDefinitionTree(lists, [], id);
+      if (!sourceDefinitions.length) continue;
+      groupHeadingOrder.set(id, range.headings.indexOf(heading));
+      recoveredGroups.push({id, partOfSpeech, koreanLabel: SOURCE_PARTS_OF_SPEECH.get(partKey),
+        definitions: [], sourceDefinitions, summaryKoreanTranslations: [], unmatchedTranslationBlocks: []});
+    }
+  }
+  return includeSourceDetails
+    ? [...groups, ...recoveredGroups].sort((a, b) => groupHeadingOrder.get(a.id) - groupHeadingOrder.get(b.id))
+    : groups;
 }
 
 function extractPronunciations(document, range) {
@@ -484,6 +564,18 @@ function extractAudio(document, range) {
     if (urls.length === 3) break;
   }
   return urls;
+}
+
+export function audioSourceFor(url) {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" || parsed.hostname !== "upload.wikimedia.org") return null;
+    const parts = parsed.pathname.split("/");
+    if (parts[1] !== "wikipedia" || parts[2] !== "commons") return null;
+    const file = decodeURIComponent(parts[3] === "transcoded" ? parts[6] : parts.at(-1));
+    if (!file) return null;
+    return { url, descriptionUrl: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file)}` };
+  } catch { return null; }
 }
 
 function flattenKoreanTranslations(definitionGroups) {
@@ -532,7 +624,7 @@ export function parseWiktionaryEntry(
         definitionsPerGroup: DEFAULT_DEFINITIONS_PER_GROUP,
         groups: DEFAULT_GROUP_LIMIT
       };
-  const allDefinitionGroups = extractDefinitionGroups(document, range, limits);
+  const allDefinitionGroups = extractDefinitionGroups(document, range, limits, options.includeSourceDetails === true);
   const definitionGroups = limits
     ? allDefinitionGroups.slice(0, limits.groups).map((group) => ({
         ...group,
@@ -546,6 +638,7 @@ export function parseWiktionaryEntry(
     found: true,
     pronunciations: extractPronunciations(document, range),
     audio: extractAudio(document, range),
+    audioSources: extractAudio(document, range).map(audioSourceFor).filter(Boolean),
     translations: inputLanguage === "en" ? flattenKoreanTranslations(definitionGroups) : [],
     definitionGroups,
     sourceUrl,

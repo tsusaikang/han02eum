@@ -169,3 +169,78 @@ test("search retains browser history and back restores the home and search query
   assert.ok(document.querySelector(".welcome-state"));
   assert.equal(document.body.classList.contains("has-results"),false);
 });
+
+test("Korean usage is visible while examples load once on opening and remain fully reachable",async()=>{
+  const {document,window}=fixture();
+  let calls=0;
+  let finish;
+  const record={id:"sample",headword:"나무",englishExpression:"tree",definitionKo:"나무",annotations:["주로 명사 앞에 쓴다."],entryAnnotations:["이름을 나타내는 말이다."],pronunciations:[{pronunciation:"나무"}],examplesCount:12,detailsRef:{}};
+  const app=createDictionaryApp({lookupEnglishEntry:async()=>[],lookupKoreanEntry:async()=>[record],loadKoreanEntryDetails:()=>{calls++;return new Promise(resolve=>finish=resolve);}},{document,window:{}});
+  await app.search("나무");
+  assert.equal(calls,0);
+  assert.equal(document.querySelectorAll(".source-pronunciation").length,1);
+  assert.equal(document.querySelectorAll(".sense-usage").length,2);
+  const details=document.querySelector(".korean-source-details");
+  assert.equal(Boolean(details.open),false);
+  details.open=true;details.dispatchEvent(new window.Event("toggle"));
+  details.dispatchEvent(new window.Event("toggle"));
+  assert.equal(calls,1);
+  finish({examples:Array.from({length:12},(_,i)=>({type:"문장",texts:[`예문 ${i}`]})),senseRelations:[{feat:[{att:"type",val:"유의어"},{att:"lemma",val:"수목"}]}]});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(details.querySelectorAll(".source-example").length,8);
+  details.querySelector(".example-more").dispatchEvent(new window.Event("click"));
+  assert.equal(details.querySelectorAll(".source-example").length,12);
+  assert.equal(details.querySelector(".relation-word").dataset.query,"수목");
+  details.open=false;details.dispatchEvent(new window.Event("toggle"));
+  details.open=true;details.dispatchEvent(new window.Event("toggle"));
+  assert.equal(calls,1);
+});
+
+test("Korean lazy detail failures can retry and old searches cannot render stale detail",async()=>{
+  const {document,window}=fixture();
+  let calls=0;
+  let finish;
+  let signal;
+  const record={id:"sample",headword:"나무",englishExpression:"tree",examplesCount:1,detailsRef:{}};
+  const app=createDictionaryApp({lookupEnglishEntry:async word=>[{word,senses:[{glosses:["사과"]}]}],lookupKoreanEntry:async()=>[record],loadKoreanEntryDetails:async(_record,options)=>{calls++;signal=options.signal;if(calls===1)throw Error("offline");return new Promise(resolve=>finish=resolve);}},{document,window:{}});
+  await app.search("나무");
+  const details=document.querySelector(".korean-source-details");
+  details.open=true;details.dispatchEvent(new window.Event("toggle"));
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.ok(details.textContent.includes("불러오지 못했습니다"));
+  details.open=false;details.dispatchEvent(new window.Event("toggle"));
+  details.open=true;details.dispatchEvent(new window.Event("toggle"));
+  assert.equal(calls,2);
+  await app.search("apple");
+  assert.equal(signal.aborted,true);
+  finish({examples:[{type:"문장",texts:["이전 검색 예문"]}]});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.ok(!details.textContent.includes("이전 검색 예문"));
+  assert.equal(document.querySelector("#result-word").textContent,"apple");
+  assert.ok(!document.body.textContent.includes("이전 검색 예문"));
+});
+
+test("source usage and topic labels survive raw/normalized and entry/sense separation",()=>{
+  const {document}=fixture();
+  const area=document.querySelector("#lookup-area");area.replaceChildren();
+  renderEnglishEntries(area,[{word:"sample",pos:"verb",tags:["transitive","slang","verb","error-lua-exec"],rawTags:["지역 한정"],topics:["law"],senses:[{glosses:["원문의 뜻"],rawTags:["수학","속어"],topics:["physics"],tags:["archaic","derogatory","pejorative","offensive","slang","no-gloss","error-missing-sense"]}]}]);
+  const usage=area.querySelector(".sense-reference").textContent;
+  for (const label of ["지역 한정","타동사","속어","법률","수학","물리","고어","비하","모욕적"]) assert.ok(usage.includes(label),label);
+  assert.equal(usage.split("속어").length-1,1);
+  assert.equal(usage.split("비하").length-1,1);
+  assert.ok(!usage.includes("error"));assert.ok(!usage.includes("no-gloss"));
+  assert.ok(!usage.includes("verb"));assert.ok(!usage.includes("physics"));
+  assert.equal(area.querySelector(".sense-meaning").textContent,"원문의 뜻");
+});
+
+test("real divergence and bear retain their source mathematics/physics and archaic/finance restrictions",async()=>{
+  const {document}=fixture();const area=document.querySelector("#lookup-area");area.replaceChildren();
+  renderEnglishEntries(area,await lookupEnglishEntry("divergence",{fetchImpl:fetchLocal}));
+  const mathSense=[...area.querySelectorAll(".sense")].find(sense=>sense.textContent.includes("발산"));
+  assert.ok(mathSense.querySelector(".sense-reference").textContent.includes("수학"));
+  assert.ok(mathSense.querySelector(".sense-reference").textContent.includes("물리"));
+  area.replaceChildren();renderEnglishEntries(area,await lookupEnglishEntry("bear",{fetchImpl:fetchLocal}));
+  const financeSense=[...area.querySelectorAll(".sense")].find(sense=>sense.textContent.includes("뇌동매도"));
+  assert.ok(financeSense.querySelector(".sense-reference").textContent.includes("고어"));
+  assert.ok(financeSense.querySelector(".sense-reference").textContent.includes("금융"));
+});

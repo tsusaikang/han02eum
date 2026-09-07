@@ -100,37 +100,45 @@ function renderTranslations(entry, supplements = []) {
 
 function renderDefinitionGroups(entry) {
   ui.definitionGroups.replaceChildren();
-  const total = entry.definitionGroups.reduce((sum, group) => sum + group.definitions.length, 0);
+  const count = (definitions) => definitions.reduce((n, d) => n + Number(Boolean(d.text)) + count(d.children || []), 0);
+  const total = entry.definitionGroups.reduce((sum, group) => sum + count(group.sourceDefinitions || group.definitions), 0);
   ui.definitionKicker.textContent = entry.language === "ko" ? "영어 뜻 · English meanings" : "영영 뜻 · English definitions";
-  ui.definitionCount.textContent = total ? `${total} meanings` : "0 meanings";
+  ui.definitionCount.textContent = `${total} meanings`;
 
+  function renderList(definitions, nested = false) {
+    const list = makeElement("ol", `definition-list${nested ? " definition-children" : ""}`);
+    for (const definition of definitions) {
+      const item = makeElement("li", "definition-item");
+      if (definition.text) item.append(makeElement("p", "definition-text", definition.text));
+      if (definition.examples.length) {
+        const examples = makeElement("div", "example-list");
+        for (const example of definition.examples) examples.append(makeElement("blockquote", "example", example));
+        item.append(examples);
+      }
+      if (definition.children?.length) item.append(renderList(definition.children, true));
+      list.append(item);
+    }
+    return list;
+  }
   if (!entry.definitionGroups.length) {
-    ui.definitionGroups.append(
-      makeElement("p", "empty-detail", "뜻 정보가 구조화되어 있지 않습니다. 원문 보기에서 Wiktionary 항목 전체를 확인해 주세요.")
-    );
+    ui.definitionGroups.append(makeElement("p", "empty-detail", "뜻 정보가 구조화되어 있지 않습니다. 원문 보기에서 Wiktionary 항목 전체를 확인해 주세요."));
     return;
   }
-
   for (const group of entry.definitionGroups) {
+    const definitions = group.sourceDefinitions || group.definitions;
+    if (!definitions.length) continue;
     const section = makeElement("section", "definition-group");
     const part = makeElement("h4", "part-of-speech", group.koreanLabel || group.partOfSpeech);
     if (group.koreanLabel) part.append(makeElement("span", "", group.partOfSpeech));
-
-    const list = makeElement("ol", "definition-list");
-    for (const definition of group.definitions) {
-      const item = makeElement("li", "definition-item");
-      item.append(makeElement("p", "definition-text", definition.text));
-      if (definition.examples.length) {
-        const examples = makeElement("div", "example-list");
-        for (const example of definition.examples) {
-          examples.append(makeElement("blockquote", "example", example));
-        }
-        item.append(examples);
-      }
-      list.append(item);
+    section.append(part, renderList(definitions.slice(0, 8)));
+    if (definitions.length > 8) {
+      const more = makeElement("details", "definition-more");
+      more.append(makeElement("summary", "", `뜻 ${definitions.length - 8}개 더 보기`));
+      const remainder = renderList(definitions.slice(8));
+      remainder.style.counterReset = "definitions 8";
+      more.append(remainder);
+      section.append(more);
     }
-
-    section.append(part, list);
     ui.definitionGroups.append(section);
   }
 }
@@ -143,6 +151,16 @@ function renderEntry(entry, { wiktionaryAvailable = true } = {}) {
     ? "Wikimedia Commons 음원으로 발음 듣기"
     : "기기의 음성 합성으로 발음 듣기";
   renderPronunciations(entry);
+  const audioSource = entry.audioSources?.find((source) => source.url === entry.audio[0]);
+  if (audioSource) {
+    const link = makeElement("a", "pronunciation-source", "녹음 출처·이용 조건");
+    link.href = audioSource.descriptionUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    ui.pronunciations.append(link);
+  } else {
+    ui.pronunciations.append(makeElement("span", "pronunciation-source", entry.audio.length ? "원문 녹음" : "기기 합성 음성"));
+  }
   const supplements = findVerifiedSupplements(entry.requestedWord || entry.word);
   renderVerifiedSupplements(
     ui.verifiedSupplements,
@@ -160,7 +178,7 @@ function renderEntry(entry, { wiktionaryAvailable = true } = {}) {
   }
 
   const revision = entry.revisionId ? `리비전 ${entry.revisionId}` : "현재 공개 항목";
-  ui.sourceDescription.textContent = `Wiktionary ${revision}을 정리해 표시했습니다. 내용은 ${entry.license?.name || "CC BY-SA"} 조건을 따릅니다.`;
+  ui.sourceDescription.textContent = `Wiktionary ${revision}을 정리해 표시했습니다. 사전 텍스트는 ${entry.license?.name || "CC BY-SA"} 조건을 따릅니다. 녹음은 파일별 출처·이용 조건을 확인해 주세요.`;
   ui.sourceLink.href = entry.sourceUrl;
   setView("result");
   requestAnimationFrame(() => {
@@ -233,6 +251,10 @@ function speakWithDevice(word, language) {
     return;
   }
   window.speechSynthesis.cancel();
+  ui.audioButton.title = "기기 합성 음성으로 재생 중";
+  if (!ui.pronunciations.querySelector(".synthesis-notice")) {
+    ui.pronunciations.append(makeElement("span", "pronunciation-source synthesis-notice", "기기 합성 음성"));
+  }
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = language === "ko" ? "ko-KR" : "en-US";
   utterance.rate = 0.88;
@@ -343,7 +365,7 @@ export async function lookup(rawWord, { updateHistory = true } = {}) {
       throw new Error(payload.error || "사전 항목을 불러오지 못했습니다.");
     }
 
-    const entry = parseWiktionaryEntry(payload);
+    const entry = parseWiktionaryEntry(payload, { limits: false, includeSourceDetails: true });
     if (!entry.found) {
       if (hasLocalResult) {
         if (verifiedSupplements.length) renderSupplementOnlyEntry(word);

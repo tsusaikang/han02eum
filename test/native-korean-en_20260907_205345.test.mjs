@@ -40,22 +40,13 @@ test("English reverse results preserve source expressions without importing exac
   assert.ok(records.some((record) => record.headword === "숫자"));
   assert.ok(records.every((record) => record.matchKind === "english-expression"));
   assert.deepEqual(await lookupKoreanByEnglish("royal", { fetchImpl: localFetch() }), []);
-  let calls = 0;
-  assert.deepEqual(await lookupKoreanByEnglish("being of royal blood", {
-    fetchImpl: async () => { calls += 1; }
-  }), []);
-  assert.equal(calls, 0);
+  const phrases = await lookupKoreanByEnglish("take off", { fetchImpl: localFetch() });
+  assert.ok(phrases.length);
+  assert.ok(phrases.every((record) => record.matchedEnglishExpressions.some((expression) => expression.toLowerCase() === "take off")));
 });
 
-test("partial source failure warns, complete failure rejects, and cancellation stays observable", async () => {
-  const warnings = [];
+test("unified source failure rejects and cancellation stays observable", async () => {
   const fetchImpl = localFetch();
-  const records = await lookupKoreanEntry("숫자", {
-    fetchImpl: (url) => url.includes("recovered") ? Promise.reject(new Error("offline")) : fetchImpl(url),
-    onWarning: (warning) => warnings.push(warning)
-  });
-  assert.ok(records.length);
-  assert.equal(warnings.length, 1);
   await assert.rejects(lookupKoreanEntry("숫자", { fetchImpl: async () => { throw new Error("offline"); } }), /offline/);
   const controller = new AbortController();
   controller.abort();

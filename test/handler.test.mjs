@@ -70,7 +70,7 @@ test("handleRequest caches successful lookups and marks a repeated lookup as HIT
   assert.match(first.headers.get("Cache-Control"), /s-maxage=600/);
 
   const second = await handleRequest(
-    new Request("https://dictionary.example/api/lookup?word=hello"),
+    new Request("https://dictionary.example/api/lookup?word=Hello"),
     env,
     createContext(),
     { cache, fetchImpl }
@@ -108,4 +108,25 @@ test("handleRequest does not cache retryable upstream failures", async () => {
   assert.equal(response.status, 503);
   assert.equal(response.headers.get("Cache-Control"), "no-store");
   assert.equal(cacheWrites, 0);
+});
+
+
+test("case-sensitive titles do not share cache entries or reuse legacy lowercase cache", async () => {
+  const entries = new Map();
+  const cache = { async match(r) { return entries.get(r.url)?.clone(); }, async put(r, s) { entries.set(r.url, s.clone()); } };
+  entries.set("https://dictionary.example/__dictionary_cache__/lookup?word=us", Response.json({title:"wrong cached title"}));
+  let calls = 0;
+  const fetchImpl = async (url) => {
+    calls++;
+    const title = new URL(url).searchParams.get("page");
+    return Response.json({parse:{title, displaytitle:title, revid:1, text:'<h2 id="English">English</h2>'}});
+  };
+  const env = { ASSETS: {fetch: globalThis.fetch}, WIKIMEDIA_USER_AGENT: TEST_USER_AGENT };
+  for (const word of ["US", "us", "US", "us"]) {
+    const ctx = createContext();
+    const response = await handleRequest(new Request(`https://dictionary.example/api/lookup?word=${word}`), env, ctx, {cache,fetchImpl});
+    assert.equal((await response.json()).title, word);
+    await Promise.all(ctx.pending);
+  }
+  assert.equal(calls, 2);
 });

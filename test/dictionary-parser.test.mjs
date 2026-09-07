@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { DOMParser } from "linkedom";
 
 import {
+  audioSourceFor,
   classifyUnmatchedTranslationFallback,
   parseWiktionaryEntry
 } from "../public/dictionary-parser.js";
@@ -413,4 +414,66 @@ test("parseWiktionaryEntry collects independent NavFrame, table, and direct Kore
   assert.equal(group.unmatchedTranslationBlocks.some((block) =>
     block.translations.some(({ term }) => term === "돛")
   ), true);
+});
+
+
+test("source detail mode preserves reviewed top-level identities and translation matches", () => {
+  const html = `<h2 id="English">English</h2><h3>Noun</h3>
+    <ol><li>Parent sense.<dl><dd>Parent example sentence.</dd></dl>
+      <ol><li>Child sense.<dl><dd>Child example sentence.</dd></dl><ol><li>Grandchild sense.</li></ol></li></ol>
+      <dl><dd>Synonyms: same<ol><li>Not a definition.</li></ol></dd></dl>
+    </li><li><ol><li>Child with empty parent.</li></ol></li><li>Second parent.</li></ol>
+    <p>More definitions:</p><ol><li>Additional root meaning.</li></ol>
+    <h4>Examples</h4><ol><li>Numbered example, not a meaning.</li></ol>
+    <h4>Translations</h4><div class="NavFrame"><div class="NavHead">Parent sense</div><span lang="ko">부모 뜻</span></div>
+    <h3>Noun</h3><ol><li>Another etymology sense.</li></ol>`;
+  const legacy = parseFixture(html, {limits:false});
+  const full = parseFixture(html, {limits:false,includeSourceDetails:true});
+  assert.deepEqual(full.definitionGroups.map(g=>g.definitions), legacy.definitionGroups.map(g=>g.definitions));
+  assert.deepEqual(full.definitionGroups.map(g=>g.summaryKoreanTranslations), legacy.definitionGroups.map(g=>g.summaryKoreanTranslations));
+  const tree = full.definitionGroups[0].sourceDefinitions;
+  assert.equal(tree.length, 4);
+  assert.equal(tree[0].id, "noun-1-sense-1");
+  assert.equal(tree[0].text, "Parent sense.");
+  assert.deepEqual(tree[0].examples, ["Parent example sentence."]);
+  assert.equal(tree[0].children.length, 1);
+  assert.equal(tree[0].children[0].parentId, tree[0].id);
+  assert.equal(tree[0].children[0].children[0].text, "Grandchild sense.");
+  assert.equal(tree[1].text, "");
+  assert.equal(tree[1].children[0].text, "Child with empty parent.");
+  assert.equal(tree[2].id, "noun-1-sense-2");
+  assert.equal(tree[3].text, "Additional root meaning.");
+  assert.deepEqual(tree[0].children[0].koreanTranslations, []);
+  assert.deepEqual(tree[3].koreanTranslations, []);
+  assert.equal(JSON.stringify(tree).includes("Not a definition"), false);
+  assert.equal(JSON.stringify(tree).includes("Numbered example"), false);
+});
+
+test("empty parent recovery cannot renumber later historical POS groups", () => {
+  const html = '<h2 id="English">English</h2><h3>Noun</h3><ol><li><ol><li>A recovered child.</li></ol></li></ol><h3>Noun</h3><ol><li>A historical meaning.</li></ol>';
+  const old = parseFixture(html, {limits:false});
+  const full = parseFixture(html, {limits:false,includeSourceDetails:true});
+  assert.deepEqual(full.definitionGroups[1].definitions, old.definitionGroups[0].definitions);
+  assert.equal(full.definitionGroups[1].id, 'noun-1');
+  assert.match(full.definitionGroups[0].id, /^source-noun-heading-/);
+  assert.equal(full.definitionGroups[0].sourceDefinitions[0].children[0].text, 'A recovered child.');
+});
+
+test("Commons audio links use original file names and do not imply the dictionary text license", () => {
+  assert.equal(audioSourceFor('https://upload.wikimedia.org/wikipedia/commons/a/ab/En-us-test.ogg').descriptionUrl, 'https://commons.wikimedia.org/wiki/File:En-us-test.ogg');
+  assert.equal(audioSourceFor('https://upload.wikimedia.org/wikipedia/commons/transcoded/a/ab/En-us-test.ogg/En-us-test.ogg.mp3').descriptionUrl, 'https://commons.wikimedia.org/wiki/File:En-us-test.ogg');
+  assert.equal(audioSourceFor('https://other.example/test.ogg'), null);
+});
+
+
+test("additional source POS headings preserve their names without changing old sense IDs", () => {
+  const html = '<h2 id="English">English</h2><h3>Number</h3><ol><li>A source number sense.</li></ol><h3>Noun</h3><ol><li>A historical noun.</li></ol><h3>References</h3><ol><li>A bibliography item.</li></ol>';
+  const legacy = parseFixture(html, {limits:false});
+  const full = parseFixture(html, {limits:false,includeSourceDetails:true});
+  assert.equal(full.definitionGroups.length, 2);
+  assert.equal(full.definitionGroups[0].partOfSpeech, 'Number');
+  assert.match(full.definitionGroups[0].id, /^source-number-heading-/);
+  assert.deepEqual(full.definitionGroups[0].definitions, []);
+  assert.deepEqual(full.definitionGroups[1].definitions, legacy.definitionGroups[0].definitions);
+  assert.equal(JSON.stringify(full.definitionGroups).includes('A bibliography item'), false);
 });

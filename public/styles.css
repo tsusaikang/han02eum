@@ -1404,3 +1404,9 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+.definition-children { margin-top: 18px; margin-bottom: 12px; border-left: 2px solid #e6e5df; padding-left: 16px; }
+.definition-children .definition-text { font-size: 16px; }
+.definition-more { margin-top: 24px; }
+.definition-more > summary { cursor: pointer; color: var(--coral); margin-bottom: 24px; }
+.pronunciation-source { font-size: 12px; color: inherit; }

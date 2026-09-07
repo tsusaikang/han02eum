@@ -1,5 +1,4 @@
 import {
-  cacheKeyFor,
   requestWiktionaryEntry,
   validateLookupWord
 } from "./dictionary-api.js";
@@ -96,8 +95,8 @@ export async function handleRequest(request, env, ctx, dependencies = {}) {
 
   const fetchImpl = dependencies.fetchImpl || globalThis.fetch;
   const cache = dependencies.cache || caches.default;
-  const cacheUrl = new URL("/__dictionary_cache__/lookup", url.origin);
-  cacheUrl.searchParams.set("word", cacheKeyFor(validation.word));
+  const cacheUrl = new URL("/__dictionary_cache__/lookup-case-v2", url.origin);
+  cacheUrl.searchParams.set("word", validation.word);
   const cacheRequest = new Request(cacheUrl, { method: "GET" });
 
   if (cache) {

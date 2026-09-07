@@ -1,0 +1,294 @@
+--- a/src/wiktextract/extractor/ko/etymology.py
++++ b/src/wiktextract/extractor/ko/etymology.py
+@@ -1,6 +1,6 @@
+ from wikitextprocessor import HTMLNode, LevelNode, NodeKind, TemplateNode
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from .models import Form, WordEntry
+ from .tags import translate_raw_tags
+--- a/src/wiktextract/extractor/ko/example.py
++++ b/src/wiktextract/extractor/ko/example.py
+@@ -1,6 +1,7 @@
++from mediawiki_langcodes import code_to_name, name_to_code
+ from wikitextprocessor import HTMLNode, NodeKind, TemplateNode, WikiNode
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from ..ruby import extract_ruby
+ from ..share import calculate_bold_offsets, set_sound_file_url_fields
+@@ -20,7 +21,20 @@
+     e_tr_nodes = []
+     after_lang_template = False
+     for node in list_item.children:
+-        if isinstance(node, TemplateNode) and node.template_name == "lang":
++        if (isinstance(node, TemplateNode)
++                and (node.template_name.startswith(("RQ:", "quote-")) or node.template_name.endswith(" 용례"))
++                and node.template_parameters.get("passage")):
++            # Source quotations already provide the verbatim passage; rendering
++            # bibliography Lua is not required to preserve text/translation.
++            params = node.template_parameters
++            example.text = clean_node(wxr, None, params["passage"])
++            example.translation = clean_node(wxr, None, params.get("translation", params.get("t", "")))
++            refs = [clean_node(wxr, None, params[key]) for key in ["author", "title", "journal", "date", "year", "chapter", "page"] if params.get(key)]
++            if node.template_name.startswith("RQ:"):
++                refs.insert(0, node.template_name)
++            example.ref = "; ".join(refs)
++            break
++        elif isinstance(node, TemplateNode) and node.template_name == "lang":
+             after_lang_template = True
+             extract_example_lang_template(wxr, example, node, lang_code)
+         elif isinstance(node, TemplateNode) and node.template_name.startswith(
+@@ -160,6 +174,18 @@
+ ) -> None:
+     # https://ko.wiktionary.org/wiki/틀:ux
+     # https://ko.wiktionary.org/wiki/모듈:usex/templates
++    if t_node.template_name == "예문":
++        args = t_node.template_parameters
++        first = str(args.get(1, "")).strip()
++        explicit_language = bool(code_to_name(first, "en") or name_to_code(first, "ko"))
++        if "언어" in args or not explicit_language or first == "영어":
++            # Legacy examples support a named language, a language name, or no
++            # language at all. Keep both explicit source texts in their roles.
++            start = 2 if explicit_language and "언어" not in args else 1
++            example.text = clean_node(wxr, None, args.get(start, ""))
++            example.translation = clean_node(wxr, None, args.get(start + 1, ""))
++            example.ref = clean_node(wxr, None, args.get("출처", args.get("ref", "")))
++            return
+     lang_code = t_node.template_parameters.get(1, "")
+     expanded_node = wxr.wtp.parse(
+         wxr.wtp.node_to_wikitext(t_node), expand_all=True
+--- a/src/wiktextract/extractor/ko/linkage.py
++++ b/src/wiktextract/extractor/ko/linkage.py
+@@ -2,7 +2,7 @@
+ 
+ from wikitextprocessor import LevelNode, NodeKind, TemplateNode, WikiNode
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from .models import Linkage, WordEntry
+ from .section_titles import LINKAGE_SECTIONS
+--- a/src/wiktextract/extractor/ko/page.py
++++ b/src/wiktextract/extractor/ko/page.py
+@@ -11,7 +11,7 @@
+     WikiNode,
+ )
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from .etymology import extract_etymology_section, extract_ja_kanjitab_template
+ from .linkage import extract_linkage_section
+@@ -54,7 +54,13 @@
+     title_text = re.sub(r"\s*\d+$", "", title_text).strip("() ")
+     if "(" in title_text:
+         title_text = title_text[: title_text.index("(")]
+-    if title_text.removeprefix("보조 ").strip() in POS_DATA:
++    parts = [part.strip() for part in re.split(r"[,/·]|\s+및\s+", title_text)]
++    if len(parts) > 1 and all(part in POS_DATA for part in parts):
++        compound_index = len(page_data)
++        extract_pos_section(wxr, page_data, base_data, level_node, title_text)
++        if len(page_data) > compound_index:
++            page_data[-1].pos_title = title_text
++    elif title_text.removeprefix("보조 ").strip() in POS_DATA:
+         orig_page_data_len = len(page_data)
+         extract_pos_section(wxr, page_data, base_data, level_node, title_text)
+         if (
+@@ -88,6 +94,8 @@
+             else base_data,
+             level_node,
+         )
++        if any(node.sarg.startswith("#") and node.sarg.endswith("#") for node in level_node.find_child(NodeKind.LIST)):
++            extract_pos_section(wxr, page_data, base_data, level_node, "어원 아래 뜻")
+     elif title_text == "어법 주의 사항":
+         extract_grammar_note_section(
+             wxr,
+@@ -160,11 +168,22 @@
+             extract_ja_kanjitab_template(wxr, t_node, base_data)
+     if len(base_data.redirects) > 0:
+         page_data.append(base_data)
+-    for next_level in level2_node.find_child(LEVEL_KIND_FLAGS):
++    # Language-level senses and subordinate POS senses can coexist.
++    # Extract direct lists first; extract_pos_section drops empty entries.
++    direct_index = len(page_data)
++    extract_pos_section(wxr, page_data, base_data, level2_node, "")
++    sub_sections = list(level2_node.find_child(LEVEL_KIND_FLAGS))
++    if (
++        sub_sections
++        and len(page_data) > direct_index
++        and not page_data[-1].senses
++    ):
++        # Shared sound-only metadata must not become a duplicate root entry.
++        page_data.pop()
++    for next_level in sub_sections:
+         parse_section(wxr, page_data, base_data, next_level)
+-
+-    # no POS section
+     if len(page_data) == pre_data_len:
++        # Preserve source records that contain pronunciation/forms but no gloss.
+         extract_pos_section(wxr, page_data, base_data, level2_node, "")
+ 
+ 
+@@ -177,10 +196,43 @@
+     if page_title.startswith(("Appendix:", "T195546/NS111")):
+         return []
+     wxr.wtp.start_page(page_title)
+-    tree = wxr.wtp.parse(page_text)
++    # Comments are not source definitions. Paragraph tags are layout-only;
++    # unmatched legacy <p> wrappers must not swallow numbered wikitext lists.
++    page_text = re.sub(r"<!--.*?(?:-->|$)", "", page_text, flags=re.S)
++    page_text = re.sub(r"</?p(?:\s[^>]*)?>", "", page_text, flags=re.I)
++    # Normalize recognizable legacy definition syntax, leaving source words intact.
++    page_text = re.sub(r"(?m)^(?='''\d+(?:-\d+)?\.?''')", "* ", page_text)
++    def repair_empty_definition(match):
++        text = match.group(1).strip()
++        if text.startswith("[[") or (re.search(r"[가-힣]", text) and not re.search(r"[A-Za-z{}]", text)):
++            return "# " + text
++        return match.group(0)
++    def repair_pos_heading(match):
++        left, title, right = match.groups()
++        if len(left) != len(right) and title.strip() in POS_DATA:
++            marker = "=" * max(3, len(left), len(right))
++            return marker + title + marker
++        return match.group(0)
++    page_text = re.sub(r"(?m)^(={2,6})([^=\n]+)(={2,6})[ \t]*$", repair_pos_heading, page_text)
++    # A malformed HTML element in one language must not consume the next one.
++    # Language headings are explicit source boundaries, independent of HTML.
++    section_starts = list(re.finditer(r"(?m)^==(?!=)[ \t]*[^\n]+?(?<!=)==[ \t]*$", page_text))
+     page_data: list[WordEntry] = []
+-    for level2_node in tree.find_child(NodeKind.LEVEL2):
+-        parse_language_section(wxr, page_data, level2_node)
++    for index, match in enumerate(section_starts):
++        caption = match.group(0).strip("= \t")
++        caption_code = name_to_code(caption, "ko")
++        if (wxr.config.capture_language_codes is not None and caption_code
++                and caption_code not in wxr.config.capture_language_codes):
++            continue
++        end = section_starts[index + 1].start() if index + 1 < len(section_starts) else len(page_text)
++        section_text = page_text[match.start():end]
++        if caption_code == "en":
++            section_text = re.sub(r"(?m)^#[ \t]*\n:\*[ \t]*([^\n]+)$", repair_empty_definition, section_text)
++        tree = wxr.wtp.parse(section_text)
++        for level2_node in tree.find_child(NodeKind.LEVEL2):
++            language_data: list[WordEntry] = []
++            parse_language_section(wxr, language_data, level2_node)
++            page_data.extend(language_data)
+ 
+     for data in page_data:
+         if len(data.senses) == 0:
+--- a/src/wiktextract/extractor/ko/pos.py
++++ b/src/wiktextract/extractor/ko/pos.py
+@@ -8,7 +8,7 @@
+     WikiNode,
+ )
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from ..ruby import extract_ruby
+ from .example import extract_example_list_item
+@@ -144,6 +144,14 @@
+     wxr: WiktextractContext, word_entry: WordEntry, list_item: WikiNode
+ ) -> None:
+     is_first_bold = True
++    if list_item.children and isinstance(list_item.children[0], str):
++        ordinal = re.match(r"^\s*\d+(?:-\d+)?\.\s*", list_item.children[0])
++        if ordinal:
++            # Old Korean entries also use *1. without bold markup.
++            definition = WikiNode(NodeKind.LIST_ITEM, 0)
++            definition.children = [list_item.children[0][ordinal.end():], *list_item.children[1:]]
++            extract_gloss_list_item(wxr, word_entry, definition, Sense())
++            return
+     for index, node in enumerate(list_item.children):
+         if (
+             isinstance(node, WikiNode)
+--- a/src/wiktextract/extractor/ko/section_titles.py
++++ b/src/wiktextract/extractor/ko/section_titles.py
+@@ -1,6 +1,24 @@
+ from ...config import POSSubtitleData
+ 
+ POS_DATA: dict[str, POSSubtitleData] = {
++    "속어": {"pos": "unknown", "tags": ["slang"]},
++    "의성어": {"pos": "unknown", "tags": ["onomatopoeic"]},
++    "인명": {"pos": "name"},
++    "구": {"pos": "phrase"},
++
++    "동명사": {"pos": "noun", "tags": ["gerund"]},
++    "구동사": {"pos": "verb", "tags": ["phrasal"]},
++    "전치사적 구": {"pos": "phrase"},
++    "두문자어": {"pos": "abbrev", "tags": ["abbreviation"]},
++    "Suffix": {"pos": "suffix", "tags": ["morpheme"]},
++    "뜻": {"pos": "unknown"},
++    "한정사": {"pos": "det"},
++    "형용사구": {"pos": "adj"},
++    "전치사구": {"pos": "phrase"},
++    "준말": {"pos": "abbrev", "tags": ["abbreviation"]},
++    "약어": {"pos": "abbrev", "tags": ["abbreviation"]},
++    "불변화사": {"pos": "particle"},
++    "접사": {"pos": "unknown", "tags": ["morpheme"]},
+     "명사": {"pos": "noun"},
+     "형용사": {"pos": "adj"},
+     "대명사": {"pos": "pron"},
+--- a/src/wiktextract/extractor/ko/sound.py
++++ b/src/wiktextract/extractor/ko/sound.py
+@@ -1,6 +1,6 @@
+ from wikitextprocessor import LevelNode, NodeKind, TemplateNode
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from ..share import set_sound_file_url_fields
+ from .models import Sound, WordEntry
+--- a/src/wiktextract/extractor/ko/text.py
++++ b/src/wiktextract/extractor/ko/text.py
+@@ -0,0 +1,36 @@
++"""Render explicit legacy Korean link/label arguments without incompatible Lua aliases."""
++from mediawiki_langcodes import code_to_name
++from ...page import clean_node as clean_core
++
++def clean_node(wxr, sense_data, wikinode, template_fn=None, **kwargs):
++    def legacy_template(name, args):
++        first = str(args.get(1, '')).strip()
++        if name == '연결' and first and not code_to_name(first, 'en'):
++            # Legacy {{연결|표제어|언어=...}} uses the first parameter as text.
++            if 2 not in args:
++                return '[[' + first + ']]'
++        if name in ('plural of', 'inflection of', 'infl of') and code_to_name(first, 'en') and args.get(2):
++            # The dump's form-of Lua calls methods on a module-name string.
++            # Preserve explicit lemma and grammatical codes without inventing
++            # a Korean definition or depending on that broken implementation.
++            lemma = str(args[2])
++            if name == 'plural of':
++                return 'Plural of [[' + lemma + ']]'
++            codes = [str(args[k]) for k in sorted(k for k in args if isinstance(k, int) and k >= 4) if str(args[k]).strip()]
++            return 'Inflection of [[' + lemma + ']]' + (' (' + ', '.join(codes) + ')' if codes else '')
++        if name == '웹 인용'  and args.get('url'):
++            title = str(args.get('제목') or args.get('title') or args['url'])
++            return '[' + str(args['url']) + ' ' + title + ']'
++        if name == '예문' and '언어' in args:
++            return str(args.get(1, '')) + (' — ' + str(args[2]) if args.get(2) else '')
++        return template_fn(name, args) if template_fn else None
++    previous_post = kwargs.pop('post_template_fn', None)
++    def legacy_post(name, args, expanded):
++        first = str(args.get(1, '')).strip()
++        if name == '라벨' and 'class="error"' in expanded:
++            start = 2 if code_to_name(first, 'en') else 1
++            labels = [str(args[k]).strip() for k in sorted(k for k in args if isinstance(k, int) and k >= start) if str(args[k]).strip()]
++            if labels:
++                return '(' + ', '.join(labels) + ')'
++        return previous_post(name, args, expanded) if previous_post else None
++    return clean_core(wxr, sense_data, wikinode, template_fn=legacy_template, post_template_fn=legacy_post, **kwargs)
+--- a/src/wiktextract/extractor/ko/translation.py
++++ b/src/wiktextract/extractor/ko/translation.py
+@@ -2,7 +2,7 @@
+ 
+ from wikitextprocessor import LevelNode, NodeKind, TemplateNode, WikiNode
+ 
+-from ...page import clean_node
++from .text import clean_node
+ from ...wxr_context import WiktextractContext
+ from .models import Translation, WordEntry
+ from .tags import translate_raw_tags

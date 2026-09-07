@@ -1,0 +1,50 @@
+{
+  "version": "native-krdict_20260908_012600",
+  "source": {
+    "name": "한국어기초사전",
+    "url": "https://krdict.korean.go.kr/dicBatchDownload?seq=214",
+    "archiveSha256": "7cf41e62a2a36158a8be2b6d2f84c086221e9b29d4345c44e5497eebf21c8c40",
+    "archiveBytes": 84455509
+  },
+  "license": {
+    "name": "CC BY-SA 2.0 KR",
+    "url": "https://creativecommons.org/licenses/by-sa/2.0/kr/"
+  },
+  "stats": {
+    "sourceEntries": 56555,
+    "entriesWithPronunciation": 46424,
+    "pronunciationTexts": 87381,
+    "entryAnnotations": 2031,
+    "sourceSenses": 76833,
+    "examples": 657691,
+    "sensesWithExamples": 74644,
+    "senseAnnotations": 4342,
+    "sensesWithAnnotations": 4342,
+    "sensesWithRelations": 22542,
+    "englishSenses": 75145,
+    "reverseOccurrences": 107501,
+    "phraseOccurrences": 44259,
+    "referenceSenses": 1688,
+    "koreanKeys": 51909,
+    "englishKeys": 49047,
+    "phraseKeys": 30888,
+    "excludedExpressionSenses": 3233
+  },
+  "shardCounts": {
+    "korean": 64,
+    "english": 64,
+    "details": 256
+  },
+  "bytes": {
+    "korean": 61218017,
+    "english": 91840351,
+    "details": 204128024
+  },
+  "maxShardBytes": {
+    "korean": 1093962,
+    "english": 1676970,
+    "details": 966676
+  },
+  "scope": "All source Korean/English senses. Other-language equivalents retained in the unchanged raw archive. Core search and lazy source details preserve source sense boundaries.",
+  "reversePolicy": "HTML entities decoded before semicolon alternatives. Commas/slashes stay in whole expressions; additional single-expression alternatives only when all fragments are single expressions. Atomic presentation marks are normalized only in keys. Sentence-like alternatives are excluded independently; up to 12 tokens. No word decomposition or semantic inference."
+}
