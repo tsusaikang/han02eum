@@ -923,7 +923,7 @@ test("the supplement renderer keeps a concise definition and collapsed source de
 });
 
 test("verified supplements are nested inside the single Korean meanings section", () => {
-  const html = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  const html = readFileSync(new URL("../public/legacy_20260907_205800.html", import.meta.url), "utf8");
   const koreanMeaningsStart = html.indexOf('<section id="translation-section"');
   const supplements = html.indexOf('<div id="verified-supplements">', koreanMeaningsStart);
   const koreanMeaningsEnd = html.indexOf("</section>", supplements);

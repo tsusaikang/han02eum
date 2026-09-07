@@ -1,0 +1,361 @@
+{
+  "version": "native-english-ko_20260907_205330",
+  "generatedAt": "2026-09-07T12:20:53.069Z",
+  "source": {
+    "name": "한국어 위키낱말사전",
+    "url": "https://ko.wiktionary.org/",
+    "extractor": "Kaikki / wiktextract",
+    "downloadUrl": "https://kaikki.org/dictionary/downloads/ko/ko-extract.jsonl.gz",
+    "license": {
+      "name": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "adaptation": "English entries selected; Korean glosses retained in original senses; non-Korean or broken glosses and navigation examples omitted; metadata fields selected; duplicate pronunciation records removed."
+  },
+  "input": {
+    "path": ".local/sources/kowiktionary_20260907_205330/ko-extract.jsonl.gz",
+    "bytes": 25829679,
+    "sha256": "3bf5784e7600cfc557d70ff504bc3a4fc3fd9c42bd54e74946a8f0d6861d58bd"
+  },
+  "normalization": "NFKC, trim, whitespace collapse, lowercase; original headword retained; no form aliases",
+  "shardCount": 64,
+  "shardSeed": "native-en-ko-v1\u0000",
+  "inventory": {
+    "rawEnglishEntries": 17801,
+    "rawEnglishSenses": 22847,
+    "entries": 16584,
+    "senses": 21543,
+    "unknownPosEntries": 9841,
+    "entriesWithExamples": 3853,
+    "entriesWithPronunciation": 6994,
+    "entriesWithForms": 291,
+    "droppedEntries": 1217,
+    "droppedSenses": 1304,
+    "duplicateEntries": 0,
+    "rawDistinctHeadwords": 16569,
+    "distinctHeadwords": 15370,
+    "lookupKeys": 15248
+  },
+  "shards": [
+    {
+      "file": "shard-00.json",
+      "keys": 251,
+      "bytes": 167508
+    },
+    {
+      "file": "shard-01.json",
+      "keys": 237,
+      "bytes": 163974
+    },
+    {
+      "file": "shard-02.json",
+      "keys": 236,
+      "bytes": 161805
+    },
+    {
+      "file": "shard-03.json",
+      "keys": 255,
+      "bytes": 154775
+    },
+    {
+      "file": "shard-04.json",
+      "keys": 231,
+      "bytes": 143347
+    },
+    {
+      "file": "shard-05.json",
+      "keys": 240,
+      "bytes": 156458
+    },
+    {
+      "file": "shard-06.json",
+      "keys": 230,
+      "bytes": 138031
+    },
+    {
+      "file": "shard-07.json",
+      "keys": 254,
+      "bytes": 160197
+    },
+    {
+      "file": "shard-08.json",
+      "keys": 239,
+      "bytes": 150241
+    },
+    {
+      "file": "shard-09.json",
+      "keys": 249,
+      "bytes": 152552
+    },
+    {
+      "file": "shard-10.json",
+      "keys": 225,
+      "bytes": 142731
+    },
+    {
+      "file": "shard-11.json",
+      "keys": 236,
+      "bytes": 151531
+    },
+    {
+      "file": "shard-12.json",
+      "keys": 248,
+      "bytes": 161358
+    },
+    {
+      "file": "shard-13.json",
+      "keys": 219,
+      "bytes": 150419
+    },
+    {
+      "file": "shard-14.json",
+      "keys": 244,
+      "bytes": 156136
+    },
+    {
+      "file": "shard-15.json",
+      "keys": 222,
+      "bytes": 143217
+    },
+    {
+      "file": "shard-16.json",
+      "keys": 235,
+      "bytes": 144622
+    },
+    {
+      "file": "shard-17.json",
+      "keys": 230,
+      "bytes": 151477
+    },
+    {
+      "file": "shard-18.json",
+      "keys": 246,
+      "bytes": 156686
+    },
+    {
+      "file": "shard-19.json",
+      "keys": 248,
+      "bytes": 165122
+    },
+    {
+      "file": "shard-20.json",
+      "keys": 259,
+      "bytes": 176254
+    },
+    {
+      "file": "shard-21.json",
+      "keys": 233,
+      "bytes": 150451
+    },
+    {
+      "file": "shard-22.json",
+      "keys": 229,
+      "bytes": 144478
+    },
+    {
+      "file": "shard-23.json",
+      "keys": 239,
+      "bytes": 151993
+    },
+    {
+      "file": "shard-24.json",
+      "keys": 224,
+      "bytes": 139288
+    },
+    {
+      "file": "shard-25.json",
+      "keys": 229,
+      "bytes": 154801
+    },
+    {
+      "file": "shard-26.json",
+      "keys": 247,
+      "bytes": 164405
+    },
+    {
+      "file": "shard-27.json",
+      "keys": 240,
+      "bytes": 155253
+    },
+    {
+      "file": "shard-28.json",
+      "keys": 247,
+      "bytes": 178637
+    },
+    {
+      "file": "shard-29.json",
+      "keys": 238,
+      "bytes": 154681
+    },
+    {
+      "file": "shard-30.json",
+      "keys": 222,
+      "bytes": 156047
+    },
+    {
+      "file": "shard-31.json",
+      "keys": 238,
+      "bytes": 153193
+    },
+    {
+      "file": "shard-32.json",
+      "keys": 225,
+      "bytes": 143174
+    },
+    {
+      "file": "shard-33.json",
+      "keys": 240,
+      "bytes": 155066
+    },
+    {
+      "file": "shard-34.json",
+      "keys": 281,
+      "bytes": 192480
+    },
+    {
+      "file": "shard-35.json",
+      "keys": 244,
+      "bytes": 167899
+    },
+    {
+      "file": "shard-36.json",
+      "keys": 256,
+      "bytes": 167443
+    },
+    {
+      "file": "shard-37.json",
+      "keys": 253,
+      "bytes": 165318
+    },
+    {
+      "file": "shard-38.json",
+      "keys": 242,
+      "bytes": 154548
+    },
+    {
+      "file": "shard-39.json",
+      "keys": 221,
+      "bytes": 143437
+    },
+    {
+      "file": "shard-40.json",
+      "keys": 239,
+      "bytes": 168948
+    },
+    {
+      "file": "shard-41.json",
+      "keys": 209,
+      "bytes": 127413
+    },
+    {
+      "file": "shard-42.json",
+      "keys": 245,
+      "bytes": 170465
+    },
+    {
+      "file": "shard-43.json",
+      "keys": 214,
+      "bytes": 147054
+    },
+    {
+      "file": "shard-44.json",
+      "keys": 226,
+      "bytes": 142097
+    },
+    {
+      "file": "shard-45.json",
+      "keys": 228,
+      "bytes": 148820
+    },
+    {
+      "file": "shard-46.json",
+      "keys": 203,
+      "bytes": 132175
+    },
+    {
+      "file": "shard-47.json",
+      "keys": 239,
+      "bytes": 163931
+    },
+    {
+      "file": "shard-48.json",
+      "keys": 221,
+      "bytes": 156106
+    },
+    {
+      "file": "shard-49.json",
+      "keys": 251,
+      "bytes": 170804
+    },
+    {
+      "file": "shard-50.json",
+      "keys": 240,
+      "bytes": 174156
+    },
+    {
+      "file": "shard-51.json",
+      "keys": 256,
+      "bytes": 169896
+    },
+    {
+      "file": "shard-52.json",
+      "keys": 252,
+      "bytes": 157002
+    },
+    {
+      "file": "shard-53.json",
+      "keys": 230,
+      "bytes": 146874
+    },
+    {
+      "file": "shard-54.json",
+      "keys": 251,
+      "bytes": 167989
+    },
+    {
+      "file": "shard-55.json",
+      "keys": 233,
+      "bytes": 141227
+    },
+    {
+      "file": "shard-56.json",
+      "keys": 246,
+      "bytes": 163972
+    },
+    {
+      "file": "shard-57.json",
+      "keys": 264,
+      "bytes": 170120
+    },
+    {
+      "file": "shard-58.json",
+      "keys": 230,
+      "bytes": 148659
+    },
+    {
+      "file": "shard-59.json",
+      "keys": 229,
+      "bytes": 141318
+    },
+    {
+      "file": "shard-60.json",
+      "keys": 227,
+      "bytes": 141439
+    },
+    {
+      "file": "shard-61.json",
+      "keys": 243,
+      "bytes": 169848
+    },
+    {
+      "file": "shard-62.json",
+      "keys": 234,
+      "bytes": 161188
+    },
+    {
+      "file": "shard-63.json",
+      "keys": 256,
+      "bytes": 172404
+    }
+  ]
+}

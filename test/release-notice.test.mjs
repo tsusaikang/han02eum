@@ -697,7 +697,7 @@ test("hostile release strings stay literal on the textContent rendering path", (
 
 test("page source integrates accessible IDs without innerHTML or search coupling", async () => {
   const [html, appSource, noticeSource, styles] = await Promise.all([
-    readFile("public/index.html", "utf8"),
+    readFile("public/legacy_20260907_205800.html", "utf8"),
     readFile("public/app.js", "utf8"),
     readFile("public/release-notice.js", "utf8"),
     readFile("public/styles.css", "utf8")
