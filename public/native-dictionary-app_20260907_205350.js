@@ -120,13 +120,13 @@ function senseShell(document, index, posLabel) {
   return item;
 }
 
-export function renderEnglishEntries(container, entries) {
+export function renderEnglishEntries(container, entries, {heading = true} = {}) {
   const document = container.ownerDocument;
   const items = entries.flatMap(entry => (entry.senses || [])
     .filter(sense => (sense.glosses || []).some(gloss => typeof gloss === "string" && gloss.trim()))
     .map(sense => ({entry, sense})));
   if (!items.length) return 0;
-  container.append(el(document, "h3", "meaning-heading", "한국어 뜻"));
+  if (heading) container.append(el(document, "h3", "meaning-heading", "한국어 뜻"));
   return paginatedList(container, items, ({entry, sense}, index) => {
     const item = senseShell(document, index, labelFor(entry.pos, entry.posTitle));
     if (entry.word) {
@@ -311,27 +311,21 @@ export function createDictionaryApp(services, {document = globalThis.document, w
       url.searchParams.delete("direction");
       if (url.href !== window.location.href) window.history.pushState({}, "", url);
     }
-    let warned = false;
     try {
-      const lookup = direction === "en-ko" ? services.lookupEnglishEntry : services.lookupKoreanEntry;
-      const entries = await lookup(query, {signal:requestSignal,onWarning:() => { warned = true; }});
-      if (request !== serial) return;
       const article = el(document, "article", "entry");
       article.setAttribute("aria-labelledby", "result-word");
       const header = el(document, "header", "word-header");
       header.append(el(document, "p", "result-direction", direction === "en-ko" ? "영어 → 한국어" : "한국어 → 영어"));
-      const heading = el(document, "h2", "", entries[0]?.word || entries[0]?.headword || query);
+      const heading = el(document, "h2", "", query);
       heading.id = "result-word";
       heading.tabIndex = -1;
       header.append(heading);
-      if (direction === "en-ko") {
-        const ipa = [...new Set(entries.flatMap(entry => (entry.sounds || []).map(sound => sound.ipa).filter(Boolean)))];
-        if (ipa.length) header.append(el(document, "p", "sense-reference", ipa.join(" · ")));
-      }
-      if (direction === "ko-en") {
-        const pronunciations = [...new Set(entries.flatMap(entry => (entry.pronunciations || []).map(item => item.pronunciation).filter(Boolean)))];
-        if (pronunciations.length) header.append(el(document, "p", "sense-reference source-pronunciation", `발음 ${pronunciations.join(" · ")}`));
-      }
+      const pronunciation = el(document, "p", "sense-reference source-pronunciation");
+      pronunciation.hidden = true;
+      header.append(pronunciation);
+      article.append(header);
+      const meaning = el(document, "div", "meaning-content");
+      article.append(meaning);
       const pendingDetails = new Map();
       const loadDetails = services.loadKoreanEntryDetails ? record => {
         if (!pendingDetails.has(record.id)) {
@@ -340,52 +334,46 @@ export function createDictionaryApp(services, {document = globalThis.document, w
         }
         return pendingDetails.get(record.id);
       } : undefined;
-      article.append(header);
-      const meaning = el(document, "div", "meaning-content");
-      const count = direction === "en-ko" ? renderEnglishEntries(meaning, entries) : renderKoreanEntries(meaning, entries, {loadDetails,signal:requestSignal});
-      if (!count) {
-        const empty = el(document, "div", "empty-result");
-        empty.append(el(document, "h3", "", warned ? "뜻을 모두 확인하지 못했어요" : direction === "en-ko" ? "한국어 뜻을 찾지 못했어요" : "영어 뜻을 찾지 못했어요"));
-        empty.append(el(document, "p", "", warned ? "일부 사전 자료를 불러오지 못했습니다. 잠시 후 다시 찾아 주세요." : direction === "en-ko"
-          ? "현재 수록된 위키낱말사전 자료에는 이 단어의 한국어 풀이가 없습니다. 철자를 확인하거나 영영 사전에서 뜻을 살펴보세요."
-          : "현재 수록된 한국어기초사전 자료에 이 표제어가 없습니다. 띄어쓰기나 기본형을 확인해 주세요."));
-        meaning.append(empty);
+      const lanes = direction === "en-ko" ? [
+        {name:"위키낱말사전",kind:"english",lookup:services.lookupEnglishEntry},
+        ...(services.lookupKoreanByEnglish ? [{name:"한국어기초사전",kind:"reverse",lookup:services.lookupKoreanByEnglish}] : [])
+      ] : [{name:"한국어기초사전",kind:"korean",lookup:services.lookupKoreanEntry}];
+      for (const lane of lanes) {
+        lane.section = el(document, "section", "dictionary-results");
+        lane.section.dataset.source = lane.kind;
+        lane.section.hidden = true;
+        lane.section.append(el(document, "h3", "meaning-heading", lane.name));
+        lane.body = el(document, "div", "source-results");
+        lane.section.append(lane.body);
+        meaning.append(lane.section);
+        lane.count = 0;
+        lane.done = false;
+        lane.failed = false;
+        lane.partial = false;
       }
-      article.append(meaning);
-      setStatus(warned ? "일부 자료를 불러오지 못했습니다. 확인된 뜻을 먼저 보여 드립니다." : count ? "검색 결과를 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.", {success:!warned && count > 0});
-      if (direction === "en-ko" && services.lookupKoreanByEnglish) {
-        const related = el(document, "details", "related-details");
-        related.append(el(document, "summary", "", "한국어기초사전에서 함께 찾기"));
-        related.append(el(document, "p", "related-note", "이 영어 표현이 사용된 한국어 항목입니다. 위 한국어 뜻과는 별도로 볼 수 있어요."));
-        const body = el(document, "div", "");
-        related.append(body);
-        let started = false;
-        const loadRelated = async () => {
-          if (!related.open || started) return;
-          started = true;
-          body.textContent = "함께 쓰인 표현을 찾고 있습니다…";
-          try {
-            let partial = false;
-            const records = await services.lookupKoreanByEnglish(query, {signal:requestSignal,onWarning:() => { partial = true; }});
-            if (request !== serial) return;
-            body.replaceChildren();
-            if (!renderKoreanEntries(body, records, {related:true,loadDetails,signal:requestSignal})) body.append(el(document, "p", "sense-reference", "함께 찾은 한국어 항목이 없습니다."));
-            if (partial) body.append(el(document, "p", "sense-reference", "일부 자료를 불러오지 못했습니다. 잠시 후 다시 검색해 주세요."));
-            if (!count) {
-              setStatus(partial || warned
-                ? "일부 자료를 불러오지 못했습니다. 확인된 관련 항목을 먼저 보여 드립니다."
-                : records.length ? "한국어기초사전의 관련 항목을 표시했습니다." : "기본 사전에 수록된 뜻이 없습니다.", {success:!partial && !warned && records.length > 0});
-            }
-          } catch (error) {
-            if (request !== serial || error?.name === "AbortError") return;
-            body.textContent = "자료를 불러오지 못했습니다. 접었다 펼쳐 다시 시도해 주세요.";
-            started = false;
-          }
-        };
-        related.addEventListener("toggle", loadRelated);
-        article.append(related);
-        if (!count) { related.open = true; loadRelated(); }
-      }
+      const empty = el(document, "div", "empty-result");
+      empty.hidden = true;
+      meaning.append(empty);
+      const updateStatus = () => {
+        if (request !== serial) return;
+        const count = lanes.reduce((sum, lane) => sum + lane.count, 0);
+        const pending = lanes.some(lane => !lane.done);
+        const unavailable = lanes.filter(lane => lane.failed || lane.partial).map(lane => lane.name);
+        if (count) {
+          empty.hidden = true;
+          setStatus(unavailable.length
+            ? `${unavailable.join(" · ")} 자료를 모두 불러오지 못했습니다. 확인된 결과를 보여 드립니다.`
+            : pending ? "검색 결과를 보여 드립니다. 나머지 사전도 찾고 있습니다…" : "검색 결과를 표시했습니다.", {success:!unavailable.length});
+        } else if (!pending) {
+          empty.replaceChildren();
+          empty.append(el(document, "h3", "", unavailable.length ? "뜻을 모두 확인하지 못했어요" : "수록된 사전에서 뜻을 찾지 못했어요"));
+          empty.append(el(document, "p", "", unavailable.length
+            ? "일부 사전 자료를 불러오지 못했습니다. 잠시 후 다시 찾아 주세요."
+            : "철자나 띄어쓰기, 기본형을 확인해 주세요."));
+          empty.hidden = false;
+          setStatus(unavailable.length ? "일부 사전 자료를 불러오지 못했습니다." : "수록된 사전에서 검색 결과를 찾지 못했습니다.");
+        }
+      };
       const links = el(document, "nav", "entry-links");
       links.setAttribute("aria-label", "다른 사전에서 보기");
       const external = safeLink(document, direction === "en-ko" ? "영영 사전에서 더 보기 ↗" : "한국어기초사전에서 더 보기 ↗", direction === "en-ko"
@@ -394,6 +382,36 @@ export function createDictionaryApp(services, {document = globalThis.document, w
       if (external) links.append(external);
       article.append(links);
       area.replaceChildren(article);
+      await Promise.all(lanes.map(async lane => {
+        try {
+          const entries = await lane.lookup(query, {signal:requestSignal,onWarning:() => { lane.partial = true; }});
+          if (request !== serial) return;
+          lane.count = lane.kind === "english"
+            ? renderEnglishEntries(lane.body, entries, {heading:false})
+            : renderKoreanEntries(lane.body, entries, {related:lane.kind === "reverse",loadDetails,signal:requestSignal});
+          lane.section.hidden = !lane.count;
+          if (lane.kind !== "reverse" && entries.length) {
+            heading.textContent = entries[0]?.word || entries[0]?.headword || query;
+            const readings = [...new Set(entries.flatMap(entry => lane.kind === "english"
+              ? (entry.sounds || []).map(sound => sound.ipa).filter(Boolean)
+              : (entry.pronunciations || []).map(item => item.pronunciation).filter(Boolean)))];
+            pronunciation.textContent = `${lane.kind === "korean" ? "발음 " : ""}${readings.join(" · ")}`;
+            pronunciation.hidden = !readings.length;
+          }
+        } catch (error) {
+          if (request !== serial || requestSignal.aborted || error?.name === "AbortError") return;
+          lane.failed = true;
+          lane.error = error;
+          lane.body.replaceChildren();
+          lane.count = 0;
+          lane.section.hidden = true;
+        } finally {
+          lane.done = true;
+          updateStatus();
+        }
+      }));
+      if (request !== serial || requestSignal.aborted) return;
+      if (lanes.every(lane => lane.failed)) throw lanes[0].error;
       heading.focus({preventScroll:true});
     } catch (error) {
       if (request !== serial || error?.name === "AbortError") return;

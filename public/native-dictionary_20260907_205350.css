@@ -8,3 +8,7 @@
 .has-results .hero{padding:26px 0 5px}.has-results .hero h1,.has-results .hero-copy,.has-results .hero .eyebrow,.has-results .suggestions{display:none}.has-results .lookup-area{margin-top:12px}
 
 .sense-usage{font-size:13px;color:var(--green);border-left:2px solid var(--green-soft);padding:3px 10px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}.source-detail-body{font-size:14px}.example-list{padding:0;list-style:none;margin:10px 0}.source-example{padding:10px 0;border-bottom:1px solid var(--line)}.source-example:last-child{border-bottom:0}.example-type{font-size:11px;color:var(--green);font-weight:650}.source-example .sense-reference{margin:4px 0;font-size:14px}.detail-heading{font-size:13px;color:var(--green);margin:15px 0 5px}.relation-word{font-size:14px;min-height:32px;font-weight:500}.source-pronunciation{font-size:14px}.example-more{font-size:13px;margin:10px 0;padding:6px 14px}
+
+.dictionary-results:not([hidden])~.dictionary-results:not([hidden]){border-top:1px solid var(--line);margin-top:24px;padding-top:24px}.dictionary-results>.meaning-heading{font-size:15px}.dictionary-results .sense-meaning{font-size:21px}.dictionary-results .sense-definition{font-size:16px}@media(max-width:540px){.dictionary-results .sense-meaning{font-size:19px}.dictionary-results .sense-definition{font-size:15px}}
+
+.dictionary-results .related-word:not(.relation-word){font-size:21px}@media(max-width:540px){.dictionary-results .related-word:not(.relation-word){font-size:19px}}

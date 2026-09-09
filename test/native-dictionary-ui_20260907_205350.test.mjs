@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {parseHTML} from "linkedom";
 import {renderEnglishEntries,renderKoreanEntries,resolveDirection,createDictionaryApp} from "../public/native-dictionary-app_20260907_205350.js";
 import {lookupEnglishEntry} from "../public/native-english-ko.js";
-import {lookupKoreanEntry} from "../public/native-korean-en_20260907_205345.js";
+import {lookupKoreanEntry,lookupKoreanByEnglish} from "../public/native-korean-en_20260907_205345.js";
 
 const html = readFileSync(new URL("../public/index.html",import.meta.url),"utf8");
 function fixture() { return parseHTML(html); }
@@ -107,24 +107,49 @@ test("partial Korean lookup and ordinary missing word produce distinct copy",asy
   assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),false);
   assert.ok(!document.body.textContent.includes("internal diagnostic"));
   await app.search("missing");
-  assert.ok(document.querySelector("#lookup-area").textContent.includes("한국어 풀이가 없습니다"));
+  assert.ok(document.querySelector("#lookup-area").textContent.includes("수록된 사전에서 뜻을 찾지 못했어요"));
   assert.ok(document.querySelector(".entry-links a").href.includes("en.wiktionary.org/wiki/missing"));
 });
 
-test("a missing English primary opens the distinct Korean source automatically",async()=>{
+test("a result from either dictionary is an expanded ordinary result without an absent-source message",async()=>{
   const {document}=fixture();
   let reverseCalls=0;
   const app=createDictionaryApp({lookupEnglishEntry:async()=>[],lookupKoreanEntry:async()=>[],lookupKoreanByEnglish:async()=>{reverseCalls++;return [{headword:"나무",englishExpression:"tree",definitionKo:"나무의 한국어 원뜻",source:{name:"한국어기초사전"}}];}},{document,window:{}});
   await app.search("tree");
   assert.equal(reverseCalls,1);
-  assert.equal(document.querySelector(".related-details").open,true);
-  assert.ok(document.querySelector(".related-details").textContent.includes("나무의 한국어 원뜻"));
-  assert.ok(document.querySelector(".empty-result").textContent.includes("위키낱말사전"));
-  assert.equal(document.querySelector("#lookup-status").textContent,"한국어기초사전의 관련 항목을 표시했습니다.");
+  const section=document.querySelector('[data-source="reverse"]');
+  assert.equal(section.hidden,false);
+  assert.equal(section.tagName,"SECTION");
+  assert.ok(section.textContent.includes("나무의 한국어 원뜻"));
+  assert.equal(document.querySelector(".empty-result").hidden,true);
+  assert.equal(document.querySelector(".related-details"),null);
+  assert.ok(!document.body.textContent.includes("함께 찾기"));
+  assert.ok(!document.body.textContent.includes("위 한국어 뜻과는 별도로"));
+  assert.equal(document.querySelector("#lookup-status").textContent,"검색 결과를 표시했습니다.");
   assert.equal(document.querySelector("#lookup-status").classList.contains("sr-only"),true);
 });
 
-test("related-only status preserves loading scope, partial warnings, and newer search results",async()=>{
+test("both dictionaries start immediately and settled results remain visible while the other loads",async()=>{
+  const {document}=fixture();
+  let finish;
+  let reverseCalls=0;
+  const app=createDictionaryApp({lookupEnglishEntry:async()=>[{word:"tree",senses:[{glosses:["나무"]}]}],lookupKoreanEntry:async()=>[],lookupKoreanByEnglish:()=>{reverseCalls++;return new Promise(resolve=>finish=resolve);}},{document,window:{}});
+  const search=app.search("tree");
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(reverseCalls,1);
+  assert.equal(document.querySelector('[data-source="english"]').hidden,false);
+  assert.ok(document.querySelector('[data-source="english"]').textContent.includes("나무"));
+  assert.equal(document.querySelector(".empty-result").hidden,true);
+  assert.equal(document.querySelector("#lookup-area").getAttribute("aria-busy"),"true");
+  finish([{headword:"수목",englishExpression:"tree",definitionKo:"나무의 원뜻",source:{name:"한국어기초사전",url:"https://krdict.korean.go.kr/"}}]);
+  await search;
+  assert.equal(document.querySelector('[data-source="reverse"]').hidden,false);
+  assert.equal(document.querySelectorAll('.dictionary-results:not([hidden])').length,2);
+  assert.ok(document.querySelector('[data-source="reverse"] .source-details a'));
+  assert.equal(document.querySelector("#lookup-area").getAttribute("aria-busy"),"false");
+});
+
+test("parallel source results preserve partial warnings and cannot overwrite a newer search",async()=>{
   const {document}=fixture();
   const pending=new Map();
   const app=createDictionaryApp({
@@ -132,18 +157,64 @@ test("related-only status preserves loading scope, partial warnings, and newer s
     lookupKoreanEntry:async()=>[],
     lookupKoreanByEnglish:async(word,options)=>new Promise(resolve=>pending.set(word,{resolve,options}))
   },{document,window:{}});
-  await app.search("coexist");
-  assert.equal(document.querySelector("#lookup-status").textContent,"기본 사전에 수록된 뜻이 없습니다.");
+  const first=app.search("coexist");
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(document.querySelector(".empty-result").hidden,true);
   pending.get("coexist").options.onWarning("partial");
   pending.get("coexist").resolve([{headword:"공존하다",englishExpression:"coexist",source:{name:"한국어기초사전"}}]);
-  await new Promise(resolve=>setImmediate(resolve));
-  assert.ok(document.querySelector("#lookup-status").textContent.includes("일부 자료를 불러오지 못했습니다"));
-  await app.search("opsimathy");
-  await app.search("apple");
+  await first;
+  assert.ok(document.querySelector("#lookup-status").textContent.includes("한국어기초사전 자료를 모두 불러오지 못했습니다"));
+  const stale=app.search("opsimathy");
+  const latest=app.search("apple");
+  pending.get("apple").resolve([]);
+  await latest;
   pending.get("opsimathy").resolve([{headword:"만학",englishExpression:"opsimathy",source:{name:"한국어기초사전"}}]);
-  await new Promise(resolve=>setImmediate(resolve));
+  await stale;
   assert.equal(document.querySelector("#lookup-status").textContent,"검색 결과를 표시했습니다.");
   assert.equal(document.querySelector("#result-word").textContent,"apple");
+  assert.ok(!document.body.textContent.includes("만학"));
+});
+
+test("one failed source keeps the other dictionary's results and never claims the word is absent",async()=>{
+  for (const failed of ["english","reverse"]) {
+    const {document}=fixture();
+    const app=createDictionaryApp({
+      lookupEnglishEntry:async()=>{if(failed==="english")throw Error("network");return [{word:"tree",senses:[{glosses:["나무"]}]}];},
+      lookupKoreanEntry:async()=>[],
+      lookupKoreanByEnglish:async()=>{if(failed==="reverse")throw Error("network");return [{headword:"나무",englishExpression:"tree",definitionKo:"나무의 원뜻"}];}
+    },{document,window:{}});
+    await app.search("tree");
+    assert.equal(document.querySelector('.dictionary-results:not([hidden])').dataset.source,failed==="english"?"reverse":"english");
+    assert.equal(document.querySelector(".empty-result").hidden,true);
+    assert.ok(document.querySelector("#lookup-status").textContent.includes("모두 불러오지 못했습니다"));
+    assert.equal(document.querySelector(".error-message"),null);
+  }
+});
+
+test("a missing-word message appears only after all sources finish without a result or failure",async()=>{
+  const {document}=fixture();let finish;
+  const app=createDictionaryApp({lookupEnglishEntry:async()=>[],lookupKoreanEntry:async()=>[],lookupKoreanByEnglish:()=>new Promise(resolve=>finish=resolve)},{document,window:{}});
+  const search=app.search("missing");
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(document.querySelector(".empty-result").hidden,true);
+  finish([]);await search;
+  assert.equal(document.querySelector(".empty-result").hidden,false);
+  assert.ok(document.querySelector(".empty-result").textContent.includes("수록된 사전에서 뜻을 찾지 못했어요"));
+  const other=fixture().document;
+  const failed=createDictionaryApp({lookupEnglishEntry:async()=>{throw Error("network");},lookupKoreanEntry:async()=>[],lookupKoreanByEnglish:async()=>[]},{document:other,window:{}});
+  await failed.search("missing");
+  assert.ok(other.querySelector(".empty-result").textContent.includes("모두 확인하지 못했어요"));
+});
+
+test("real take care of results are visible without opening a secondary dictionary",async()=>{
+  const {document}=fixture();
+  const app=createDictionaryApp({lookupEnglishEntry:(query,options)=>lookupEnglishEntry(query,{...options,fetchImpl:fetchLocal}),lookupKoreanEntry:(query,options)=>lookupKoreanEntry(query,{...options,fetchImpl:fetchLocal}),lookupKoreanByEnglish:(query,options)=>lookupKoreanByEnglish(query,{...options,fetchImpl:fetchLocal})},{document,window:{}});
+  await app.search("take care of");
+  const section=document.querySelector('[data-source="reverse"]');
+  assert.equal(section.hidden,false);assert.ok(section.querySelector(".sense"));
+  assert.ok(section.querySelector(".related-word"));
+  assert.ok(section.textContent.includes("take care of"));
+  assert.equal(document.querySelector(".empty-result").hidden,true);
 });
 
 test("search retains browser history and back restores the home and search query",async()=>{
