@@ -166,8 +166,8 @@ test("a fully suppressed exact token keeps its card and English description", as
   assert.match(target.textContent, /The quantity of something expressed in numbers/u);
 });
 
-test("markup and styles keep the new section separate and controls 44px", () => {
-  const html = readFileSync(new URL("../public/legacy_20260907_205800.html", import.meta.url), "utf8");
+test("preserved legacy markup and styles keep sections separate and controls 44px", () => {
+  const html = readFileSync(new URL("./fixtures/legacy-dictionary-before-retirement_20260910_082859.html", import.meta.url), "utf8");
   const exact = html.indexOf('<section id="translation-section"');
   const koreanSource = html.indexOf('<section id="korean-source-relation-section"');
   const englishContext = html.indexOf('<section id="context-expression-section"');
@@ -189,7 +189,7 @@ test("a Korean 404 renders source-only and hides empty Wiktionary regions", asyn
     DOMParser: globalThis.DOMParser,
     requestAnimationFrame: globalThis.requestAnimationFrame
   };
-  const { document, window } = parseHTML(readFileSync(new URL("../public/legacy_20260907_205800.html", import.meta.url), "utf8"));
+  const { document, window } = parseHTML(readFileSync(new URL("./fixtures/legacy-dictionary-before-retirement_20260910_082859.html", import.meta.url), "utf8"));
   window.location = { href: "https://example.test/" };
   window.speechSynthesis = { cancel() {} };
   globalThis.document = document;
@@ -244,7 +244,7 @@ test("two rapid Korean lookups collect aborted work and never render the stale e
     DOMParser: globalThis.DOMParser,
     requestAnimationFrame: globalThis.requestAnimationFrame
   };
-  const { document, window } = parseHTML(readFileSync(new URL("../public/legacy_20260907_205800.html", import.meta.url), "utf8"));
+  const { document, window } = parseHTML(readFileSync(new URL("./fixtures/legacy-dictionary-before-retirement_20260910_082859.html", import.meta.url), "utf8"));
   window.location = { href: "https://example.test/" };
   window.speechSynthesis = { cancel() {} };
   let resolveFirstApi;

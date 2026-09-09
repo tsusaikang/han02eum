@@ -695,9 +695,9 @@ test("hostile release strings stay literal on the textContent rendering path", (
   assert.equal(changes.children[0].children.length, 0);
 });
 
-test("page source integrates accessible IDs without innerHTML or search coupling", async () => {
+test("preserved legacy page integrates accessible IDs without innerHTML or search coupling", async () => {
   const [html, appSource, noticeSource, styles] = await Promise.all([
-    readFile("public/legacy_20260907_205800.html", "utf8"),
+    readFile("test/fixtures/legacy-dictionary-before-retirement_20260910_082859.html", "utf8"),
     readFile("public/app.js", "utf8"),
     readFile("public/release-notice.js", "utf8"),
     readFile("public/styles.css", "utf8")
