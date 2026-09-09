@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {parseHTML,DOMParser} from 'linkedom';
 
-test('legacy search exposes all POS groups, expandable meanings, parent context and recording attribution', async () => {
-  const {document,window}=parseHTML(await readFile(new URL('../public/legacy_20260907_205800.html',import.meta.url),'utf8'));
+test('preserved legacy renderer exposes POS groups, expandable meanings, parent context and recording attribution', async () => {
+  const {document,window}=parseHTML(await readFile(new URL('./fixtures/legacy-dictionary-before-retirement_20260910_082859.html',import.meta.url),'utf8'));
   Object.assign(globalThis,{document,window,DOMParser,requestAnimationFrame:()=>0});
   window.location={href:'https://dictionary.example/legacy_20260907_205800.html'};
   window.matchMedia=()=>({matches:true});

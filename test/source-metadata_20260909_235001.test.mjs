@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, symlink, copyFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildSourceMetadata, compareKeys, keyCounts } from '../scripts/build-source-metadata_20260909_235001.mjs';
 
 test('stored-key comparison merges case and width, keeps phrase boundaries, and is not additive', () => {
@@ -12,7 +15,20 @@ test('stored-key comparison merges case and width, keeps phrase boundaries, and 
 
 test('published metadata can be regenerated entirely from active public assets', async () => {
   const saved = JSON.parse(await readFile(new URL('../public/source-metadata_20260909_235001.json', import.meta.url), 'utf8'));
-  const rebuilt = await buildSourceMetadata({ generatedAt: saved.generatedAt });
+  const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
+  const fixtureDir = await mkdtemp(path.join(tmpdir(), 'dictionary-current-sources-'));
+  let rebuilt;
+  try {
+    for (const source of saved.sources) {
+      for (const version of source.versions) await symlink(path.join(publicDir, version), path.join(fixtureDir, version), 'dir');
+    }
+    for (const loader of ['native-english-ko.js', 'native-korean-en_20260907_205345.js']) {
+      await copyFile(path.join(publicDir, loader), path.join(fixtureDir, loader));
+    }
+    rebuilt = await buildSourceMetadata({ publicDir: fixtureDir, generatedAt: saved.generatedAt });
+  } finally {
+    await rm(fixtureDir, { recursive: true, force: true });
+  }
   assert.deepEqual(rebuilt, saved);
   const wiki = saved.sources.find(source => source.id === 'kowiktionary');
   const kr = saved.sources.find(source => source.id === 'krdict');
@@ -23,9 +39,8 @@ test('published metadata can be regenerated entirely from active public assets',
   assert.equal(c.breakdown.withoutSpaces.union + c.breakdown.withSpaces.union, c.union);
   assert.equal(kr.counts.detailSenses, kr.counts.senses);
   assert.equal(kr.counts.koreanEnglishSenses + kr.counts.koreanReferenceSenses, kr.counts.senses);
-  assert.equal(saved.legacy.koreanCombined.senses, kr.counts.senses);
-  assert.equal(saved.legacy.layers.find(layer => layer.id === 'reviewed-exact').counts.pairs, 208);
-  assert.equal(saved.sources.find(source => source.id === 'enwiktionary').counts.totalEntries, null);
-  assert.equal(saved.calculation.searchShardsRead, 512);
+  assert.deepEqual(saved.sources.map(source => source.id), ['kowiktionary', 'krdict']);
+  assert.equal(Object.hasOwn(saved, 'legacy'), false);
+  assert.equal(saved.calculation.searchShardsRead, 192);
   assert.equal(saved.calculation.detailShardsRead, 256);
 });

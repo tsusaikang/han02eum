@@ -294,8 +294,6 @@ export function createDictionaryApp(services, {document = globalThis.document, w
     query = String(query || "").normalize("NFC").trim().replace(/\s+/gu, " ").slice(0, 80);
     if (!query) { input.focus(); return; }
     input.value = query;
-    const legacy = document.querySelector("#legacy-search-link");
-    if (legacy) legacy.href = `/legacy_20260907_205800.html?q=${encodeURIComponent(query)}`;
     const direction = resolveDirection(query);
     controller?.abort();
     controller = new AbortController();
@@ -458,8 +456,6 @@ export function createDictionaryApp(services, {document = globalThis.document, w
       area.setAttribute("aria-busy", "false");
       area.replaceChildren(...initialContent.map(node => node.cloneNode(true)));
       document.body.classList.remove("has-results");
-      const legacy = document.querySelector("#legacy-search-link");
-      if (legacy) legacy.href = "/legacy_20260907_205800.html";
     }
   };
   window?.addEventListener?.("popstate", restoreUrl);

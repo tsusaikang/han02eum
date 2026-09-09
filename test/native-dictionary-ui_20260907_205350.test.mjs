@@ -14,7 +14,8 @@ test("the main page connects the native app and both real primary dictionaries",
   const {document}=fixture();
   assert.equal(document.querySelector('script[type="module"]').getAttribute("src"),"/native-dictionary-app_20260907_205350.js");
   assert.equal(document.querySelector('link[rel="stylesheet"]').getAttribute("href"),"/native-dictionary_20260907_205350.css");
-  assert.equal(document.querySelector("#legacy-search-link").getAttribute("href"),"/legacy_20260907_205800.html");
+  assert.equal(document.querySelector("#legacy-search-link"),null);
+  assert.equal(document.querySelector('a[href*="legacy_"]'),null);
   assert.equal(document.querySelector('input[name="direction"]'),null);
   const app=createDictionaryApp({
     lookupEnglishEntry:(query,options)=>lookupEnglishEntry(query,{...options,fetchImpl:fetchLocal}),
