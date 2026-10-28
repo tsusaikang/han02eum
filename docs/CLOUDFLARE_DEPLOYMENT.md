@@ -22,6 +22,7 @@
 
 - [wrangler.jsonc](../wrangler.jsonc): Worker 이름 `han02eum`, 진입 `src/worker.js`, 정적 자산 `public`, `/api/*`의 Worker 우선 처리를 확인할 수 있다.
 - [package.json](../package.json): `verify`, `deploy` 등 실제 명령의 정본이다. `package-lock.json`으로 설치 버전을 재현한다. 과거 Git 연결 설정은 build `npm run verify`, deploy `npm run deploy`였으며 현재 계정의 실제 설정 확인과 구분한다.
+- `npm run deploy`의 `predeploy`는 `scripts/build-deployment-meta_20261029_002011.mjs`로 `public/meta.json`을 생성한다. 실제 커밋(`commit`)과 빌드 시각(`builtAt`)만 담으며 Git에서는 제외한다. 배포 확인 시 `/meta.json`의 `commit`을 push한 SHA와 대조한다. 이 빌드 시각은 안내판 갱신일·자료 집계일과 별개다.
 - 기존 `/api/lookup` 구현과 `WIKIMEDIA_USER_AGENT` 필수 런타임 설정은 남아 있다. 기본 정적 검색의 외부 사전 수집 기능으로 해석하지 않는다. [.dev.vars.example](../.dev.vars.example)은 로컬 설정 형식이며 운영 비밀값을 저장소에 기록하지 않는다.
 - 현재 설정 파일은 요청 URL 자동 저장용 invocation logs와 traces를 끈다. 다시 켜는 경우에는 검색어 마스킹·보존 기간을 확인한다. 이 설정만으로 모든 로그에 민감한 값이 없다고 단정하지 않는다.
 
