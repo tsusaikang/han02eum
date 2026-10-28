@@ -93,7 +93,10 @@ function coverageChart(document, data) {
     for (const key of ["kowiktionaryOnly", "intersection", "krdictOnly", "union"]) row.append(element(document, "td", "", number(values[key])));
     tbody.append(row);
   }
-  table.append(tbody);details.append(table);
+  table.append(tbody);
+  const tableScroll = element(document, "div", "table-scroll");
+  tableScroll.tabIndex = 0;tableScroll.setAttribute("role", "region");tableScroll.setAttribute("aria-label", "공백 유무별 검색어 수, 좁은 화면에서는 가로로 넘겨 보기");
+  tableScroll.append(table);details.append(tableScroll);
   details.append(element(document, "p", "", "대소문자와 공백을 정리한 표기로 비교합니다. 구 표현·로마자 표기 등이 포함되며 원문 표기의 오류 가능성도 있습니다. 실제 검색은 한글 포함 여부로 방향을 나누고 80자까지 받으므로, 저장된 모든 표현의 직접 조회를 보장하는 수치는 아닙니다."));
   panel.append(details);
   return panel;
@@ -110,8 +113,7 @@ function sourceCard(document, source) {
   counts.append(metric(document, source.id === "krdict" ? "한국어 검색어" : "영어 검색어", source.counts.searchKeys));
   if (source.id === "krdict") counts.append(metric(document, "영어 검색어·대응 표현", source.counts.englishSearchKeys));
   card.append(counts);
-  card.append(element(document, "p", "source-count-note", "한영이음에서 표제어는 수록한 원래 표기의 수, 검색어는 대소문자·공백을 정리해 묶은 표기의 수입니다. 뜻 수는 수록한 원문 항목의 구분을 따릅니다."));
-  const dates = (source.snapshotKnownDates || []).map(item => item.date ? `원천 자료 기준일: ${item.date}` : "원천 자료의 갱신일은 확인되지 않았습니다.").join(" · ");
+  const dates = (source.snapshotKnownDates || []).map(item => item.date ? `원천 자료 기준일: ${item.date}` : "원천 자료 기준일: 공개 메타정보에 없어 확인되지 않았습니다.").join(" · ");
   card.append(element(document, "p", "source-date", dates || "자료 시점이 확인되지 않았습니다."));
   card.append(link(document, "원문 사전 보기 ↗", source.url));
   return card;
@@ -121,16 +123,19 @@ export function renderSourceMetadata(container, metadata) {
   const document = container.ownerDocument;
   const fragment = document.createDocumentFragment();
   const krdict = data.sources.find(source => source.id === "krdict");
+  const date = new Date(data.generatedAt);
+  if (Number.isNaN(date.valueOf())) throw new Error("Invalid counting date");
+  fragment.append(element(document, "p", "updated", `저장 자료 집계: ${new Intl.DateTimeFormat("ko-KR", {dateStyle:"long",timeStyle:"short",timeZone:"Asia/Seoul"}).format(date)} KST · 원천 자료 기준일은 출처별로 아래에 표시합니다.`));
   const grid = element(document, "div", "overview-grid");
   grid.append(overview(document, "한영이음 · 영어 검색용 표현", data.englishInputCoverage.union, "한영이음의 두 출처 자료에 저장된 표기를 중복 없이 센 수입니다. 구 표현·로마자 표기를 포함하며 가능한 모든 입력 형태의 수는 아닙니다."));
   grid.append(overview(document, "한영이음 · 한국어 검색용 표기", krdict.counts.searchKeys, "한영이음에 수록한 한국어기초사전 표제어의 검색 범위입니다. 영어 검색어 수와 합산하지 않습니다."));
   fragment.append(grid, coverageChart(document, data.englishInputCoverage));
   fragment.append(element(document, "h3", "subsection-heading", "한영이음에 수록한 두 출처"));
+  fragment.append(element(document, "p", "source-count-note", "한영이음에서 표제어는 수록한 원래 표기의 수, 검색어는 대소문자·공백을 정리해 묶은 표기의 수입니다. 뜻 수는 수록한 원문 항목의 구분을 따릅니다."));
   const sources = element(document, "div", "source-grid");
   for (const id of ["kowiktionary", "krdict"]) sources.append(sourceCard(document, data.sources.find(source => source.id === id)));
   fragment.append(sources);
-  const date = new Date(data.generatedAt);
-  if (!Number.isNaN(date.valueOf())) fragment.append(element(document, "p", "updated", `집계 시점: ${new Intl.DateTimeFormat("ko-KR", {dateStyle:"long",timeStyle:"short",timeZone:"Asia/Seoul"}).format(date)} · 자료 시점은 출처별로 다릅니다.`));
+
   container.replaceChildren(fragment);
 }
 export function initializeSourceMetadata({document = globalThis.document, fetchImpl = globalThis.fetch} = {}) {

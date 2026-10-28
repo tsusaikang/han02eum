@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "preview": "wrangler dev",
+    "predeploy": "node scripts/build-deployment-meta_20261029_002011.mjs",
     "deploy": "wrangler deploy",
     "deploy:dry-run": "wrangler deploy --dry-run",
     "cf-typegen": "wrangler types",

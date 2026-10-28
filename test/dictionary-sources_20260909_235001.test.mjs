@@ -18,10 +18,10 @@ test("source page displays only the two supported dictionaries and actual dedupl
   assert.ok(text.includes("76,833"));
   assert.ok(!text.includes("뜻 연결 208개"));
   assert.ok(!text.includes("이전 검색"));
-  assert.ok(!text.includes("영어판 Wiktionary"));
+  assert.ok(text.includes("외부 영영 사전 참고 링크"));
   assert.ok(!text.includes("기기 음성"));
   assert.ok(text.includes("80자"));
-  assert.ok(text.includes("한영이음에서 표제어는"));
+  assert.equal(text.split("한영이음에서 표제어는").length-1,1);
   assert.ok(!text.includes("native-krdict_"));
   assert.ok(!text.includes("manifest"));
   assert.equal(document.querySelectorAll(".coverage-legend>div").length,3);
@@ -61,4 +61,26 @@ test("source explanations and original links remain in HTML, and all search entr
     assert.equal(link.textContent,"출처와 수록 범위");
     assert.equal(entry.querySelector('a[href*="legacy_"]'),null);
   }
+});
+
+
+test("record dates distinguish retained counting snapshot from the updated explanation",()=>{
+  const document=fixture();
+  const record=JSON.parse(document.getElementById("record-meta").textContent);
+  assert.equal(record.kind,"snapshot");
+  assert.equal(record.as_of,"2026-09-10");
+  assert.equal(record.version,"v01");
+  assert.equal(record.url,"/dictionary-sources_20260909_235001.html");
+  assert.equal(record.updated_at,"2026-10-29T00:15:00+09:00");
+  assert.equal(metadata.generatedAt,"2026-09-09T23:28:35.861Z");
+  renderSourceMetadata(document.getElementById("source-statistics"),metadata);
+  const counting=document.querySelector(".updated").textContent;
+  assert.ok(counting.includes("2026년 9월 10일"));
+  assert.ok(counting.includes("KST"));
+  assert.ok(!counting.includes("10월 29일"));
+  assert.ok(document.querySelector(".source-date").textContent.includes("2026-09-01"));
+  assert.ok(document.querySelectorAll(".source-date")[1].textContent.includes("확인되지 않았습니다"));
+  assert.ok(document.querySelector(".record-edition").textContent.includes("현재 안내판 v01"));
+  assert.equal(document.querySelector(".table-scroll").getAttribute("tabindex"),"0");
+  for(const id of ["statistics","how-it-works","original-sources"]) assert.ok(document.getElementById(id));
 });

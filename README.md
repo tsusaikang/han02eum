@@ -1,47 +1,58 @@
 # 한영이음 사전
 
-영어와 한국어 단어를 검색해 발음, 영한·영영·한영 뜻, 예문을 함께 보는 웹 사전 MVP입니다.
+안내 갱신: 2026-10-29 (KST). 공개 반영 상태와 확인 시점은 [프로젝트 상태](./docs/PROJECT_STATE.md)를 따릅니다.
 
-운영 환경은 **Cloudflare Worker + Static Assets**입니다. 브라우저 화면과 `/api/lookup`이 한 도메인에서 제공되며, GitHub `main` 브랜치에 새 커밋이 올라오면 Cloudflare Workers Builds가 자동으로 검증하고 배포하도록 구성합니다.
+[한영이음](https://han02eum.com)은 영어·한국어를 한 검색창에서 찾는 웹 사전입니다. 한국어판 위키낱말사전의 영어 뜻과 한국어기초사전의 한영 자료를 출처별로 보여 줍니다. 두 자료의 뜻을 임의로 같은 뜻으로 합치지 않으며, 제공되는 뜻풀이·품사·발음·예문과 원문 링크를 확인할 수 있습니다.
+
+운영 환경은 **Cloudflare Worker + Static Assets**입니다. 기존 GitHub `main` 반영이 Cloudflare Workers Builds의 자동 배포로 이어집니다. 현재 공개 상태, 남은 문제와 다음 작업은 [프로젝트 상태](./docs/PROJECT_STATE.md)에서 관리합니다.
 
 ## 구조
 
-- `public/`: 브라우저 화면과 Wiktionary 결과 파서
-- `src/worker.js`: Cloudflare Worker 진입점
-- `src/handler.js`: 정적 파일/API 라우팅, Cloudflare 캐시, 오류 응답
-- `src/dictionary-api.js`: Wikimedia API 호출과 응답 검증
-- `wrangler.jsonc`: Worker·정적 자산·필수 운영값 설정
-- `docs/CLOUDFLARE_DEPLOYMENT.md`: GitHub 연동 배포 절차
+- `public/index.html`, `public/native-dictionary_20260907_205350.html`, `public/native-dictionary-app_20260907_205350.js`: 기본 검색 화면과 표시
+- `public/native-english-ko.js`, `public/native-korean-en_20260907_205345.js`: 출처별 검색 자료 로더
+- `public/native-english-ko_*/`, `public/native-krdict_*/`: 검색용으로 나눈 자료와 출처 정보
+- `public/legacy_20260907_205800.html`: 지원이 종료된 이전 검색 주소에서 기본 검색으로 이동하는 호환 진입점.
+- `public/app.js`, `public/dictionary-parser.js`: 이전 구현 보존 자료
+- `src/worker.js`, `src/handler.js`, `src/dictionary-api.js`: 요청 라우팅, 정적 자산과 보존된 `/api/lookup` 구현. 기본 검색은 이 API를 사용하지 않습니다.
+- `scripts/`, `test/`: 자료 생성·교정 도구와 관련 검사
+- `wrangler.jsonc`: Worker·정적 자산 설정
 
-검색 결과는 영문 Wiktionary의 현재 공개 항목을 공식 MediaWiki API로 읽어 브라우저에서 구조화해 표시합니다. 원문 HTML을 화면에 직접 삽입하지 않고 텍스트만 추출합니다.
+## 로컬 실행과 검사
 
-## 검증
-
-Node.js 20 이상에서 의존성을 설치한 뒤 전체 검증을 실행합니다.
+Node.js 20 이상에서 의존성을 설치합니다.
 
 ```sh
 npm ci
-npm run verify
 ```
 
-운영 서비스는 로컬 서버를 계속 켜둘 필요가 없습니다. 필요할 때만 `.dev.vars.example`을 `.dev.vars`로 복사해 공개 연락처 값을 바꾸고 `npm run dev`로 로컬 확인을 할 수 있습니다.
+Worker 개발 환경은 `.dev.vars.example`을 `.dev.vars`로 복사하고 `WIKIMEDIA_USER_AGENT`에 실제 공개 연락처를 넣어 실행합니다. 이 변수는 보존된 영어판 API와 기존 배포 설정에 연결되며, 기본 검색은 같은 도메인의 정적 사전 자료를 읽습니다. 운영 서비스를 위해 로컬 서버를 계속 켜둘 필요는 없습니다.
 
-## 현재 제공 범위
+```sh
+npm run dev
+```
 
-- 영어 검색: IPA, 공개 음원 또는 기기 음성, 한국어 번역어, 영영 뜻, 예문
-- 한국어 검색: 발음 표기 또는 로마자 표기, 영어 뜻, 제공되는 경우 예문
-- 검색 URL 공유와 뒤로 가기
-- 원문 링크, Wiktionary 리비전 번호, CC BY-SA 4.0 표시
-- Cloudflare 공유 캐시를 이용한 10분 API 캐시
-- Wikimedia 지연·호출 제한·비정상 응답·대용량 응답 방어
+종합 검사 명령은 `npm run verify`입니다. 저장소에는 과거 파일럿과 로컬 보존 자료에 의존하는 검사도 있으므로, 변경 범위의 확인 방법과 알려진 실행 제약은 [프로젝트 상태](./docs/PROJECT_STATE.md)를 함께 확인합니다. 기본 검색을 실행하는 데 유료 AI 파일럿은 필요하지 않습니다.
 
-## 배포 전 필수 설정
+## 공개 안내와 근거
 
-Cloudflare Worker 이름은 `wrangler.jsonc`의 `han02eum`과 같아야 합니다. Worker의 **Settings > Variables & Secrets**에 다음 런타임 비밀값을 먼저 추가합니다.
+별도 `/records/` 사이트는 없습니다. 기존 공개 안내와 근거는 다음과 같습니다. 수록량·조합 방법을 바꿀 때 함께 확인합니다.
 
-- 이름: `WIKIMEDIA_USER_AGENT`
-- 값 예시: `HanyeongIeumDictionary/0.2 (https://github.com/tsusaikang/han02eum)`
+<!-- record-map:start -->
+- [출처와 수록 범위](https://han02eum.com/dictionary-sources_20260909_235001.html): 이용자용 공개 안내
+- [데이터 출처 안내](./docs/DATA_SOURCES.md): 출처별 역할·이용 조건·집계 해석
+- [집계 결과 JSON](./public/source-metadata_20260909_235001.json): 제품 자료에서 계산한 수량과 기준일
+- [집계 프로그램](./scripts/build-source-metadata_20260909_235001.mjs): 위 수량의 재생성 방법
+<!-- record-map:end -->
 
-괄호 안에는 실제로 공개 접근 가능한 저장소나 연락처 페이지를 넣어야 합니다. 이 값이 없으면 배포 검증이 실패하고 API도 안전하게 503을 반환합니다.
+실행과 페이지 확인은 [수록량 집계와 갱신](./docs/DATA_SOURCES.md#수록량-집계와-갱신)을 따릅니다. 안내 문서의 갱신일과 자료의 기준일은 다릅니다. 9월 집계 자료를 10월에 새로 수집·측정한 자료로 해석하지 않습니다.
 
-GitHub 연결과 Workers Builds 입력값은 [Cloudflare 배포 안내](./docs/CLOUDFLARE_DEPLOYMENT.md), 데이터 선택과 라이선스 판단은 [데이터 출처 문서](./docs/DATA_SOURCES.md), 현재 공식 상태는 [프로젝트 상태 문서](./docs/PROJECT_STATE.md)를 확인하세요.
+## 자료와 작업 안내
+
+아래는 프로젝트 작업공간의 문서 지도입니다. 로컬 보관 문서는 GitHub에 포함되지 않을 수 있으며, 문서 링크가 있다는 사실은 그 원문을 웹에 공개한다는 뜻이 아닙니다.
+
+- [출처별 사전 구조](./docs/NATIVE_DICTIONARY_20260907_212917.md): 현재 조회·표시 구조와 재생성 도구. 검색 동작이나 원천 자료를 바꿀 때 확인
+- [Cloudflare 배포 안내](./docs/CLOUDFLARE_DEPLOYMENT.md): 기존 배포 경로·확인 순서·설정 근거. 초기 설정 이력은 별도로 연결
+- [프로젝트 상태](./docs/PROJECT_STATE.md): 현재 결정·공개 상태·미해결 문제·다음 행동
+- 요구사항 (로컬 보관 경로: `docs/REQUIREMENTS.md`): 요구사항과 안정 ID
+- [작업 지침](./AGENTS.md): 위임·후속 수정·완료·승인 범위
+- 정리 전 README (로컬 보관 경로: `docs/PROJECT_HISTORY_20260909_234322.md #정리-전-readme`): 과거 v3 AI 재평가의 명령·고정 입력·승인 경계와 당시 소개 원문. 현재 실행 순서로 자동 재개하지 않습니다.

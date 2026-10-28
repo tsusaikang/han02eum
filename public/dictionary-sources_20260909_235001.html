@@ -8,6 +8,35 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/native-dictionary_20260907_205350.css">
     <link rel="stylesheet" href="/dictionary-sources_20260909_235001.css">
+    <script type="application/json" id="record-meta">
+{
+  "schema_version": 1,
+  "title": "출처와 수록 범위",
+  "description": "한영이음에 저장된 두 사전 자료의 수록량과 함께 보여 주는 방식",
+  "kind": "snapshot",
+  "as_of": "2026-09-10",
+  "updated_at": "2026-10-29T00:15:00+09:00",
+  "version": "v01",
+  "published_at": "2026-10-29T00:15:00+09:00",
+  "url": "/dictionary-sources_20260909_235001.html",
+  "keywords": [
+    "출처",
+    "수록 범위",
+    "검색 표현"
+  ],
+  "sources": [
+    {
+      "path": "docs/DATA_SOURCES.md"
+    },
+    {
+      "path": "public/source-metadata_20260909_235001.json"
+    },
+    {
+      "path": "scripts/build-source-metadata_20260909_235001.mjs"
+    }
+  ]
+}
+    </script>
     <script type="module" src="/dictionary-sources_20260909_235001.js"></script>
   </head>
   <body>
@@ -22,13 +51,16 @@
           <p class="eyebrow">사전을 이루는 자료</p>
           <h1>출처와<br><em>수록 범위</em></h1>
           <p>어디에서 온 뜻인지,<br class="mobile-break"> 얼마나 찾아볼 수 있는지.</p>
-          <p class="intro-note">한영이음은 두 사전의 원문을 함께 보여 줍니다.<br>같은 검색어가 겹쳐도 서로 다른 뜻을 하나로 합치지 않습니다.</p>
+          <p class="intro-note">한국어판 위키낱말사전과 한국어기초사전에서 가져온 자료를 함께 보여 줍니다. 같은 검색어로 찾은 뜻도 출처별로 구분합니다.</p>
+          <p class="record-edition">현재 안내판 v01 · 내용 갱신 <time datetime="2026-10-29T00:15:00+09:00">2026-10-29 00:15 KST</time></p>
         </header>
         <nav class="section-nav" aria-label="이 페이지에서 보기">
           <a href="#statistics">수록 범위</a><a href="#how-it-works">함께 보여 주는 방식</a><a href="#original-sources">원문과 이용 조건</a>
         </nav>
         <section id="statistics" aria-labelledby="statistics-title">
           <h2 id="statistics-title" class="section-title">한영이음에 수록된 범위</h2>
+          <p class="section-copy">아래 수치는 한영이음에 저장된 자료만 센 결과입니다. 원문 사전 전체의 규모와는 다릅니다.</p>
+          <p class="quality-note">수록량은 자료의 규모를 나타냅니다. 뜻의 정확성이나 학습에 필요한 표현이 빠짐없이 있다는 보증은 아닙니다.</p>
           <div class="statistics-message">
             <p id="metadata-status" role="status" aria-live="polite">수록량을 확인하고 있어요.</p>
             <button id="metadata-retry" type="button" hidden>다시 불러오기</button>
@@ -44,7 +76,7 @@
             <li><strong>한국어를 입력하면 그 표제어를 찾습니다.</strong><p>한국어기초사전의 영어 대응 표현과 한국어·영어 풀이를 보여 줍니다. 해당 한국어 항목의 예문과 관련 정보도 펼쳐 볼 수 있습니다.</p></li>
             <li><strong>출처가 같아도, 달라도 원래 뜻을 유지합니다.</strong><p>같은 검색어로 두 출처를 찾았다는 사실은 두 뜻이 정확히 같다는 뜻이 아닙니다. 뜻·품사·용법과 예문은 각 원문 항목에 속하며, 항목의 출처 보기에서 확인할 수 있습니다.</p></li>
           </ol>
-          <p class="quality-note">수록량은 찾을 수 있는 자료의 규모입니다. 모든 뜻의 정확성이나 학습에 필요한 표현이 빠짐없이 있다는 보증은 아닙니다.</p>
+          <p>영어판 Wiktionary는 검색 결과에서 찾아갈 수 있는 외부 영영 사전 참고 링크입니다. 이 페이지의 두 출처 수록량에는 포함하지 않습니다.</p>
         </section>
         <section id="original-sources" class="explanation" aria-labelledby="original-title">
           <h2 id="original-title" class="section-title">원문과 이용 조건</h2>
@@ -53,6 +85,16 @@
             <article><h3>국립국어원 한국어기초사전</h3><p>한국어 표제어의 영어 대응 표현과 풀이를 제공합니다.</p><a href="https://krdict.korean.go.kr/">원문 사전 ↗</a><a href="https://krdict.korean.go.kr/kor/kboardPolicy/copyRightTermsInfo">이용 조건 ↗</a></article>
           </div>
         </section>
+        <details class="record-evidence">
+          <summary>이 안내의 기준과 근거</summary>
+          <p>안내판 갱신일은 이 설명을 고친 시점입니다. 수록량의 집계 시점과 각 출처의 원천 자료 기준일은 별도로 표시합니다. 숫자는 저장된 통계 자료를 읽어 표시하며, 안내문만 고칠 때 새로 집계한 것처럼 날짜를 바꾸지 않습니다.</p>
+          <p>저장소의 근거 경로입니다. 원문 사전과 이용 조건은 위 링크에서 확인할 수 있습니다.</p>
+          <ul>
+            <li><code>docs/DATA_SOURCES.md</code> — 출처와 제공 방식</li>
+            <li><code>public/source-metadata_20260909_235001.json</code> — 수록량 통계</li>
+            <li><code>scripts/build-source-metadata_20260909_235001.mjs</code> — 수록량을 세는 규칙</li>
+          </ul>
+        </details>
       </main>
       <footer class="site-footer"><p>한영이음 <span>·</span> English ↔ 한국어</p><p><a href="/">단어 찾기</a></p></footer>
     </div>

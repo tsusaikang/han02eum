@@ -1,73 +1,35 @@
 # GitHub → Cloudflare Workers 배포 안내
 
-마지막 검토: 2026-08-22 (KST)
+기존 운영 경로와 일반 수정의 반영 절차를 설명하는 정본이다. 안내 갱신: 2026-10-29 (KST). 2026-09-10의 배포·실제 화면 확인 이력은 완료 기록 (로컬 보관 경로: `docs/PROJECT_HISTORY_20260909_234322.md #completed-20260910`), 최신 공개 상태와 확인 시점은 [프로젝트 상태](PROJECT_STATE.md)를 따른다. 문서 갱신 자체가 새 배포나 Cloudflare 계정 설정 재확인을 뜻하지 않는다.
 
-이 프로젝트는 Cloudflare Workers Builds가 GitHub `main` 브랜치의 새 커밋을 감지해 정적 화면과 Worker API를 함께 배포하도록 준비되어 있습니다. 운영 환경에서는 로컬 서버를 계속 실행할 필요가 없습니다.
+## 현재 운영 경로
 
-## 1. 외부 작업 전 확정할 값
+기존 `git@github.com:tsusaikang/han02eum.git`의 `main` → Cloudflare Workers Builds → Worker `han02eum` → [han02eum.com](https://han02eum.com) 경로를 사용한다. 운영을 위해 로컬 서버를 계속 켜둘 필요는 없다. 일반 수정마다 저장소·Worker·도메인·연결을 새로 만들지 않는다.
 
-- GitHub 저장소 이름
-- 저장소 공개 범위: 공개 또는 비공개
-- Wikimedia에 전달할 공개 연락처 URL
+원본 작업공간의 미커밋 자료와 별도 작업은 보존하고, 공개할 변경만 현재 원격 main을 기준으로 통합한다. 사용할 checkout과 브랜치 상태는 실제로 확인한다. 9월에 쓴 임시 공개용 clone은 당시 실행 기록이며 현재 존재하는 작업 위치로 간주하지 않는다.
 
-비공개 저장소를 쓰는 경우 저장소 주소는 공개 연락처가 될 수 없습니다. 별도의 공개 웹페이지나 공개 가능한 이메일 연락처를 사용합니다.
+## 일반 수정 반영
 
-## 2. GitHub에 올리기
+1. 변경에 맞는 검사를 실행하고 배포 대상에서 `npm run verify`를 확인한다. 로컬 전용 과거 파일럿 자료에 의존하는 검사 제약은 [프로젝트 상태](PROJECT_STATE.md)와 관련 시험 범위에서 구분한다.
+2. 승인된 제품 변경만 기존 GitHub `main`에 반영하고 Workers Builds의 해당 커밋 빌드·배포 결과를 확인한다. push 성공과 배포 완료를 구분한다.
+3. 실제 서비스에서 요청한 동작을 확인한다. 기본 영어 검색의 두 출처 결과, 한국어 검색·상세 더보기, 빈 결과와 일부 출처 실패 안내 중 변경에 해당하는 동작을 확인한다. 화면 변경은 모바일 표시도 확인한다.
+4. 출처·통계 변경은 [수록량 집계와 갱신](DATA_SOURCES.md#수록량-집계와-갱신)에 따라 근거와 공개 안내를 함께 확인한다. 이전 주소 변경은 `?q=` 유지와 기본 검색으로의 이동을 확인한다.
+5. 실제 반영 커밋·확인 결과·남은 문제는 [프로젝트 상태](PROJECT_STATE.md)에 기록한다.
 
-1. GitHub에 빈 저장소를 만든다.
-2. 자동 생성 README, `.gitignore`, 라이선스 파일은 추가하지 않는다. 로컬 저장소에 이미 같은 역할의 파일이 있다.
-3. 이 로컬 저장소에 GitHub 원격을 연결한다.
-4. `main` 브랜치를 처음 푸시한다.
+기본 검색은 보존된 영어판 API를 사용하지 않으므로 `/api/lookup`의 캐시 HIT를 현재 기본 검색의 완료 기준으로 삼지 않는다. 새로운 계정·권한·DNS·도메인·비용·비공개 자료 전송 등은 [작업 지침](../AGENTS.md)의 별도 승인 경계를 따른다.
 
-Cloudflare 연결 이후의 `main` 푸시는 운영 배포를 시작할 수 있습니다.
+## 설정 근거와 보존된 API
 
-## 3. Cloudflare Worker와 필수값 준비
+- [wrangler.jsonc](../wrangler.jsonc): Worker 이름 `han02eum`, 진입 `src/worker.js`, 정적 자산 `public`, `/api/*`의 Worker 우선 처리를 확인할 수 있다.
+- [package.json](../package.json): `verify`, `deploy` 등 실제 명령의 정본이다. `package-lock.json`으로 설치 버전을 재현한다. 과거 Git 연결 설정은 build `npm run verify`, deploy `npm run deploy`였으며 현재 계정의 실제 설정 확인과 구분한다.
+- 기존 `/api/lookup` 구현과 `WIKIMEDIA_USER_AGENT` 필수 런타임 설정은 남아 있다. 기본 정적 검색의 외부 사전 수집 기능으로 해석하지 않는다. [.dev.vars.example](../.dev.vars.example)은 로컬 설정 형식이며 운영 비밀값을 저장소에 기록하지 않는다.
+- 현재 설정 파일은 요청 URL 자동 저장용 invocation logs와 traces를 끈다. 다시 켜는 경우에는 검색어 마스킹·보존 기간을 확인한다. 이 설정만으로 모든 로그에 민감한 값이 없다고 단정하지 않는다.
 
-Cloudflare 대시보드에서 Worker 이름을 정확히 `han02eum`으로 만든다. 이 이름은 `wrangler.jsonc`의 `name`과 같아야 합니다.
+## 운영 복구와 과거 설정
 
-Worker의 **Settings > Variables & Secrets**에 다음 값을 런타임 비밀값으로 추가합니다.
+배포 문제가 생기면 기존 Cloudflare 배포 이력의 직전 정상 버전과 적용 범위를 확인해 복구하고, 수정·검증된 커밋을 기존 경로로 반영한다. Git 이력을 강제로 되돌리거나 비밀값을 커밋하지 않는다.
 
-- 이름: `WIKIMEDIA_USER_AGENT`
-- 값: `HanyeongIeumDictionary/0.2 (공개 연락처 URL)`
-
-예: `HanyeongIeumDictionary/0.2 (https://github.com/tsusaikang/han02eum)`
-
-이 값은 Workers Builds의 빌드 변수에 넣지 않습니다. 빌드 변수는 실행 중인 Worker에서 사용할 수 없습니다. 저장소의 `.dev.vars.example`은 형식 안내일 뿐 실제 운영값이 아닙니다.
-
-필수값을 먼저 등록하기 어렵다면 Git 저장소를 연결한 뒤 최초 빌드가 누락 오류로 멈추는 것이 정상입니다. Worker 설정에서 값을 등록한 다음 빌드를 다시 시도합니다.
-
-## 4. GitHub 저장소 연결
-
-Worker의 **Settings > Builds**에서 GitHub 계정과 저장소를 연결하고 다음 값을 사용합니다.
-
-| 항목 | 값 |
-| --- | --- |
-| Production branch | `main` |
-| Root directory | `/` 또는 비워 둠 |
-| Build command | `npm run verify` |
-| Deploy command | `npm run deploy` |
-| Non-production deploy | 기본값 `npx wrangler versions upload` |
-
-`package-lock.json`이 있으므로 Cloudflare가 의존성을 재현 가능하게 설치합니다. 실제 Wrangler 버전은 `package.json`에 고정된 범위를 사용합니다.
-
-미리보기 브랜치 자동 배포는 처음에는 꺼 두는 편이 단순합니다. 필요해지면 별도 브랜치 빌드를 활성화합니다.
-
-## 5. 첫 배포 후 확인
-
-1. 빌드 단계에서 `npm run verify`가 통과했는지 확인한다.
-2. 배포 주소의 첫 화면이 열리는지 확인한다.
-3. `hello` 검색에서 발음·영한·영영 뜻·예문·출처가 보이는지 확인한다.
-4. `안녕` 검색에서 발음 또는 로마자·영어 뜻·출처가 보이는지 확인한다.
-5. 존재하지 않는 단어가 명확한 안내를 표시하는지 확인한다.
-6. 같은 단어를 다시 검색했을 때 `/api/lookup` 응답의 `X-Dictionary-Cache`가 `HIT`인지 확인한다.
-7. 모바일 폭에서 검색창과 결과 카드가 잘리지 않는지 확인한다.
-8. Cloudflare Logs에는 검색어 원문이나 비밀값 없이 구조화된 오류 코드만 남는지 확인한다.
-
-`wrangler.jsonc`는 요청 URL을 자동 저장하는 호출 로그와 추적을 꺼 둡니다. 이를 다시 켜기 전에는 검색어 마스킹과 보존 기간을 먼저 결정합니다.
-
-## 6. 운영 롤백
-
-문제가 있으면 Cloudflare의 배포 이력에서 직전 정상 버전을 다시 활성화합니다. 원인을 고친 뒤 검증을 통과한 새 커밋을 `main`에 푸시합니다. Git 이력을 강제로 되돌리거나 비밀값을 저장소에 커밋하지 않습니다.
+초기 설정·이전 검색 점검 원문 (로컬 보관 경로: `docs/PROJECT_HISTORY_20260909_234322.md #deployment-setup-before-20261029`)은 2026-08-22에 작성한 신규 저장소·Worker 연결 절차와 당시 API 중심 점검을 보존한다. 기존 운영의 일반 수정 절차로 재실행하지 않는다.
 
 ## 참고 문서
 
